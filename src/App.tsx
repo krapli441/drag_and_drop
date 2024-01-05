@@ -10,6 +10,10 @@ function App() {
     alignItems: "center",
   };
 
+  const inventoryContainerstyle: CSSProperties = {
+    height: "70vh",
+  };
+
   const inventoryStyle: CSSProperties = {
     display: "grid",
     gridTemplateColumns: "repeat(5, 1fr)",
@@ -34,7 +38,9 @@ function App() {
   return (
     <div className="App">
       <div style={containerStyle}>
-        <div style={inventoryStyle}>{inventoryBoxes}</div>
+        <div style={inventoryContainerstyle}>
+          <div style={inventoryStyle}>{inventoryBoxes}</div>
+        </div>
       </div>
     </div>
   );
