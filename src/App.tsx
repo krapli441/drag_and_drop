@@ -63,11 +63,13 @@ function App() {
         <div style={inventoryBoxStyle}></div>
       </div>
       <div
+        className="inventory"
         style={{
           height: "30vh",
           display: "flex",
           flexDirection: "row",
-          alignItems: "space-around",
+          alignItems: "center",
+          justifyContent: "space-around",
         }}
       >
         {items.map((item) => generateBoxes(item.size, item.text))}
