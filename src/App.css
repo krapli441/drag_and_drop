@@ -1,3 +1,5 @@
+/* App.css 파일에 추가하거나 별도의 CSS 파일에 적용하세요 */
+
 .App {
   text-align: center;
   padding: 20px;
@@ -5,16 +7,16 @@
 
 .inventory {
   display: grid;
-  grid-template-columns: repeat(
+  grid-template-rows: repeat(
     5,
     50px
   ); /* 5x5 칸으로 구성하며, 칸 크기는 50px로 지정 */
-  gap: 5px; /* 각 칸 사이의 간격 설정 */
+  gap: 3px; /* 각 칸 사이의 간격 설정 */
 }
 
 .inventory-row {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .inventory-cell {
