@@ -31,50 +31,24 @@ function App() {
     );
   }
 
-  // 1x1, 2x2, 3x3 크기의 아이템 추가
-  const items = [
-    { size: "1x1", text: "1x1", width: "60px", height: "60px" },
-    { size: "2x2", text: "2x2", width: "120px", height: "120px" },
-    { size: "3x3", text: "3x3", width: "180px", height: "180px" },
-  ];
-
-  const itemComponents = items.map((item, index) => {
-    const gridSize = parseInt(item.size.charAt(0)); // Extract the numeric part of size
-    const itemBoxes = [];
-
-    for (let i = 0; i < gridSize; i++) {
-      for (let j = 0; j < gridSize; j++) {
-        itemBoxes.push(
-          <div
-            key={`${index}_${i}_${j}`}
-            style={{
-              width: `calc(${item.width} / ${gridSize})`,
-              height: `calc(${item.height} / ${gridSize})`,
-              cursor: "grab",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              border: "1px solid black",
-            }}
-          >
-            {item.text}
-          </div>
-        );
-      }
-    }
-
-    return (
-      <div
-        key={index}
-        style={{
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
-        {itemBoxes}
-      </div>
-    );
-  });
+  // 1x1 크기의 박스 추가
+  const oneByOneBox = (
+    <div
+      key="1x1"
+      style={{
+        ...boxStyle,
+        width: "60px",
+        height: "60px",
+        cursor: "grab",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        border: "1px solid black",
+      }}
+    >
+      1x1
+    </div>
+  );
 
   return (
     <div className="App">
@@ -89,7 +63,7 @@ function App() {
           alignItems: "center",
         }}
       >
-        {itemComponents}
+        {oneByOneBox}
       </div>
     </div>
   );
