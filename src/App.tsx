@@ -1,5 +1,12 @@
 import React, { CSSProperties } from "react";
 import "./App.css";
+import { DndProvider, useDrag, useDrop } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
+// 아이템 타입 정의
+const ItemTypes = {
+  BOX: "box",
+};
 
 function App() {
   const inventoryContainerStyle: CSSProperties = {
@@ -23,30 +30,41 @@ function App() {
     border: "1px solid black",
   };
 
-  const generateBoxes = (size: any, text: any) => {
-    const numCols = size === "1x1" ? 1 : size === "2x2" ? 2 : 3;
-    const numRows = size === "1x1" ? 1 : size === "2x2" ? 2 : 3;
-    const boxWidth = `${numCols * 60}px`;
-    const boxHeight = `${numRows * 60}px`;
+  // 드래그 가능한 아이템 컴포넌트 정의
+  const DraggableBox = ({ size, text }: any) => {
+    const [, ref] = useDrag({
+      type: ItemTypes.BOX,
+      item: { size },
+    });
 
     return (
       <div
-        key={size}
+        ref={ref}
         style={{
           ...boxStyle,
-          width: boxWidth,
-          height: boxHeight,
+          width: size === "1x1" ? "60px" : size === "2x2" ? "120px" : "180px",
+          height: size === "1x1" ? "60px" : size === "2x2" ? "120px" : "180px",
           cursor: "grab",
-          display: "grid",
-          gridTemplateColumns: `repeat(${numCols}, 1fr)`,
-          gridTemplateRows: `repeat(${numRows}, 1fr)`,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           border: "1px solid black",
         }}
       >
-        {Array.from({ length: numCols * numRows }, (_, index) => (
-          <div key={index} style={{ ...boxStyle }}></div>
-        ))}
-        {/* {text} */}
+        {text}
+      </div>
+    );
+  };
+
+  // 드롭 가능한 박스 컴포넌트 정의
+  const DroppableBox = ({ children }: any) => {
+    const [, ref] = useDrop({
+      accept: ItemTypes.BOX,
+    });
+
+    return (
+      <div ref={ref} style={{ ...boxStyle, position: "relative" }}>
+        {children}
       </div>
     );
   };
@@ -58,23 +76,38 @@ function App() {
   ];
 
   return (
-    <div className="App">
-      <div style={inventoryContainerStyle}>
-        <div style={inventoryBoxStyle}></div>
+    <DndProvider backend={HTML5Backend}>
+      <div className="App">
+        <div style={inventoryContainerStyle}>
+          <div style={inventoryBoxStyle}>
+            {/* 박스 영역에 드롭 가능한 박스 컴포넌트 추가 */}
+            <DroppableBox>
+              {items.map((item) => (
+                <DraggableBox
+                  key={item.size}
+                  size={item.size}
+                  text={item.text}
+                />
+              ))}
+            </DroppableBox>
+          </div>
+        </div>
+        <div
+          className="inventory"
+          style={{
+            height: "30vh",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-around",
+          }}
+        >
+          {items.map((item) => (
+            <DraggableBox key={item.size} size={item.size} text={item.text} />
+          ))}
+        </div>
       </div>
-      <div
-        className="inventory"
-        style={{
-          height: "30vh",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-around",
-        }}
-      >
-        {items.map((item) => generateBoxes(item.size, item.text))}
-      </div>
-    </div>
+    </DndProvider>
   );
 }
 
