@@ -72,6 +72,33 @@ function App() {
     </div>
   );
 
+  // 3x3 크기의 박스 추가
+  const threeByThreeBox = (
+    <div
+      key="3x3"
+      style={{
+        ...boxStyle,
+        width: "180px",
+        height: "180px",
+        cursor: "grab",
+        display: "grid",
+        gridTemplateColumns: "repeat(3, 1fr)",
+        gridTemplateRows: "repeat(3, 1fr)",
+        border: "1px solid black",
+      }}
+    >
+      <div style={{ ...boxStyle }}></div>
+      <div style={{ ...boxStyle }}></div>
+      <div style={{ ...boxStyle }}></div>
+      <div style={{ ...boxStyle }}></div>
+      <div style={{ ...boxStyle }}></div>
+      <div style={{ ...boxStyle }}></div>
+      <div style={{ ...boxStyle }}></div>
+      <div style={{ ...boxStyle }}></div>
+      <div style={{ ...boxStyle }}></div>
+    </div>
+  );
+
   return (
     <div className="App">
       <div style={inventoryContainerStyle}>
@@ -87,6 +114,7 @@ function App() {
       >
         {oneByOneBox}
         {twoByTwoBox}
+        {threeByThreeBox}
       </div>
     </div>
   );
