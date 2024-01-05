@@ -38,23 +38,43 @@ function App() {
     { size: "3x3", text: "3x3", width: "180px", height: "180px" },
   ];
 
-  const itemComponents = items.map((item, index) => (
-    <div
-      key={index}
-      draggable={true}
-      style={{
-        width: item.width,
-        height: item.height,
-        cursor: "grab",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        border: "1px solid black",
-      }}
-    >
-      {item.text}
-    </div>
-  ));
+  const itemComponents = items.map((item, index) => {
+    const gridSize = parseInt(item.size.charAt(0)); // Extract the numeric part of size
+    const itemBoxes = [];
+
+    for (let i = 0; i < gridSize; i++) {
+      for (let j = 0; j < gridSize; j++) {
+        itemBoxes.push(
+          <div
+            key={`${index}_${i}_${j}`}
+            style={{
+              width: `calc(${item.width} / ${gridSize})`,
+              height: `calc(${item.height} / ${gridSize})`,
+              cursor: "grab",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              border: "1px solid black",
+            }}
+          >
+            {item.text}
+          </div>
+        );
+      }
+    }
+
+    return (
+      <div
+        key={index}
+        style={{
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        {itemBoxes}
+      </div>
+    );
+  });
 
   return (
     <div className="App">
@@ -65,7 +85,8 @@ function App() {
         style={{
           height: "30vh",
           display: "flex",
-          justifyContent: "space-around",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
         {itemComponents}
