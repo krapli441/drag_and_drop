@@ -23,86 +23,44 @@ function App() {
     border: "1px solid black",
   };
 
-  const inventoryBoxes = [];
+  const generateBoxes = (size: any, text: any) => {
+    const numCols = size === "1x1" ? 1 : size === "2x2" ? 2 : 3;
+    const numRows = size === "1x1" ? 1 : size === "2x2" ? 2 : 3;
+    const boxWidth = `${numCols * 60}px`;
+    const boxHeight = `${numRows * 60}px`;
 
-  for (let i = 0; i < 25; i++) {
-    inventoryBoxes.push(
-      <div key={i} style={{ ...boxStyle, cursor: "default" }}></div>
+    return (
+      <div
+        key={size}
+        style={{
+          ...boxStyle,
+          width: boxWidth,
+          height: boxHeight,
+          cursor: "grab",
+          display: "grid",
+          gridTemplateColumns: `repeat(${numCols}, 1fr)`,
+          gridTemplateRows: `repeat(${numRows}, 1fr)`,
+          border: "1px solid black",
+        }}
+      >
+        {Array.from({ length: numCols * numRows }, (_, index) => (
+          <div key={index} style={{ ...boxStyle }}></div>
+        ))}
+        {/* {text} */}
+      </div>
     );
-  }
+  };
 
-  // 1x1 크기의 박스 추가
-  const oneByOneBox = (
-    <div
-      key="1x1"
-      style={{
-        ...boxStyle,
-        width: "60px",
-        height: "60px",
-        cursor: "grab",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        border: "1px solid black",
-      }}
-    >
-      1x1
-    </div>
-  );
-
-  // 2x2 크기의 박스 추가
-  const twoByTwoBox = (
-    <div
-      key="2x2"
-      style={{
-        ...boxStyle,
-        width: "120px",
-        height: "120px",
-        cursor: "grab",
-        display: "grid",
-        gridTemplateColumns: "repeat(2, 1fr)",
-        gridTemplateRows: "repeat(2, 1fr)",
-        border: "1px solid black",
-      }}
-    >
-      <div style={{ ...boxStyle }}></div>
-      <div style={{ ...boxStyle }}></div>
-      <div style={{ ...boxStyle }}></div>
-      <div style={{ ...boxStyle }}></div>
-    </div>
-  );
-
-  // 3x3 크기의 박스 추가
-  const threeByThreeBox = (
-    <div
-      key="3x3"
-      style={{
-        ...boxStyle,
-        width: "180px",
-        height: "180px",
-        cursor: "grab",
-        display: "grid",
-        gridTemplateColumns: "repeat(3, 1fr)",
-        gridTemplateRows: "repeat(3, 1fr)",
-        border: "1px solid black",
-      }}
-    >
-      <div style={{ ...boxStyle }}></div>
-      <div style={{ ...boxStyle }}></div>
-      <div style={{ ...boxStyle }}></div>
-      <div style={{ ...boxStyle }}></div>
-      <div style={{ ...boxStyle }}></div>
-      <div style={{ ...boxStyle }}></div>
-      <div style={{ ...boxStyle }}></div>
-      <div style={{ ...boxStyle }}></div>
-      <div style={{ ...boxStyle }}></div>
-    </div>
-  );
+  const items = [
+    { size: "1x1", text: "1x1" },
+    { size: "2x2", text: "2x2" },
+    { size: "3x3", text: "3x3" },
+  ];
 
   return (
     <div className="App">
       <div style={inventoryContainerStyle}>
-        <div style={inventoryBoxStyle}>{inventoryBoxes}</div>
+        <div style={inventoryBoxStyle}></div>
       </div>
       <div
         style={{
@@ -112,9 +70,7 @@ function App() {
           alignItems: "space-around",
         }}
       >
-        {oneByOneBox}
-        {twoByTwoBox}
-        {threeByThreeBox}
+        {items.map((item) => generateBoxes(item.size, item.text))}
       </div>
     </div>
   );
