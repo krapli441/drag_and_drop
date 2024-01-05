@@ -13,7 +13,7 @@ const inventory = [
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: -1, y: -1 });
 
-  const handleMouseEnter = (rowIndex: any, columnIndex: any) => {
+  const handleMouseEnter = (rowIndex: number, columnIndex: number) => {
     setMousePosition({ x: rowIndex, y: columnIndex });
   };
 
