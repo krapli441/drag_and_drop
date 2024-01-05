@@ -50,6 +50,28 @@ function App() {
     </div>
   );
 
+  // 2x2 크기의 박스 추가
+  const twoByTwoBox = (
+    <div
+      key="2x2"
+      style={{
+        ...boxStyle,
+        width: "120px",
+        height: "120px",
+        cursor: "grab",
+        display: "grid",
+        gridTemplateColumns: "repeat(2, 1fr)",
+        gridTemplateRows: "repeat(2, 1fr)",
+        border: "1px solid black",
+      }}
+    >
+      <div style={{ ...boxStyle }}></div>
+      <div style={{ ...boxStyle }}></div>
+      <div style={{ ...boxStyle }}></div>
+      <div style={{ ...boxStyle }}></div>
+    </div>
+  );
+
   return (
     <div className="App">
       <div style={inventoryContainerStyle}>
@@ -59,11 +81,12 @@ function App() {
         style={{
           height: "30vh",
           display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          flexDirection: "row",
+          alignItems: "space-around",
         }}
       >
         {oneByOneBox}
+        {twoByTwoBox}
       </div>
     </div>
   );
