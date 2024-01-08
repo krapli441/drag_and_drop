@@ -3,8 +3,8 @@ import "./Inventory.css";
 
 const Inventory = () => {
   const [grid, setGrid] = useState({
-    width_block: 10,
-    height_block: 10,
+    width_block: 5,
+    height_block: 5,
     size: 50,
   });
 
