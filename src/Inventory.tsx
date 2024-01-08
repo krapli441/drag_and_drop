@@ -47,9 +47,6 @@ const Inventory = () => {
     size: 50,
   });
 
-  // 현재는 handleClick 메서드를 사용하지 않는다
-  // const handleClick = () => { ... };
-
   const { width_block, height_block, size } = grid;
 
   return (
