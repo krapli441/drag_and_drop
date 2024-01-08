@@ -43,6 +43,34 @@
   ); /* 세로 방향으로 정렬하려면 이 부분을 추가 */
 }
 
+.item-grid-2x2 {
+  display: grid;
+  grid-template-rows: repeat(
+    1,
+    50px
+  ); /* 3x3 칸으로 구성하며, 칸 크기는 50px로 지정 */
+  gap: 3px; /* 각 칸 사이의 간격 설정 */
+  margin-top: 20px; /* 인벤토리와의 간격 설정 (선택사항) */
+  grid-template-columns: repeat(
+    1,
+    50px
+  ); /* 세로 방향으로 정렬하려면 이 부분을 추가 */
+}
+
+.item-grid-3x3 {
+  display: grid;
+  grid-template-rows: repeat(
+    1,
+    50px
+  ); /* 3x3 칸으로 구성하며, 칸 크기는 50px로 지정 */
+  gap: 3px; /* 각 칸 사이의 간격 설정 */
+  margin-top: 20px; /* 인벤토리와의 간격 설정 (선택사항) */
+  grid-template-columns: repeat(
+    1,
+    50px
+  ); /* 세로 방향으로 정렬하려면 이 부분을 추가 */
+}
+
 .item-row {
   display: flex;
 }
