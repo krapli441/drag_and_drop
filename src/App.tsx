@@ -13,18 +13,18 @@ const inventory = [
 // 1x1 아이템 배열
 const item1x1 = [["1x1"]];
 
-// 2x2 아이템 배열
-const item2x2 = [
-  ["2x2", "2x2"],
-  ["2x2", "2x2"],
-];
+// // 2x2 아이템 배열
+// const item2x2 = [
+//   ["2x2", "2x2"],
+//   ["2x2", "2x2"],
+// ];
 
-// 3x3 아이템 배열
-const item3x3 = [
-  ["3x3", "3x3", "3x3"],
-  ["3x3", "3x3", "3x3"],
-  ["3x3", "3x3", "3x3"],
-];
+// // 3x3 아이템 배열
+// const item3x3 = [
+//   ["3x3", "3x3", "3x3"],
+//   ["3x3", "3x3", "3x3"],
+//   ["3x3", "3x3", "3x3"],
+// ];
 
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: -1, y: -1 });
@@ -65,10 +65,12 @@ function App() {
         {item1x1.map((row, rowIndex) => (
           <div className="item-row" key={rowIndex}>
             {row.map((item, columnIndex) => (
-              <div className="item-cell" key={columnIndex}>
-                {item !== null ? (
-                  <div className="item-item">{/* 아이템 표시 */}</div>
-                ) : null}
+              <div
+                className="item-cell"
+                key={columnIndex}
+                onMouseEnter={() => handleMouseEnter(rowIndex, columnIndex)}
+              >
+                {item !== null ? <div className="item-item">{item}</div> : null}
               </div>
             ))}
           </div>
