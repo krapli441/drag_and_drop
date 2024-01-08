@@ -78,7 +78,7 @@ function App() {
       </div>
 
       {/* 2x2 아이템 그리드 */}
-      <div className="item-grid">
+      <div className="item-grid-2x2">
         {item2x2.map((row, rowIndex) => (
           <div className="item-row" key={rowIndex}>
             {row.map((item, columnIndex) => (
@@ -93,7 +93,7 @@ function App() {
       </div>
 
       {/* 3x3 아이템 그리드 */}
-      <div className="item-grid">
+      <div className="item-grid-3x3">
         {item3x3.map((row, rowIndex) => (
           <div className="item-row" key={rowIndex}>
             {row.map((item, columnIndex) => (
