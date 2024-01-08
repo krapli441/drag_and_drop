@@ -10,6 +10,22 @@ const inventory = [
   [null, null, null, null, null],
 ];
 
+// 1x1 아이템 배열
+const item1x1 = [["1x1"]];
+
+// 2x2 아이템 배열
+const item2x2 = [
+  ["2x2", "2x2"],
+  ["2x2", "2x2"],
+];
+
+// 3x3 아이템 배열
+const item3x3 = [
+  ["3x3", "3x3", "3x3"],
+  ["3x3", "3x3", "3x3"],
+  ["3x3", "3x3", "3x3"],
+];
+
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: -1, y: -1 });
 
