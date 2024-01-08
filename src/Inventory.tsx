@@ -15,14 +15,6 @@ const Inventory = () => {
 
   return (
     <>
-      {/* 현재는 Add Item 버튼을 사용하지 않는다.
-      <button
-        onClick={handleClick}
-        style={{ position: 'absolute', top: '80%', left: '50%' }}
-      >
-        Add Item
-      </button>
-      */}
       <div
         className="inventory-drag-wrapper"
         style={{
