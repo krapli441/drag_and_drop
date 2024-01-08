@@ -82,7 +82,11 @@ function App() {
         {item2x2.map((row, rowIndex) => (
           <div className="item-row" key={rowIndex}>
             {row.map((item, columnIndex) => (
-              <div className="item-cell" key={columnIndex}>
+              <div
+                className="item-cell"
+                key={columnIndex}
+                onMouseEnter={() => handleMouseEnter(rowIndex, columnIndex)}
+              >
                 {item !== null ? (
                   <div className="item-item">{/* 아이템 표시 */}</div>
                 ) : null}
@@ -97,7 +101,11 @@ function App() {
         {item3x3.map((row, rowIndex) => (
           <div className="item-row" key={rowIndex}>
             {row.map((item, columnIndex) => (
-              <div className="item-cell" key={columnIndex}>
+              <div
+                className="item-cell"
+                key={columnIndex}
+                onMouseEnter={() => handleMouseEnter(rowIndex, columnIndex)}
+              >
                 {item !== null ? (
                   <div className="item-item">{/* 아이템 표시 */}</div>
                 ) : null}
