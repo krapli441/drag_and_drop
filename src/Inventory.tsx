@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./inventory.scss";
+import "./Inventory.css";
 
 const Inventory = () => {
   const [grid, setGrid] = useState({
