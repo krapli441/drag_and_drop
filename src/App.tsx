@@ -70,7 +70,7 @@ function App() {
                 key={columnIndex}
                 onMouseEnter={() => handleMouseEnter(rowIndex, columnIndex)}
               >
-                {item !== null ? <div className="item-item">{item}</div> : null}
+                {item !== null ? <div className="item-item"></div> : null}
               </div>
             ))}
           </div>
