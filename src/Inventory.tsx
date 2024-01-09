@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import InventoryBlock from "./InventoryBlock";
 import "./Inventory.css";
+import { Item, Grid } from "./Types";
 
-const _items = [
+const _items: Item[] = [
   {
     name: "AK-47",
     image:
@@ -14,18 +16,18 @@ const _items = [
   {
     name: "Mag",
     image:
-      "url(https://media.discordapp.net/attachments/656601175763845180/930158750952730705/mag.png)",
+      "url(https://assets.tarkov.dev/564ca99c4bdc2d16268b4589-base-image.webp)",
     image2:
-      "url(https://media.discordapp.net/attachments/656601175763845180/930158751183425586/mag_2.png)",
+      "url(https://assets.tarkov.dev/564ca99c4bdc2d16268b4589-base-image.webp)",
     size_width: 1,
     size_height: 2,
   },
   {
     name: "AMMO",
     image:
-      "url(https://cdn.discordapp.com/attachments/656601175763845180/930158749509910538/ammo.png)",
+      "url(https://assets.tarkov.dev/54527a984bdc2d4e668b4567-base-image.webp)",
     image2:
-      "url(https://cdn.discordapp.com/attachments/656601175763845180/930158749769941042/ammo_2.png)",
+      "url(https://assets.tarkov.dev/54527a984bdc2d4e668b4567-base-image.webp)",
     size_width: 1,
     size_height: 1,
   },
@@ -40,13 +42,13 @@ const _items = [
   },
 ];
 
-const Inventory = () => {
-  const [grid, setGrid] = useState({
+const Inventory: React.FC = () => {
+  const [items, setItems] = useState<Item[]>(_items);
+  const [grid, setGrid] = useState<Grid>({
     width_block: 10,
     height_block: 10,
     size: 50,
   });
-
   const { width_block, height_block, size } = grid;
 
   return (
@@ -55,17 +57,16 @@ const Inventory = () => {
         className="inventory-drag-wrapper"
         style={{
           gridTemplateColumns: `repeat(${width_block}, ${size}px)`,
-          width: `${width_block * size + 3}px`,
+          width: `${width_block * size + 2}px`,
           height: `${height_block * size + 3}px`,
-          gridTemplateRows: `repeat(${height_block}, ${size}px)`,
+          gridTemplateRows: `repeat(${width_block}, ${size}px)`,
         }}
       >
-        {/* 여기에서 InventoryBlock 컴포넌트를 사용하지 않습니다. */}
-        {Array.from({ length: width_block * height_block }).map((_, i) => (
-          <div className="block-wrapper" key={i}>
-            <div className="block"></div>
-          </div>
-        ))}
+        <InventoryBlock
+          amount={width_block * height_block}
+          size={size}
+          items={items}
+        />
       </div>
     </>
   );
