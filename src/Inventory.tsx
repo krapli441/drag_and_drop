@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import InventoryBlock from "./InventoryBlock";
 import "./Inventory.css";
 import { Item, Grid } from "./Types";
 
@@ -60,7 +61,13 @@ const Inventory: React.FC = () => {
           height: `${height_block * size + 3}px`,
           gridTemplateRows: `repeat(${width_block}, ${size}px)`,
         }}
-      ></div>
+      >
+        <InventoryBlock
+          amount={width_block * height_block}
+          size={size}
+          items={items}
+        />
+      </div>
     </>
   );
 };
