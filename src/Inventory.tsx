@@ -16,18 +16,18 @@ const _items: Item[] = [
   {
     name: "Mag",
     image:
-      "url(https://media.discordapp.net/attachments/656601175763845180/930158750952730705/mag.png)",
+      "url(https://assets.tarkov.dev/564ca99c4bdc2d16268b4589-base-image.webp)",
     image2:
-      "url(https://media.discordapp.net/attachments/656601175763845180/930158751183425586/mag_2.png)",
+      "url(https://assets.tarkov.dev/564ca99c4bdc2d16268b4589-base-image.webp)",
     size_width: 1,
     size_height: 2,
   },
   {
     name: "AMMO",
     image:
-      "url(https://cdn.discordapp.com/attachments/656601175763845180/930158749509910538/ammo.png)",
+      "url(https://assets.tarkov.dev/54527a984bdc2d4e668b4567-base-image.webp)",
     image2:
-      "url(https://cdn.discordapp.com/attachments/656601175763845180/930158749769941042/ammo_2.png)",
+      "url(https://assets.tarkov.dev/54527a984bdc2d4e668b4567-base-image.webp)",
     size_width: 1,
     size_height: 1,
   },
