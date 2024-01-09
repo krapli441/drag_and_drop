@@ -15,7 +15,7 @@ export default class InventoryScene extends Phaser.Scene {
 
   create() {
     this.createGrid();
-    this.item = this.add.sprite(100, 100, "item").setInteractive();
+    this.item = this.add.sprite(25, 25, "item").setInteractive();
     this.item.setOrigin(0.5, 0.5);
     this.item.setDisplaySize(50, 50);
 
@@ -80,11 +80,12 @@ export default class InventoryScene extends Phaser.Scene {
 
   alignItemToGrid(item: Phaser.GameObjects.Sprite) {
     const gridSize = 50; // 그리드 칸의 크기
-    // 아이템의 드래그 종료 위치를 그리드 크기로 나누어 가장 가까운 칸 위치 계산
-    const gridX = Math.round(item.x / gridSize) * gridSize;
-    const gridY = Math.round(item.y / gridSize) * gridSize;
+    const halfGridSize = gridSize / 2;
+    const gridX =
+      Math.round((item.x - halfGridSize) / gridSize) * gridSize + halfGridSize;
+    const gridY =
+      Math.round((item.y - halfGridSize) / gridSize) * gridSize + halfGridSize;
 
-    // 아이템을 그리드 칸의 중앙으로 이동
     item.x = gridX;
     item.y = gridY;
   }
