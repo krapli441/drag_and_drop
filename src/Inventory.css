@@ -31,3 +31,10 @@
   background-position: center;
   border: 0.1px solid rgba(255, 255, 255, 1);
 }
+
+/* Inventory.css */
+.inventory-drag-wrapper .inventory-blocks {
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, 50px);
+}

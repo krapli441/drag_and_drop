@@ -22,7 +22,7 @@ const InventoryBlock: React.FC<InventoryBlockProps> = ({
   }, [items]); // items 배열이 변경될 때만 이 효과를 실행
 
   return (
-    <div>
+    <div className="inventory-blocks">
       {itemBlocks.map((item, index) => (
         <div
           key={index}
