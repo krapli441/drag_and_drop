@@ -38,9 +38,19 @@ export default class InventoryScene extends Phaser.Scene {
       }
     );
 
+    // 'R' 키에 대한 참조 생성
+    if (this.input.keyboard) {
+      this.rotateKey = this.input.keyboard.addKey(
+        Phaser.Input.Keyboard.KeyCodes.R
+      );
+    }
+
     // 아이템 클릭하여 회전
     this.item.on("pointerdown", () => {
-      this.item.setAngle(this.item.angle + 90);
+      // 'R' 키가 눌렸을 때만 아이템 회전
+      if (this.rotateKey && this.rotateKey.isDown) {
+        this.item.setAngle(this.item.angle + 180);
+      }
     });
   }
 
