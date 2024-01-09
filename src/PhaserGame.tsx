@@ -17,6 +17,8 @@ const PhaserGame: React.FC = () => {
 
       new Phaser.Game(config);
     }
+
+    console.log("게임 생성됨");
   }, []);
 
   return <div ref={phaserGame} />;
