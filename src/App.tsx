@@ -1,8 +1,13 @@
 import React, { CSSProperties } from "react";
 import "./App.css";
+import PhaserGame from "./PhaserGame";
 
 function App() {
-  return <div className="App"></div>;
+  return (
+    <div className="App">
+      <PhaserGame />
+    </div>
+  );
 }
 
 export default App;
