@@ -27,7 +27,7 @@ const InventoryBlock: React.FC<InventoryBlockProps> = ({
         <div
           key={index}
           className="block"
-          style={{ width: size, height: size }}
+          style={{ width: size, height: size, border: "0.5px solid gray" }}
         >
           {item && (
             <div
