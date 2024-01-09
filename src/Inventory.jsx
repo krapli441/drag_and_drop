@@ -298,11 +298,8 @@ class InventoryBlock extends Component {
     }
   };
   componentDidMount() {
-    Object.entries(this.props.items).map((el, i) => {
-      setTimeout(() => {
-        this.#addItem(null, el[1]);
-      }, 0); // This timeout for loading DOM element, delete this and add item not correct work
-      return null;
+    this.props.items.forEach((item, index) => {
+      this.#addItem(index, item);
     });
   }
 
