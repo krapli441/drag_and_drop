@@ -1,8 +1,9 @@
 import Phaser from "phaser";
 
 export default class InventoryScene extends Phaser.Scene {
-  item!: Phaser.GameObjects.Sprite; // 'item' 속성 추가
-  rotateKey!: Phaser.Input.Keyboard.Key; // 'R' 키에 대한 참조
+  item!: Phaser.GameObjects.Sprite;
+  rotateKey!: Phaser.Input.Keyboard.Key;
+  isItemClicked: boolean = false; // 아이템 클릭 상태 추적
 
   constructor() {
     super({ key: "InventoryScene" });
@@ -13,18 +14,14 @@ export default class InventoryScene extends Phaser.Scene {
   }
 
   create() {
-    // 한 번만 그리드 생성
     this.createGrid();
 
-    // 아이템 생성 및 설정
     this.item = this.add.sprite(100, 100, "item").setInteractive();
     this.item.setOrigin(0.5, 0.5);
     this.item.setDisplaySize(50, 50);
 
-    // 드래그 가능하게 설정
     this.input.setDraggable(this.item);
 
-    // 드래그 이벤트 리스너
     this.input.on(
       "drag",
       (
@@ -45,13 +42,20 @@ export default class InventoryScene extends Phaser.Scene {
       );
     }
 
-    // 아이템 클릭하여 회전
+    // 아이템 클릭 이벤트 리스너
     this.item.on("pointerdown", () => {
-      // 'R' 키가 눌렸을 때만 아이템 회전
-      if (this.rotateKey && this.rotateKey.isDown) {
-        this.item.setAngle(this.item.angle + 180);
-      }
+      this.isItemClicked = true; // 아이템 클릭 상태 설정
     });
+
+    // 아이템 클릭 해제 이벤트 리스너
+    if (this.input.keyboard) {
+      this.input.keyboard.on("keydown-R", () => {
+        // 아이템이 클릭된 상태에서 'R' 키가 눌렸을 때만 회전
+        if (this.isItemClicked) {
+          this.item.setAngle(this.item.angle + 90);
+        }
+      });
+    }
   }
 
   createGrid() {
