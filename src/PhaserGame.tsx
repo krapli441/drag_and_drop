@@ -13,6 +13,9 @@ const PhaserGame: React.FC = () => {
         height: 600,
         parent: phaserGame.current,
         scene: [InventoryScene], // InventoryScene 클래스 사용
+        input: {
+          keyboard: true, // 키보드 입력 활성화
+        },
       };
 
       new Phaser.Game(config);
