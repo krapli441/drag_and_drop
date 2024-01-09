@@ -19,7 +19,7 @@ const InventoryBlock: React.FC<InventoryBlockProps> = ({
   useEffect(() => {
     // 여기서 items 배열을 기반으로 itemBlocks 상태를 업데이트합니다.
     // 예: 각 아이템을 적절한 위치에 매핑하는 로직
-  }, [items]); // items 배열이 변경될 때만 이 효과를 실행
+  }, [items]);
 
   return (
     <div className="inventory-blocks">
@@ -33,7 +33,6 @@ const InventoryBlock: React.FC<InventoryBlockProps> = ({
             <div
               className="item"
               style={{
-                // 예시: 아이템의 배경 이미지, 크기 등을 설정
                 backgroundImage: item.image,
                 width: item.size_width * size,
                 height: item.size_height * size,
