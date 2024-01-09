@@ -1,11 +1,11 @@
 import React, { CSSProperties } from "react";
 import "./App.css";
-import Inventory from "./Inventory";
+import PhaserGame from "./PhaserGame";
 
 function App() {
   return (
     <div className="App">
-      <Inventory />
+      <PhaserGame />
     </div>
   );
 }
