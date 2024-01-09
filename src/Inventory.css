@@ -9,7 +9,6 @@
   transform: translate(-50%, -50%);
   display: grid;
   background-color: #1e1f21;
-  gap: 1px;
   user-select: none;
 }
 

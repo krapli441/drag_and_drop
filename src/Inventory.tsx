@@ -56,7 +56,7 @@ const Inventory: React.FC = () => {
         className="inventory-drag-wrapper"
         style={{
           gridTemplateColumns: `repeat(${width_block}, ${size}px)`,
-          width: `${width_block * size + 3}px`,
+          width: `${width_block * size + 2}px`,
           height: `${height_block * size + 3}px`,
           gridTemplateRows: `repeat(${width_block}, ${size}px)`,
         }}
