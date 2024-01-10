@@ -128,25 +128,32 @@ export default class InventoryScene extends Phaser.Scene {
 
   createInnerGrids(grids: any[], itemWidth: number, itemHeight: number) {
     const graphics = this.add.graphics();
-    graphics.lineStyle(1, 0x00ff00, 1); // 내부 그리드에 다른 색상 사용
+    graphics.lineStyle(1, 0x00ff00, 1); // 내부 그리드 색상
 
     const gridSize = 50; // 한 칸의 크기
-    let offsetX = this.item.x - (itemWidth * gridSize) / 2; // 아이템의 x 시작 위치
-    let offsetY = this.item.y - (itemHeight * gridSize) / 2; // 아이템의 y 시작 위치
+    let offsetX = this.item.x; // 아이템의 중앙 x 좌표
+    let offsetY = this.item.y; // 아이템의 중앙 y 좌표
 
     grids.forEach((grid) => {
       const gridWidth = grid.width * gridSize;
       const gridHeight = grid.height * gridSize;
 
       // 내부 그리드 그리기
-      graphics.strokeRect(offsetX, offsetY, gridWidth, gridHeight);
+      graphics.strokeRect(
+        offsetX - gridWidth / 2,
+        offsetY - gridHeight / 2,
+        gridWidth,
+        gridHeight
+      );
 
       // 다음 그리드 위치 업데이트
       offsetX += gridWidth;
       if (offsetX >= this.item.x + (itemWidth * gridSize) / 2) {
-        offsetX = this.item.x - (itemWidth * gridSize) / 2;
+        offsetX = this.item.x;
         offsetY += gridHeight;
       }
     });
+
+    graphics.strokePath();
   }
 }
