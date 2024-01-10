@@ -16,6 +16,69 @@ export default class InventoryScene extends Phaser.Scene {
 
   create() {
     this.createGrid();
+
+    // 아이템 정보
+    const itemData = {
+      name: "Crye Precision AVS plate carrier (Ranger Green)",
+      id: "544a5caa4bdc2d1a388b4568",
+      width: 3,
+      height: 4,
+      hasGrid: true,
+      link: "https://tarkov.dev/item/crye-precision-avs-plate-carrier-ranger-green",
+      basePrice: 58629,
+      properties: {
+        grids: [
+          {
+            width: 1,
+            height: 2,
+          },
+          {
+            width: 1,
+            height: 2,
+          },
+          {
+            width: 1,
+            height: 2,
+          },
+          {
+            width: 1,
+            height: 2,
+          },
+          {
+            width: 2,
+            height: 2,
+          },
+          {
+            width: 2,
+            height: 2,
+          },
+          {
+            width: 1,
+            height: 1,
+          },
+          {
+            width: 1,
+            height: 1,
+          },
+          {
+            width: 1,
+            height: 1,
+          },
+          {
+            width: 1,
+            height: 1,
+          },
+          {
+            width: 1,
+            height: 2,
+          },
+          {
+            width: 1,
+            height: 1,
+          },
+        ],
+      },
+    };
   }
 
   createGrid() {
