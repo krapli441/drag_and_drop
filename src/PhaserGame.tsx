@@ -9,8 +9,8 @@ const PhaserGame: React.FC = () => {
     if (phaserGame.current) {
       const config: Phaser.Types.Core.GameConfig = {
         type: Phaser.AUTO,
-        width: 800,
-        height: 600,
+        width: 500,
+        height: 500,
         parent: phaserGame.current,
         scene: [InventoryScene], // InventoryScene 클래스 사용
         input: {
