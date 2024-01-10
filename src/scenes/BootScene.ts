@@ -119,5 +119,37 @@ export default class BootScene extends Phaser.Scene {
 
     // 컨테이너에 이미지와 텍스트를 모두 추가
     container.add([image, nameText, widthText, heightText, capaticyText]);
+
+    // 그리드를 그리기 위한 Graphics 객체 생성
+    const gridGraphics = this.add.graphics();
+    gridGraphics.fillStyle(0x141414, 1); // 회색으로 채우기, 투명도는 1
+
+    // itemData의 width와 height를 기준으로 그리드 생성
+    const gridWidth = this.itemData.width * 50; // 한 칸당 50px
+    const gridHeight = this.itemData.height * 50;
+    const gridX = container.x; // 컨테이너의 X 위치를 그리드 시작점으로 사용
+    const gridY = container.y + container.height + 20; // 컨테이너 아래쪽에 여백을 주고 시작
+
+    // 그리드 그리기
+    for (let i = 0; i < this.itemData.width; i++) {
+      for (let j = 0; j < this.itemData.height; j++) {
+        // 각 칸의 배경을 그립니다
+        gridGraphics.fillRect(
+          gridX + i * 50, // X 위치
+          gridY + j * 50, // Y 위치
+          50, // 너비
+          50 // 높이
+        );
+
+        // 각 칸의 테두리를 그립니다
+        gridGraphics.lineStyle(1, 0x555557, 1); // 흰색 테두리, 두께 2, 투명도 1
+        gridGraphics.strokeRect(
+          gridX + i * 50, // X 위치
+          gridY + j * 50, // Y 위치
+          50, // 너비
+          50 // 높이
+        );
+      }
+    }
   }
 }
