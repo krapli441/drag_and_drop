@@ -77,26 +77,40 @@ export default class BootScene extends Phaser.Scene {
 
   create() {
     // 배경을 반으로 나누기
-    const { width, height } = this.sys.game.canvas;
-    const divider = width / 2;
+    // 이미지와 텍스트를 포함할 컨테이너 생성
+    const container = this.add.container(20, 20);
 
-    // 왼쪽 영역에 정보 표시
-    this.add.text(20, 20, this.itemData.name, {
-      font: "18px Arial",
-      color: "#ffffff",
-    });
-    this.add.image(20, 60, "itemImage").setDisplaySize(150, 150); // 이미지 크기 조정 필요시 setDisplaySize 사용
-    this.add.text(20, 220, `Width: ${this.itemData.width}`, {
-      font: "16px Arial",
-      color: "#ffffff",
-    });
-    this.add.text(20, 240, `Height: ${this.itemData.height}`, {
-      font: "16px Arial",
-      color: "#ffffff",
-    });
+    // 이미지 추가
+    const image = this.add
+      .image(0, 0, "itemImage")
+      .setDisplaySize(150, 150)
+      .setOrigin(0, 0);
 
-    // 오른쪽 영역에 내부 그리드 표시 (여기에 더 많은 로직이 필요할 수 있습니다)
+    // 텍스트 추가
+    const nameText = this.add
+      .text(0, 160, this.itemData.name, {
+        font: "18px Arial",
+        color: "#ffffff",
+      })
+      .setOrigin(0, 0);
+    const widthText = this.add
+      .text(
+        0,
+        nameText.y + nameText.height + 10,
+        `Width: ${this.itemData.width}`,
+        { font: "16px Arial", color: "#ffffff" }
+      )
+      .setOrigin(0, 0);
+    const heightText = this.add
+      .text(
+        0,
+        widthText.y + widthText.height + 5,
+        `Height: ${this.itemData.height}`,
+        { font: "16px Arial", color: "#ffffff" }
+      )
+      .setOrigin(0, 0);
 
-    // 다른 Scene으로 전환하는 코드는 제거됨
+    // 컨테이너에 이미지와 텍스트를 모두 추가
+    container.add([image, nameText, widthText, heightText]);
   }
 }
