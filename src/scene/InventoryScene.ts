@@ -4,6 +4,7 @@ export default class InventoryScene extends Phaser.Scene {
   item!: Phaser.GameObjects.Sprite;
   rotateKey!: Phaser.Input.Keyboard.Key;
   isItemClicked: boolean = false; // 아이템 클릭 상태 추적
+  background!: Phaser.GameObjects.Graphics;// 배경 객체 추가
 
   constructor() {
     super({ key: "InventoryScene" });
@@ -16,10 +17,23 @@ export default class InventoryScene extends Phaser.Scene {
   create() {
     this.createGrid();
 
-    // 새로운 아이템 추가: 가로 3칸, 세로 4칸 크기
-    const itemWidth = 3 * 50; // 3칸
-    const itemHeight = 4 * 50; // 4칸
-    this.item = this.add.sprite(25, 25, "item").setInteractive();
+    const itemWidth = 3 * 50; // 가로 3칸
+    const itemHeight = 4 * 50; // 세로 4칸
+    const itemX = 25; // 아이템의 초기 x 좌표
+    const itemY = 25; // 아이템의 초기 y 좌표
+
+    // 아이템 배경 그리기
+    const background = this.add.graphics();
+    background.fillStyle(0x00ff00, 0.4); // 투명한 초록색
+    background.fillRect(
+      itemX - itemWidth / 2,
+      itemY - itemHeight / 2,
+      itemWidth,
+      itemHeight
+    );
+
+    // 아이템 추가
+    this.item = this.add.sprite(itemX, itemY, "item").setInteractive();
     this.item.setOrigin(0.5, 0.5);
     this.item.setDisplaySize(itemWidth, itemHeight);
 
