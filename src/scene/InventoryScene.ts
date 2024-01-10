@@ -10,6 +10,11 @@ export default class InventoryScene extends Phaser.Scene {
     super({ key: "InventoryScene" });
   }
 
+  preload() {
+    // 필요한 에셋을 미리 로드합니다.
+    this.load.image("itemImage", "./img/avs.webp");
+  }
+
   create() {
     this.createGrid();
 
@@ -76,6 +81,16 @@ export default class InventoryScene extends Phaser.Scene {
         ],
       },
     };
+
+    // 아이템 생성 및 배치
+    const itemWidth = itemData.width * 50; // 가로 크기
+    const itemHeight = itemData.height * 50; // 세로 크기
+    const itemX = itemWidth / 2; // 아이템의 초기 x 좌표
+    const itemY = itemHeight / 2; // 아이템의 초기 y 좌표
+
+    this.item = this.add.sprite(itemX, itemY, "itemImage").setInteractive();
+    this.item.setOrigin(0.5, 0.5);
+    this.item.setDisplaySize(itemWidth, itemHeight);
   }
 
   createGrid() {
