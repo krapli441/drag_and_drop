@@ -100,7 +100,7 @@ export default class InventoryScene extends Phaser.Scene {
 
     const gridSize = 50; // 한 칸의 크기
 
-    // 가로 및 세로 선 그리기
+    // 가로선 및 세로선 그리기
     for (let i = 0; i <= itemWidth * gridSize; i += gridSize) {
       graphics.moveTo(i, 0);
       graphics.lineTo(i, itemHeight * gridSize);
@@ -109,6 +109,13 @@ export default class InventoryScene extends Phaser.Scene {
       graphics.moveTo(0, j);
       graphics.lineTo(itemWidth * gridSize, j);
     }
+
+    // 마지막 가로선 추가
+    if (itemHeight * gridSize !== 0) {
+      graphics.moveTo(0, itemHeight * gridSize);
+      graphics.lineTo(itemWidth * gridSize, itemHeight * gridSize);
+    }
+
     graphics.strokePath();
   }
 }
