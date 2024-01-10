@@ -15,7 +15,11 @@ const PhaserGame: React.FC = () => {
         scene: [BootScene], // 여기에 Scene을 포함
       };
 
-      new Phaser.Game(gameConfig);
+      const game = new Phaser.Game(gameConfig);
+
+      return () => {
+        game.destroy(true);
+      };
     }
   }, []);
 
