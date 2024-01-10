@@ -16,6 +16,7 @@ export default class InventoryScene extends Phaser.Scene {
   }
 
   create() {
+    // 아이템 정보
     const itemData = {
       name: "Crye Precision AVS plate carrier (Ranger Green)",
       id: "544a5caa4bdc2d1a388b4568",
@@ -80,8 +81,6 @@ export default class InventoryScene extends Phaser.Scene {
     };
 
     this.createGrid(itemData.width, itemData.height);
-
-    // 아이템 정보
 
     // 아이템 생성 및 배치
     const itemWidth = itemData.width * 50; // 가로 크기
