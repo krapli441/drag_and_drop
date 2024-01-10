@@ -128,7 +128,7 @@ export default class BootScene extends Phaser.Scene {
     const gridWidth = this.itemData.width * 50; // 한 칸당 50px
     const gridHeight = this.itemData.height * 50;
     const gridX = container.x; // 컨테이너의 X 위치를 그리드 시작점으로 사용
-    const gridY = container.y + container.height + 20; // 컨테이너 아래쪽에 여백을 주고 시작
+    const gridY = container.y + container.height + 280; // 컨테이너 아래쪽에 여백을 주고 시작
 
     // 그리드 그리기
     for (let i = 0; i < this.itemData.width; i++) {
