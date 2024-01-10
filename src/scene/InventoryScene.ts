@@ -91,6 +91,14 @@ export default class InventoryScene extends Phaser.Scene {
     this.item = this.add.sprite(itemX, itemY, "itemImage").setInteractive();
     this.item.setOrigin(0.5, 0.5);
     this.item.setDisplaySize(itemWidth, itemHeight);
+
+    if (itemData.hasGrid) {
+      this.createInnerGrids(
+        itemData.properties.grids,
+        itemData.width,
+        itemData.height
+      );
+    }
   }
 
   createGrid(itemWidth: number, itemHeight: number) {
@@ -116,5 +124,29 @@ export default class InventoryScene extends Phaser.Scene {
     }
 
     graphics.strokePath();
+  }
+
+  createInnerGrids(grids: any[], itemWidth: number, itemHeight: number) {
+    const graphics = this.add.graphics();
+    graphics.lineStyle(1, 0x00ff00, 1); // 내부 그리드에 다른 색상 사용
+
+    const gridSize = 50; // 한 칸의 크기
+    let offsetX = this.item.x - (itemWidth * gridSize) / 2; // 아이템의 x 시작 위치
+    let offsetY = this.item.y - (itemHeight * gridSize) / 2; // 아이템의 y 시작 위치
+
+    grids.forEach((grid) => {
+      const gridWidth = grid.width * gridSize;
+      const gridHeight = grid.height * gridSize;
+
+      // 내부 그리드 그리기
+      graphics.strokeRect(offsetX, offsetY, gridWidth, gridHeight);
+
+      // 다음 그리드 위치 업데이트
+      offsetX += gridWidth;
+      if (offsetX >= this.item.x + (itemWidth * gridSize) / 2) {
+        offsetX = this.item.x - (itemWidth * gridSize) / 2;
+        offsetY += gridHeight;
+      }
+    });
   }
 }
