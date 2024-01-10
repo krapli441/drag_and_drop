@@ -9,7 +9,7 @@ export default class BootScene extends Phaser.Scene {
     height: 4,
     hasGrid: true,
     link: "https://tarkov.dev/item/crye-precision-avs-plate-carrier-ranger-green",
-    image8xLink: "https://assets.tarkov.dev/544a5caa4bdc2d1a388b4568-8x.webp",
+    image8xLink: "./img/avs.webp",
     basePrice: 58629,
     properties: {
       grids: [
@@ -85,7 +85,7 @@ export default class BootScene extends Phaser.Scene {
       font: "18px Arial",
       color: "#ffffff",
     });
-    this.add.image(20, 60, "itemImage").setDisplaySize(146, 146); // 이미지 크기 조정 필요시 setDisplaySize 사용
+    this.add.image(20, 60, "itemImage").setDisplaySize(150, 150); // 이미지 크기 조정 필요시 setDisplaySize 사용
     this.add.text(20, 220, `Width: ${this.itemData.width}`, {
       font: "16px Arial",
       color: "#ffffff",
