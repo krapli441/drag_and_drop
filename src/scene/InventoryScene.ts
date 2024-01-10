@@ -10,14 +10,18 @@ export default class InventoryScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("item", "./img/855.webp");
+    this.load.image("item", "./img/avs.webp");
   }
 
   create() {
     this.createGrid();
+
+    // 새로운 아이템 추가: 가로 3칸, 세로 4칸 크기
+    const itemWidth = 3 * 50; // 3칸
+    const itemHeight = 4 * 50; // 4칸
     this.item = this.add.sprite(25, 25, "item").setInteractive();
     this.item.setOrigin(0.5, 0.5);
-    this.item.setDisplaySize(50, 50);
+    this.item.setDisplaySize(itemWidth, itemHeight);
 
     this.input.setDraggable(this.item);
     this.input.keyboard = this.input.keyboard;
