@@ -19,26 +19,19 @@ export default class InventoryScene extends Phaser.Scene {
   }
 
   createGrid() {
-    let graphics = this.add.graphics();
+    const graphics = this.add.graphics();
     graphics.lineStyle(1, 0xffffff, 1);
-    for (let i = 0; i < 500; i += 50) {
+
+    const gridSize = 50; // 한 칸의 크기
+    const gridCount = 10; // 그리드 칸 수
+
+    // 가로 및 세로 선 그리기
+    for (let i = 0; i <= gridCount * gridSize; i += gridSize) {
       graphics.moveTo(i, 0);
-      graphics.lineTo(i, 500);
+      graphics.lineTo(i, gridCount * gridSize);
       graphics.moveTo(0, i);
-      graphics.lineTo(500, i);
+      graphics.lineTo(gridCount * gridSize, i);
     }
     graphics.strokePath();
-  }
-
-  alignItemToGrid(item: Phaser.GameObjects.Sprite) {
-    const gridSize = 50; // 그리드 칸의 크기
-    const halfGridSize = gridSize / 2;
-    const gridX =
-      Math.round((item.x - halfGridSize) / gridSize) * gridSize + halfGridSize;
-    const gridY =
-      Math.round((item.y - halfGridSize) / gridSize) * gridSize + halfGridSize;
-
-    item.x = gridX;
-    item.y = gridY;
   }
 }
