@@ -146,6 +146,17 @@ export default class InventoryScene extends Phaser.Scene {
         gridHeight
       );
 
+      // 텍스트 추가
+      const gridText = `${grid.width}x${grid.height}`;
+      this.add
+        .text(
+          offsetX - gridWidth / 2 + gridWidth / 2,
+          offsetY - gridHeight / 2 + gridHeight / 2,
+          gridText,
+          { font: "16px Arial", color: "#ffffff", align: "center" }
+        )
+        .setOrigin(0.5, 0.5); // 텍스트를 그리드 중앙에 위치시킵니다.
+
       // 다음 그리드 위치 업데이트
       offsetX += gridWidth;
       if (offsetX >= this.item.x + (itemWidth * gridSize) / 2) {
