@@ -9,7 +9,7 @@ const PhaserGame: React.FC = () => {
     if (phaserGameRef.current) {
       const gameConfig: Phaser.Types.Core.GameConfig = {
         type: Phaser.AUTO,
-        width: 1200,
+        width: 1000,
         height: 600,
         parent: phaserGameRef.current,
         scene: [BootScene], // 여기에 Scene을 포함

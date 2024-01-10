@@ -158,46 +158,66 @@ export default class BootScene extends Phaser.Scene {
       20
     );
 
+    // 각 그리드 타입별로 순회하면서 그리드 생성
+    const gridTypes = {
+      "1x2": { count: 5, width: 1, height: 2 },
+      "1x1": { count: 5, width: 1, height: 1 },
+      "2x2": { count: 2, width: 2, height: 2 },
+    };
+
     let xOffset = 0;
     let yOffset = 0;
 
-    this.itemData.properties.grids.forEach((grid) => {
-      const currentGridWidth = grid.width * 50;
-      const currentGridHeight = grid.height * 50;
+    Object.keys(gridTypes).forEach((type) => {
+      const gridType = gridTypes[type];
+      for (let i = 0; i < gridType.count; i++) {
+        // 현재 그리드의 너비와 높이를 픽셀 단위로 계산
+        const currentGridWidth = gridType.width * 50;
+        const currentGridHeight = gridType.height * 50;
 
-      // 현재 행에 그리드를 추가할 공간이 충분한지 확인
-      if (xOffset + currentGridWidth > this.cameras.main.width / 2) {
-        // 다음 행으로 이동
-        xOffset = 0;
-        yOffset += currentGridHeight + 10; // 가장 높은 그리드 높이 기준으로 Y 위치 조정
+        // 화면 끝에 도달하면 다음 줄로
+        if (xOffset + currentGridWidth > this.cameras.main.width / 2) {
+          xOffset = 0;
+          yOffset += currentGridHeight + 10;
+        }
+
+        const gridGraphics = this.add.graphics();
+        rightGridContainer.add(gridGraphics);
+
+        // 각 그리드 배경 그리기
+        gridGraphics.fillStyle(0x141414, 1); // 회색
+        gridGraphics.fillRect(
+          xOffset,
+          yOffset,
+          currentGridWidth,
+          currentGridHeight
+        );
+
+        // 각 그리드 테두리 그리기
+        gridGraphics.lineStyle(1, 0x555557, 1); // 흰색 테두리
+        gridGraphics.strokeRect(
+          xOffset,
+          yOffset,
+          currentGridWidth,
+          currentGridHeight
+        );
+
+        // 다음 그리드 위치를 위해 X 오프셋 업데이트
+        xOffset += currentGridWidth + 10;
       }
-
-      const gridGraphics = this.add.graphics();
-      rightGridContainer.add(gridGraphics);
-
-      // 각 그리드 배경 그리기
-      gridGraphics.fillStyle(0x141414, 1); // 회색
-      gridGraphics.fillRect(
-        xOffset,
-        yOffset,
-        currentGridWidth,
-        currentGridHeight
-      );
-
-      // 각 그리드 테두리 그리기
-      gridGraphics.lineStyle(1, 0x555557, 1); // 흰색 테두리
-      gridGraphics.strokeRect(
-        xOffset,
-        yOffset,
-        currentGridWidth,
-        currentGridHeight
-      );
-
-      // 다음 그리드 위치를 위해 X 오프셋 업데이트
-      xOffset += currentGridWidth + 10; // 가로 간격 추가
+      // 다음 타입의 그리드를 위해 X 오프셋 리셋하고 Y 오프셋 업데이트
+      xOffset = 0;
+      yOffset += gridType.height * 50 + 10;
     });
 
+    // 컨테이너의 너비를 최대 그리드 너비로 조정
+    rightGridContainer.width = Math.max(
+      ...Object.values(gridTypes).map(
+        (type) => type.width * 50 * type.count + 10 * (type.count - 1)
+      )
+    );
+    rightGridContainer.height = yOffset;
     // 컨테이너 위치 조정
-    rightGridContainer.x -= xOffset / 2; // 가로 중앙 정렬
+    rightGridContainer.x -= rightGridContainer.width / 2;
   }
 }
