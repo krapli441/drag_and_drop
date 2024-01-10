@@ -151,5 +151,37 @@ export default class BootScene extends Phaser.Scene {
         );
       }
     }
+
+    // 화면의 오른쪽 중앙에 그리드를 배치하기 위한 X, Y 시작점 계산
+    const rightGridStartX = this.cameras.main.width / 2 + 20;
+    let rightGridStartY = 20;
+
+    // 내부 그리드 그리기
+    this.itemData.properties.grids.forEach((grid) => {
+      // 현재 그리드의 너비와 높이를 픽셀 단위로 계산
+      const currentGridWidth = grid.width * 50;
+      const currentGridHeight = grid.height * 50;
+
+      // 각 그리드 배경 그리기
+      gridGraphics.fillStyle(0x141414, 1); // 회색
+      gridGraphics.fillRect(
+        rightGridStartX,
+        rightGridStartY,
+        currentGridWidth,
+        currentGridHeight
+      );
+
+      // 각 그리드 테두리 그리기
+      gridGraphics.lineStyle(1, 0x555557, 1); // 흰색 테두리
+      gridGraphics.strokeRect(
+        rightGridStartX,
+        rightGridStartY,
+        currentGridWidth,
+        currentGridHeight
+      );
+
+      // 다음 그리드를 위한 Y 위치 업데이트
+      rightGridStartY += currentGridHeight + 10; // 그리드 사이 간격 추가
+    });
   }
 }
