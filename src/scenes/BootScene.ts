@@ -158,8 +158,16 @@ export default class BootScene extends Phaser.Scene {
       20
     );
 
+    type GridType = {
+      [key: string]: {
+        count: number;
+        width: number;
+        height: number;
+      };
+    };
+
     // 각 그리드 타입별로 순회하면서 그리드 생성
-    const gridTypes = {
+    const gridTypes: GridType = {
       "1x2": { count: 5, width: 1, height: 2 },
       "1x1": { count: 5, width: 1, height: 1 },
       "2x2": { count: 2, width: 2, height: 2 },
