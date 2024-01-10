@@ -4,7 +4,7 @@ export default class InventoryScene extends Phaser.Scene {
   item!: Phaser.GameObjects.Sprite;
   rotateKey!: Phaser.Input.Keyboard.Key;
   isItemClicked: boolean = false; // 아이템 클릭 상태 추적
-  background!: Phaser.GameObjects.Graphics;// 배경 객체 추가
+  background!: Phaser.GameObjects.Graphics;
 
   constructor() {
     super({ key: "InventoryScene" });
@@ -22,10 +22,10 @@ export default class InventoryScene extends Phaser.Scene {
     const itemX = 25; // 아이템의 초기 x 좌표
     const itemY = 25; // 아이템의 초기 y 좌표
 
-    // 아이템 배경 그리기
-    const background = this.add.graphics();
-    background.fillStyle(0x00ff00, 0.4); // 투명한 초록색
-    background.fillRect(
+    // 보라색 배경 그리기
+    const purpleBackground = this.add.graphics();
+    purpleBackground.fillStyle(0x800080, 0.4); // 투명한 보라색
+    purpleBackground.fillRect(
       itemX - itemWidth / 2,
       itemY - itemHeight / 2,
       itemWidth,
@@ -36,6 +36,16 @@ export default class InventoryScene extends Phaser.Scene {
     this.item = this.add.sprite(itemX, itemY, "item").setInteractive();
     this.item.setOrigin(0.5, 0.5);
     this.item.setDisplaySize(itemWidth, itemHeight);
+
+    // 아이템 배경 그리기
+    this.background = this.add.graphics();
+    this.background.fillStyle(0x00ff00, 0.4);
+    this.background.fillRect(
+      this.item.x - itemWidth / 2,
+      this.item.y - itemHeight / 2,
+      itemWidth,
+      itemHeight
+    );
 
     this.input.setDraggable(this.item);
     this.input.keyboard = this.input.keyboard;
@@ -53,6 +63,16 @@ export default class InventoryScene extends Phaser.Scene {
       ) => {
         gameObject.x = dragX;
         gameObject.y = dragY;
+
+        // 배경 위치 업데이트
+        this.background.clear(); // 이전 배경 지우기
+        this.background.fillStyle(0x00ff00, 0.4);
+        this.background.fillRect(
+          dragX - itemWidth / 2,
+          dragY - itemHeight / 2,
+          itemWidth,
+          itemHeight
+        );
       }
     );
 
