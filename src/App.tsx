@@ -3,8 +3,16 @@ import PhaserGame from "./PhaserGame";
 
 function App() {
   return (
-    <div className="App">
-      <h1>My Phaser Game</h1>
+    <div
+      className="App"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <h1>Tetris Simulator</h1>
       <PhaserGame />
     </div>
   );
