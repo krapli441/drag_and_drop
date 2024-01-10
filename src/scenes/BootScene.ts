@@ -76,7 +76,6 @@ export default class BootScene extends Phaser.Scene {
   }
 
   create() {
-    // 배경을 반으로 나누기
     // 이미지와 텍스트를 포함할 컨테이너 생성
     const container = this.add.container(20, 20);
 
@@ -109,8 +108,16 @@ export default class BootScene extends Phaser.Scene {
         { font: "16px Arial", color: "#ffffff" }
       )
       .setOrigin(0, 0);
+    const capaticyText = this.add
+      .text(
+        0,
+        heightText.y + heightText.height + 5,
+        `Capacity: ${this.itemData.properties.capacity}`,
+        { font: "16px Arial", color: "#ffffff" }
+      )
+      .setOrigin(0, 0);
 
     // 컨테이너에 이미지와 텍스트를 모두 추가
-    container.add([image, nameText, widthText, heightText]);
+    container.add([image, nameText, widthText, heightText, capaticyText]);
   }
 }
