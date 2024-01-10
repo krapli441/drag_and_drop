@@ -3,7 +3,7 @@ import Phaser from "phaser";
 
 export default class BootScene extends Phaser.Scene {
   private itemData = {
-    name: "Crye Precision AVS plate carrier (Ranger Green)",
+    name: "Crye Precision AVS plate carrier",
     id: "544a5caa4bdc2d1a388b4568",
     width: 3,
     height: 4,
