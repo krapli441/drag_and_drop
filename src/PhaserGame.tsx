@@ -1,30 +1,29 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import Phaser from "phaser";
-import InventoryScene from "./scene/InventoryScene"; // InventoryScene 클래스 임포트
+import BootScene from "./scenes/BootScene";
 
 const PhaserGame: React.FC = () => {
-  const phaserGame = useRef<HTMLDivElement>(null);
+  const phaserGameRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (phaserGame.current) {
-      const config: Phaser.Types.Core.GameConfig = {
+    if (phaserGameRef.current) {
+      const gameConfig: Phaser.Types.Core.GameConfig = {
         type: Phaser.AUTO,
         width: 1000,
-        height: 1000,
-        parent: phaserGame.current,
-        scene: [InventoryScene], // InventoryScene 클래스 사용
-        input: {
-          keyboard: true, // 키보드 입력 활성화
-        },
+        height: 600,
+        parent: phaserGameRef.current,
+        scene: [BootScene], // 여기에 Scene을 포함
       };
 
-      new Phaser.Game(config);
-    }
+      const game = new Phaser.Game(gameConfig);
 
-    console.log("게임 생성됨");
+      return () => {
+        game.destroy(true);
+      };
+    }
   }, []);
 
-  return <div ref={phaserGame} />;
+  return <div ref={phaserGameRef} />;
 };
 
 export default PhaserGame;

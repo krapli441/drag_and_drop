@@ -1,10 +1,18 @@
-import React, { CSSProperties } from "react";
-import "./App.css";
+import React from "react";
 import PhaserGame from "./PhaserGame";
 
 function App() {
   return (
-    <div className="App">
+    <div
+      className="App"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <h1>Tetris Simulator</h1>
       <PhaserGame />
     </div>
   );
