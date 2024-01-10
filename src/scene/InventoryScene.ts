@@ -10,10 +10,6 @@ export default class InventoryScene extends Phaser.Scene {
     super({ key: "InventoryScene" });
   }
 
-  preload() {
-    this.load.image("item", "./img/avs.webp");
-  }
-
   create() {
     this.createGrid();
 
@@ -25,6 +21,7 @@ export default class InventoryScene extends Phaser.Scene {
       height: 4,
       hasGrid: true,
       link: "https://tarkov.dev/item/crye-precision-avs-plate-carrier-ranger-green",
+      image8xLink: "./img/avs.webp",
       basePrice: 58629,
       properties: {
         grids: [
