@@ -16,9 +16,6 @@ export default class InventoryScene extends Phaser.Scene {
   }
 
   create() {
-    this.createGrid();
-
-    // 아이템 정보
     const itemData = {
       name: "Crye Precision AVS plate carrier (Ranger Green)",
       id: "544a5caa4bdc2d1a388b4568",
@@ -82,6 +79,10 @@ export default class InventoryScene extends Phaser.Scene {
       },
     };
 
+    this.createGrid(itemData.width, itemData.height);
+
+    // 아이템 정보
+
     // 아이템 생성 및 배치
     const itemWidth = itemData.width * 50; // 가로 크기
     const itemHeight = itemData.height * 50; // 세로 크기
@@ -93,19 +94,20 @@ export default class InventoryScene extends Phaser.Scene {
     this.item.setDisplaySize(itemWidth, itemHeight);
   }
 
-  createGrid() {
+  createGrid(itemWidth: number, itemHeight: number) {
     const graphics = this.add.graphics();
     graphics.lineStyle(1, 0xffffff, 1);
 
     const gridSize = 50; // 한 칸의 크기
-    const gridCount = 10; // 그리드 칸 수
 
     // 가로 및 세로 선 그리기
-    for (let i = 0; i <= gridCount * gridSize; i += gridSize) {
+    for (let i = 0; i <= itemWidth * gridSize; i += gridSize) {
       graphics.moveTo(i, 0);
-      graphics.lineTo(i, gridCount * gridSize);
-      graphics.moveTo(0, i);
-      graphics.lineTo(gridCount * gridSize, i);
+      graphics.lineTo(i, itemHeight * gridSize);
+    }
+    for (let j = 0; j <= itemHeight * gridSize; j += gridSize) {
+      graphics.moveTo(0, j);
+      graphics.lineTo(itemWidth * gridSize, j);
     }
     graphics.strokePath();
   }
