@@ -42,12 +42,13 @@ export default class BootScene extends Phaser.Scene {
 
   preload() {}
 
-  create() {
-    this.loadRandomChestRigData();
-    this.loadRandomBarterItems().then(() => {
-      this.createBarterItemGrids();
-    });
+  async create() {
+    await this.loadRandomChestRigData();
+    await this.loadRandomBarterItems();
+    this.createItemData();
+    this.createBarterItemGrids();
   }
+  
 
   async loadRandomBarterItems() {
     const query = `
