@@ -63,10 +63,24 @@ export default class BootScene extends Phaser.Scene {
   createText() {
     // ChestRigData가 존재하는 경우에만 실행
     if (this.ChestRigData) {
-      this.add.text(20, 20, `Name: ${this.ChestRigData.name}`, { font: "18px Arial", fill: "#fff" });
-      this.add.text(20, 50, `Width: ${this.ChestRigData.width}`, { font: "18px Arial", fill: "#fff" });
-      this.add.text(20, 80, `Height: ${this.ChestRigData.height}`, { font: "18px Arial", fill: "#fff" });
-      this.add.text(20, 110, `Capacity: ${this.ChestRigData.properties.capacity}`, { font: "18px Arial", fill: "#fff" });
+      this.add.text(20, 20, `Name: ${this.ChestRigData.name}`, {
+        font: "18px Arial",
+        color: "#ffffff",
+      });
+      this.add.text(20, 50, `Width: ${this.ChestRigData.width}`, {
+        font: "18px Arial",
+        color: "#ffffff",
+      });
+      this.add.text(20, 80, `Height: ${this.ChestRigData.height}`, {
+        font: "18px Arial",
+        color: "#ffffff",
+      });
+      this.add.text(
+        20,
+        110,
+        `Capacity: ${this.ChestRigData.properties.capacity}`,
+        { font: "18px Arial", color: "#ffffff" }
+      );
     }
   }
 }
