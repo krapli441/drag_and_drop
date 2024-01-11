@@ -1,5 +1,6 @@
 // src/scenes/BootScene.ts
 import Phaser from "phaser";
+const { request, gql } = require("graphql-request");
 
 export default class BootScene extends Phaser.Scene {
   private itemData = {
@@ -31,7 +32,7 @@ export default class BootScene extends Phaser.Scene {
         },
         {
           width: 1,
-          height: 2, 
+          height: 2,
         },
         {
           width: 1,
@@ -227,5 +228,49 @@ export default class BootScene extends Phaser.Scene {
     rightGridContainer.height = yOffset;
     // 컨테이너 위치 조정
     rightGridContainer.x -= rightGridContainer.width / 2;
+
+    this.fetchItemData();
+  }
+  async fetchItemData() {
+    const query = `
+      query {
+        items(categoryNames: ChestRig) {
+          name
+          id
+          width
+          height
+          hasGrid
+          link
+          image8xLink
+          basePrice
+          properties {
+            ...on ItemPropertiesChestRig {
+              grids {
+                width
+                height
+              }
+              capacity
+            }
+          }
+        }
+      }
+    `;
+
+    try {
+      const response = await fetch("https://api.tarkov.dev/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Network response was not ok ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Failed to fetch item data:", error);
+    }
   }
 }
