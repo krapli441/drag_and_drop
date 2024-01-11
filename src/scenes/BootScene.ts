@@ -52,6 +52,7 @@ export default class BootScene extends Phaser.Scene {
       const { data } = await response.json();
       const randomIndex = Math.floor(Math.random() * data.items.length);
       this.ChestRigData = data.items[randomIndex];
+      console.log(this.ChestRigData);
 
       // 출력할 텍스트 생성
       this.createText();
