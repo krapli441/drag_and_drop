@@ -22,8 +22,19 @@ interface ChestRigData {
   properties: ChestRigProperties;
 }
 
+interface BarterItemData {
+  shortName: string;
+  id: string;
+  width: number;
+  height: number;
+  link: string;
+  image8xLink: string;
+  basePrice: number;
+}
+
 export default class BootScene extends Phaser.Scene {
   private ChestRigData: ChestRigData | null = null;
+  private selectedBarterItems: BarterItemData[] = [];
 
   constructor() {
     super("BootScene");
@@ -50,31 +61,41 @@ export default class BootScene extends Phaser.Scene {
       }
     }
     `;
-  
+
     try {
       const response = await fetch("https://api.tarkov.dev/graphql", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),
       });
-  
+
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
-  
+
       const { data } = await response.json();
       const selectedItems = [];
       for (let i = 0; i < 5; i++) {
         const randomIndex = Math.floor(Math.random() * data.items.length);
         selectedItems.push(data.items[randomIndex]);
       }
-  
-      console.log("Selected Barter Items: ", selectedItems);
+      this.selectedBarterItems = data.items
+        .slice(0, 5) // Select the first 5 items
+        .map((item: any) => ({
+          shortName: item.shortName,
+          id: item.id,
+          width: item.width,
+          height: item.height,
+          link: item.link,
+          image8xLink: item.image8xLink,
+          basePrice: item.basePrice,
+        }));
+
+      console.log("Selected Barter Items: ", this.selectedBarterItems);
     } catch (error) {
       console.error("Failed to load barter items:", error);
     }
   }
-  
 
   async loadRandomItemData() {
     const query = `
