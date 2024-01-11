@@ -76,13 +76,11 @@ export default class BootScene extends Phaser.Scene {
       }
 
       const { data } = await response.json();
-      console.log("교환 아이템 목록 : ", data);
       const selectedItems = [];
       for (let i = 0; i < 5; i++) {
         const randomIndex = Math.floor(Math.random() * data.items.length);
         selectedItems.push(data.items[randomIndex]);
       }
-      console.log(selectedItems);
       this.selectedBarterItems = selectedItems
         .slice(0, 5) // Select the first 5 items
         .map((item: any) => ({
