@@ -55,13 +55,13 @@ export default class BootScene extends Phaser.Scene {
       console.log(this.ChestRigData);
 
       // 출력할 텍스트 생성
-      this.createText();
+      this.createItemData();
     } catch (error) {
       console.error("Failed to load item data:", error);
     }
   }
 
-  createText() {
+  createItemData() {
     // ChestRigData가 존재하는 경우에만 실행
     if (this.ChestRigData) {
       this.add.text(20, 20, `Name: ${this.ChestRigData.name}`, {
@@ -83,7 +83,11 @@ export default class BootScene extends Phaser.Scene {
         { font: "18px Arial", color: "#ffffff" }
       );
     }
+    // 그리드 인벤토리 생성 (현재 아이템의 크기)
     this.createGridInventory();
+
+    // 내부 그리드 인벤토리 생성
+    this.createInnerGridInventory();
   }
 
   createGridInventory() {
@@ -102,6 +106,33 @@ export default class BootScene extends Phaser.Scene {
           );
         }
       }
+    }
+  }
+
+  createInnerGridInventory() {
+    if (
+      this.ChestRigData &&
+      this.ChestRigData.hasGrid &&
+      this.ChestRigData.properties.grids
+    ) {
+      const gridGraphics = this.add.graphics();
+      gridGraphics.lineStyle(1, 0x00ff00); // 다른 색으로 그리드 테두리 설정
+
+      let yOffset = 150 + this.ChestRigData.height * 50 + 20; // 기존 그리드 아래에 위치
+
+      this.ChestRigData.properties.grids.forEach((grid) => {
+        for (let x = 0; x < grid.width; x++) {
+          for (let y = 0; y < grid.height; y++) {
+            gridGraphics.strokeRect(
+              20 + x * 50, // X 위치
+              yOffset + y * 50, // Y 위치
+              50, // 칸 너비
+              50 // 칸 높이
+            );
+          }
+        }
+        yOffset += grid.height * 50 + 10; // 다음 그리드 레이아웃을 위한 Y 오프셋
+      });
     }
   }
 }
