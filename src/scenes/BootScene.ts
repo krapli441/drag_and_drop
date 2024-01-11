@@ -229,12 +229,12 @@ export default class BootScene extends Phaser.Scene {
     // 컨테이너 위치 조정
     rightGridContainer.x -= rightGridContainer.width / 2;
 
-    this.fetchItemData();
+    this.loadRandomItemData();
   }
-  async fetchItemData() {
+  async loadRandomItemData() {
     const query = `
       query {
-        items(categoryNames: ChestRig) {
+        items(categoryNames: "ChestRig") {
           name
           id
           width
@@ -264,13 +264,30 @@ export default class BootScene extends Phaser.Scene {
       });
 
       if (!response.ok) {
-        throw new Error(`Network response was not ok ${response.statusText}`);
+        throw new Error(`Network response was not ok: ${response.statusText}`);
       }
 
-      const data = await response.json();
+      const { data } = await response.json();
       console.log(data);
+      const randomIndex = Math.floor(Math.random() * data.items.length);
+      console.log(randomIndex);
+      const randomItem = data.items[randomIndex];
+      console.log(randomItem);
+
+      this.itemData = {
+        ...randomItem,
+        image8xLink: randomItem.image8xLink.replace(
+          "https://assets.tarkov.dev/",
+          "./img/"
+        ),
+      };
+
+      // 이제 itemData를 사용하여 Phaser에서 아이템을 렌더링할 수 있습니다.
+      // 예를 들어, 아이템 이미지를 로드하고 화면에 표시하는 등의 작업을 여기서 수행할 수 있습니다.
+      this.load.image("itemImage", this.itemData.image8xLink);
+      // ... Phaser 렌더링 로직
     } catch (error) {
-      console.error("Failed to fetch item data:", error);
+      console.error("Failed to load item data:", error);
     }
   }
 }
