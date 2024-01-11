@@ -83,5 +83,25 @@ export default class BootScene extends Phaser.Scene {
         { font: "18px Arial", color: "#ffffff" }
       );
     }
+    this.createGridInventory();
+  }
+
+  createGridInventory() {
+    if (this.ChestRigData) {
+      const gridGraphics = this.add.graphics();
+      gridGraphics.lineStyle(1, 0xffffff); // 흰색 선으로 그리드 테두리 설정
+
+      // 그리드 인벤토리 그리기
+      for (let x = 0; x < this.ChestRigData.width; x++) {
+        for (let y = 0; y < this.ChestRigData.height; y++) {
+          gridGraphics.strokeRect(
+            20 + x * 50, // X 위치
+            150 + y * 50, // Y 위치 (텍스트 아래에 위치)
+            50, // 칸 너비
+            50 // 칸 높이
+          );
+        }
+      }
+    }
   }
 }
