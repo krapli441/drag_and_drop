@@ -120,7 +120,12 @@ export default class BootScene extends Phaser.Scene {
 
       let yOffset = 150 + this.ChestRigData.height * 50 + 20; // 기존 그리드 아래에 위치
 
-      this.ChestRigData.properties.grids.forEach((grid) => {
+      interface GridSize {
+        width: number;
+        height: number;
+      }
+
+      this.ChestRigData.properties.grids.forEach((grid: GridSize) => {
         for (let x = 0; x < grid.width; x++) {
           for (let y = 0; y < grid.height; y++) {
             gridGraphics.strokeRect(
