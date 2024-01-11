@@ -233,27 +233,27 @@ export default class BootScene extends Phaser.Scene {
   }
   async loadRandomItemData() {
     const query = `
-      query {
-        items(categoryNames: "ChestRig") {
-          name
-          id
-          width
-          height
-          hasGrid
-          link
-          image8xLink
-          basePrice
-          properties {
-            ...on ItemPropertiesChestRig {
-              grids {
-                width
-                height
-              }
-              capacity
+    query {
+      items(categoryNames: ChestRig) {
+        name
+        id
+        width
+        height
+        hasGrid
+        link
+        image8xLink
+        basePrice
+        properties {
+          ...on ItemPropertiesChestRig {
+            grids {
+              width
+              height
             }
+            capacity
           }
         }
       }
+    }
     `;
 
     try {
