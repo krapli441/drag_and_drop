@@ -10,7 +10,7 @@ export default class BootScene extends Phaser.Scene {
   preload() {}
 
   create() {
-      this.loadRandomItemData();
+    this.loadRandomItemData();
   }
   async loadRandomItemData() {
     const query = `
@@ -52,8 +52,6 @@ export default class BootScene extends Phaser.Scene {
       const randomIndex = Math.floor(Math.random() * data.items.length);
       const randomItem = data.items[randomIndex];
       console.log("무작위로 선정된 아이템 : ", randomItem);
-
-      this.load.start();
     } catch (error) {
       console.error("Failed to load item data:", error);
     }
