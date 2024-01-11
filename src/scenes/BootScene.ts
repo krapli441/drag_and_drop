@@ -33,7 +33,48 @@ export default class BootScene extends Phaser.Scene {
 
   create() {
     this.loadRandomItemData();
+    this.loadRandomBarterItems();
   }
+
+  async loadRandomBarterItems() {
+    const query = `
+    query {
+      items(categoryNames: BarterItem) {
+        shortName
+        id
+        width
+        height
+        link
+        image8xLink
+        basePrice
+      }
+    }
+    `;
+  
+    try {
+      const response = await fetch("https://api.tarkov.dev/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+  
+      const { data } = await response.json();
+      const selectedItems = [];
+      for (let i = 0; i < 5; i++) {
+        const randomIndex = Math.floor(Math.random() * data.items.length);
+        selectedItems.push(data.items[randomIndex]);
+      }
+  
+      console.log("Selected Barter Items: ", selectedItems);
+    } catch (error) {
+      console.error("Failed to load barter items:", error);
+    }
+  }
+  
 
   async loadRandomItemData() {
     const query = `
