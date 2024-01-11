@@ -1,7 +1,29 @@
 import Phaser from "phaser";
 
+interface Grid {
+  width: number;
+  height: number;
+}
+
+interface ChestRigProperties {
+  grids: Grid[];
+  capacity: number;
+}
+
+interface ChestRigData {
+  name: string;
+  id: string;
+  width: number;
+  height: number;
+  hasGrid: boolean;
+  link: string;
+  image8xLink: string;
+  basePrice: number;
+  properties: ChestRigProperties;
+}
+
 export default class BootScene extends Phaser.Scene {
-  private ChestRigData: any;
+  private ChestRigData: ChestRigData | null = null;
 
   constructor() {
     super("BootScene");
@@ -51,7 +73,7 @@ export default class BootScene extends Phaser.Scene {
 
       const { data } = await response.json();
       const randomIndex = Math.floor(Math.random() * data.items.length);
-      this.ChestRigData = data.items[randomIndex];
+      this.ChestRigData = data.items[randomIndex] as ChestRigData;
       console.log(this.ChestRigData);
 
       // 출력할 텍스트 생성
