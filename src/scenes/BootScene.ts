@@ -1,8 +1,8 @@
-// src/scenes/BootScene.ts
 import Phaser from "phaser";
-const { request, gql } = require("graphql-request");
 
 export default class BootScene extends Phaser.Scene {
+  private ChestRigData: any;
+
   constructor() {
     super("BootScene");
   }
@@ -12,6 +12,7 @@ export default class BootScene extends Phaser.Scene {
   create() {
     this.loadRandomItemData();
   }
+
   async loadRandomItemData() {
     const query = `
     query {
@@ -50,10 +51,22 @@ export default class BootScene extends Phaser.Scene {
 
       const { data } = await response.json();
       const randomIndex = Math.floor(Math.random() * data.items.length);
-      const randomItem = data.items[randomIndex];
-      console.log("무작위로 선정된 아이템 : ", randomItem);
+      this.ChestRigData = data.items[randomIndex];
+
+      // 출력할 텍스트 생성
+      this.createText();
     } catch (error) {
       console.error("Failed to load item data:", error);
+    }
+  }
+
+  createText() {
+    // ChestRigData가 존재하는 경우에만 실행
+    if (this.ChestRigData) {
+      this.add.text(20, 20, `Name: ${this.ChestRigData.name}`, { font: "18px Arial", fill: "#fff" });
+      this.add.text(20, 50, `Width: ${this.ChestRigData.width}`, { font: "18px Arial", fill: "#fff" });
+      this.add.text(20, 80, `Height: ${this.ChestRigData.height}`, { font: "18px Arial", fill: "#fff" });
+      this.add.text(20, 110, `Capacity: ${this.ChestRigData.properties.capacity}`, { font: "18px Arial", fill: "#fff" });
     }
   }
 }
