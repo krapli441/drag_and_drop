@@ -3,7 +3,6 @@ import Phaser from "phaser";
 const { request, gql } = require("graphql-request");
 
 export default class BootScene extends Phaser.Scene {
-  private itemDataLoaded: boolean = false;
   constructor() {
     super("BootScene");
   }
@@ -11,9 +10,7 @@ export default class BootScene extends Phaser.Scene {
   preload() {}
 
   create() {
-    if (!this.itemDataLoaded) {
       this.loadRandomItemData();
-    }
   }
   async loadRandomItemData() {
     const query = `
@@ -57,7 +54,6 @@ export default class BootScene extends Phaser.Scene {
       console.log("무작위로 선정된 아이템 : ", randomItem);
 
       this.load.start();
-      this.itemDataLoaded = true;
     } catch (error) {
       console.error("Failed to load item data:", error);
     }
