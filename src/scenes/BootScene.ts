@@ -118,7 +118,8 @@ export default class BootScene extends Phaser.Scene {
       const gridGraphics = this.add.graphics();
       gridGraphics.lineStyle(1, 0x00ff00); // 다른 색으로 그리드 테두리 설정
 
-      let yOffset = 150 + this.ChestRigData.height * 50 + 20; // 기존 그리드 아래에 위치
+      let xOffset = 20; // 시작 X 위치
+      let yOffset = 150 + this.ChestRigData.height * 50 + 20; // 시작 Y 위치 (기존 그리드 아래에 위치)
 
       interface GridSize {
         width: number;
@@ -129,14 +130,22 @@ export default class BootScene extends Phaser.Scene {
         for (let x = 0; x < grid.width; x++) {
           for (let y = 0; y < grid.height; y++) {
             gridGraphics.strokeRect(
-              20 + x * 50, // X 위치
+              xOffset + x * 50, // X 위치
               yOffset + y * 50, // Y 위치
               50, // 칸 너비
               50 // 칸 높이
             );
           }
         }
-        yOffset += grid.height * 50 + 10; // 다음 그리드 레이아웃을 위한 Y 오프셋
+
+        // X 오프셋 업데이트 (다음 그리드의 X 위치를 위해)
+        xOffset += grid.width * 50 + 10;
+
+        // 가로 방향으로 더 이상 그리드를 그릴 공간이 없으면 Y 오프셋 업데이트
+        if (xOffset + grid.width * 50 > this.cameras.main.width) {
+          xOffset = 20; // X 오프셋 리셋
+          yOffset += grid.height * 50 + 10; // Y 오프셋 업데이트
+        }
       });
     }
   }
