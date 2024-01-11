@@ -43,7 +43,7 @@ export default class BootScene extends Phaser.Scene {
   preload() {}
 
   create() {
-    this.loadRandomItemData();
+    this.loadRandomChestRigData();
     this.loadRandomBarterItems();
   }
 
@@ -97,7 +97,7 @@ export default class BootScene extends Phaser.Scene {
     }
   }
 
-  async loadRandomItemData() {
+  async loadRandomChestRigData() {
     const query = `
     query {
       items(categoryNames: ChestRig) {
