@@ -48,7 +48,6 @@ export default class BootScene extends Phaser.Scene {
     this.createItemData();
     this.createBarterItemGrids();
   }
-  
 
   async loadRandomBarterItems() {
     const query = `
@@ -77,12 +76,14 @@ export default class BootScene extends Phaser.Scene {
       }
 
       const { data } = await response.json();
+      console.log("교환 아이템 목록 : ", data);
       const selectedItems = [];
       for (let i = 0; i < 5; i++) {
         const randomIndex = Math.floor(Math.random() * data.items.length);
         selectedItems.push(data.items[randomIndex]);
       }
-      this.selectedBarterItems = data.items
+      console.log(selectedItems);
+      this.selectedBarterItems = selectedItems
         .slice(0, 5) // Select the first 5 items
         .map((item: any) => ({
           shortName: item.shortName,
@@ -244,7 +245,7 @@ export default class BootScene extends Phaser.Scene {
     let xOffset = this.cameras.main.width / 2 + 20; // 화면 오른쪽에 위치하도록 설정
     let yOffset = 20; // 시작 Y 위치
 
-    this.selectedBarterItems.forEach((item, index) => {
+    this.selectedBarterItems.forEach((item) => {
       // 아이템의 그리드 그리기
       for (let x = 0; x < item.width; x++) {
         for (let y = 0; y < item.height; y++) {
@@ -256,6 +257,19 @@ export default class BootScene extends Phaser.Scene {
           );
         }
       }
+
+      // 아이템 이름 텍스트 위치 계산
+      const textX = xOffset + (item.width * 50) / 2;
+      const textY = yOffset + (item.height * 50) / 2;
+
+      // 아이템 이름 텍스트 추가
+      this.add
+        .text(textX, textY, item.shortName, {
+          font: "16px Arial",
+          color: "#ffffff",
+          align: "center",
+        })
+        .setOrigin(0.5, 0.5); // 텍스트를 중앙 정렬
 
       // 다음 아이템을 위한 X, Y 오프셋 업데이트
       xOffset += item.width * 50 + 10;
