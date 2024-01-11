@@ -44,7 +44,9 @@ export default class BootScene extends Phaser.Scene {
 
   create() {
     this.loadRandomChestRigData();
-    this.loadRandomBarterItems();
+    this.loadRandomBarterItems().then(() => {
+      this.createBarterItemGrids();
+    });
   }
 
   async loadRandomBarterItems() {
@@ -232,5 +234,34 @@ export default class BootScene extends Phaser.Scene {
         }
       });
     }
+  }
+
+  createBarterItemGrids() {
+    const gridGraphics = this.add.graphics();
+    gridGraphics.lineStyle(1, 0x0000ff); // 파란색 선으로 그리드 테두리 설정
+
+    let xOffset = this.cameras.main.width / 2 + 20; // 화면 오른쪽에 위치하도록 설정
+    let yOffset = 20; // 시작 Y 위치
+
+    this.selectedBarterItems.forEach((item, index) => {
+      // 아이템의 그리드 그리기
+      for (let x = 0; x < item.width; x++) {
+        for (let y = 0; y < item.height; y++) {
+          gridGraphics.strokeRect(
+            xOffset + x * 50, // X 위치
+            yOffset + y * 50, // Y 위치
+            50, // 칸 너비
+            50 // 칸 높이
+          );
+        }
+      }
+
+      // 다음 아이템을 위한 X, Y 오프셋 업데이트
+      xOffset += item.width * 50 + 10;
+      if (xOffset + item.width * 50 > this.cameras.main.width) {
+        xOffset = this.cameras.main.width / 2 + 20; // X 오프셋 리셋
+        yOffset += item.height * 50 + 10; // Y 오프셋 업데이트
+      }
+    });
   }
 }
