@@ -31,7 +31,7 @@ export default class BootScene extends Phaser.Scene {
         },
         {
           width: 1,
-          height: 2,
+          height: 2, 
         },
         {
           width: 1,
