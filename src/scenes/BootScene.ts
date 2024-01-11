@@ -11,7 +11,7 @@ interface ChestRigProperties {
 }
 
 interface ChestRigData {
-  name: string;
+  shortName: string;
   id: string;
   width: number;
   height: number;
@@ -39,7 +39,7 @@ export default class BootScene extends Phaser.Scene {
     const query = `
     query {
       items(categoryNames: ChestRig) {
-        name
+        shortName
         id
         width
         height
@@ -86,7 +86,7 @@ export default class BootScene extends Phaser.Scene {
   createItemData() {
     // ChestRigData가 존재하는 경우에만 실행
     if (this.ChestRigData) {
-      this.add.text(20, 20, `Name: ${this.ChestRigData.name}`, {
+      this.add.text(20, 20, `Name: ${this.ChestRigData.shortName}`, {
         font: "18px Arial",
         color: "#ffffff",
       });
