@@ -52,7 +52,20 @@ class Grid {
     this.item = null;
   }
 
-  // 여기에 그리드 관리 로직 추가
+  // 그리드에 아이템을 추가하는 메서드
+  addItem(item: Item): boolean {
+    // 이 그리드에 아이템이 들어갈 수 있는지 검사
+    if (
+      this.item !== null ||
+      item.width > this.width ||
+      item.height > this.height
+    ) {
+      return false; // 아이템이 들어갈 수 없다면 false 반환
+    }
+
+    this.item = item; // 아이템을 그리드에 추가
+    return true; // 성공적으로 추가되면 true 반환
+  }
 }
 
 class Item {
