@@ -4,7 +4,7 @@ import {
   ChestRigData,
   BarterItemData,
 } from "./InventoryClass/InventoryInterface";
-import { loadRandomData } from "./api";
+import { loadChestRigData, loadBarterItemsData } from "./api";
 
 export default class BootScene extends Phaser.Scene {
   private inventory: Inventory | null = null;
@@ -18,54 +18,17 @@ export default class BootScene extends Phaser.Scene {
   preload() {}
 
   async create() {
-    await this.loadRandomChestRigData();
-    await this.loadRandomBarterItems();
-    this.createInventory();
-    this.createItemData();
-    this.createBarterItemGrids();
-  }
-
-  createInventory() {
-    if (this.ChestRigData && this.ChestRigData.hasGrid) {
-      this.inventory = new Inventory(this.ChestRigData.properties);
-      console.log(this.inventory);
+    const chestRigResponse = await loadChestRigData();
+    if (chestRigResponse && chestRigResponse.data && chestRigResponse.data.items.length > 0) {
+      this.ChestRigData = chestRigResponse.data.items[0] as ChestRigData;
+      this.createInventory();
+      this.createItemData();
     }
-  }
-
-  async loadRandomBarterItems() {
-    const query = `
-    query {
-      items(categoryNames: BarterItem) {
-        shortName
-        id
-        width
-        height
-        link
-        image8xLink
-        basePrice
-      }
-    }
-    `;
-
-    try {
-      const response = await fetch("https://api.tarkov.dev/graphql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-      }
-
-      const { data } = await response.json();
-      const selectedItems = [];
-      for (let i = 0; i < 5; i++) {
-        const randomIndex = Math.floor(Math.random() * data.items.length);
-        selectedItems.push(data.items[randomIndex]);
-      }
-      this.selectedBarterItems = selectedItems
-        .slice(0, 5) // Select the first 5 items
+  
+    const barterItemsResponse = await loadBarterItemsData();
+    if (barterItemsResponse && barterItemsResponse.data && barterItemsResponse.data.items.length > 0) {
+      this.selectedBarterItems = barterItemsResponse.data.items
+        .slice(0, 5)
         .map((item: any) => ({
           shortName: item.shortName,
           id: item.id,
@@ -75,58 +38,18 @@ export default class BootScene extends Phaser.Scene {
           image8xLink: item.image8xLink,
           basePrice: item.basePrice,
         }));
-
+  
       console.log("Selected Barter Items: ", this.selectedBarterItems);
-    } catch (error) {
-      console.error("Failed to load barter items:", error);
     }
+  
+    this.createBarterItemGrids();
   }
+  
 
-  async loadRandomChestRigData() {
-    const query = `
-    query {
-      items(categoryNames: ChestRig) {
-        shortName
-        id
-        width
-        height
-        hasGrid
-        link
-        image8xLink
-        basePrice
-        properties {
-          ...on ItemPropertiesChestRig {
-            grids {
-              width
-              height
-            }
-            capacity
-          }
-        }
-      }
-    }
-    `;
-
-    try {
-      const response = await fetch("https://api.tarkov.dev/graphql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-      }
-
-      const { data } = await response.json();
-      const randomIndex = Math.floor(Math.random() * data.items.length);
-      this.ChestRigData = data.items[randomIndex] as ChestRigData;
-      console.log(this.ChestRigData);
-
-      // 출력할 텍스트 생성
-      this.createItemData();
-    } catch (error) {
-      console.error("Failed to load item data:", error);
+  createInventory() {
+    if (this.ChestRigData && this.ChestRigData.hasGrid) {
+      this.inventory = new Inventory(this.ChestRigData.properties);
+      console.log(this.inventory);
     }
   }
 

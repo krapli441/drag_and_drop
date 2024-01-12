@@ -1,3 +1,5 @@
+import { CHEST_RIG_QUERY, BARTER_ITEM_QUERY } from "./Item_queries";
+
 export async function loadRandomData(query: string) {
   try {
     const response = await fetch("https://api.tarkov.dev/graphql", {
@@ -15,4 +17,12 @@ export async function loadRandomData(query: string) {
     console.error("Failed to load data:", error);
     return null;
   }
+}
+
+export async function loadChestRigData() {
+  return await loadRandomData(CHEST_RIG_QUERY);
+}
+
+export async function loadBarterItemsData() {
+  return await loadRandomData(BARTER_ITEM_QUERY);
 }
