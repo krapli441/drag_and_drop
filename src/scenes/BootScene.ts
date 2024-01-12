@@ -19,14 +19,24 @@ export default class BootScene extends Phaser.Scene {
 
   async create() {
     const chestRigResponse = await loadChestRigData();
-    if (chestRigResponse && chestRigResponse.data && chestRigResponse.data.items.length > 0) {
+    if (
+      chestRigResponse &&
+      chestRigResponse.data &&
+      chestRigResponse.data.items.length > 0
+    ) {
       this.ChestRigData = chestRigResponse.data.items[0] as ChestRigData;
       this.createInventory();
       this.createItemData();
+
+      console.log("Selected Chest Rig Data: ", this.ChestRigData);
     }
-  
+
     const barterItemsResponse = await loadBarterItemsData();
-    if (barterItemsResponse && barterItemsResponse.data && barterItemsResponse.data.items.length > 0) {
+    if (
+      barterItemsResponse &&
+      barterItemsResponse.data &&
+      barterItemsResponse.data.items.length > 0
+    ) {
       this.selectedBarterItems = barterItemsResponse.data.items
         .slice(0, 5)
         .map((item: any) => ({
@@ -38,13 +48,12 @@ export default class BootScene extends Phaser.Scene {
           image8xLink: item.image8xLink,
           basePrice: item.basePrice,
         }));
-  
+
       console.log("Selected Barter Items: ", this.selectedBarterItems);
     }
-  
+
     this.createBarterItemGrids();
   }
-  
 
   createInventory() {
     if (this.ChestRigData && this.ChestRigData.hasGrid) {
