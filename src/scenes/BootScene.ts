@@ -19,6 +19,7 @@ export default class BootScene extends Phaser.Scene {
   preload() {}
 
   async create() {
+    // Chest Rig 데이터 로드
     const chestRigResponse = await loadChestRigData();
     if (
       chestRigResponse &&
@@ -28,32 +29,37 @@ export default class BootScene extends Phaser.Scene {
       this.ChestRigData = chestRigResponse.data.items[0] as ChestRigData;
       this.createInventory();
       this.createItemData();
-
       console.log("Selected Chest Rig Data: ", this.ChestRigData);
     }
 
+    // Barter Item 데이터 로드
     const barterItemsResponse = await loadBarterItemsData();
     if (
       barterItemsResponse &&
       barterItemsResponse.data &&
       barterItemsResponse.data.items.length > 0
     ) {
-      this.selectedBarterItems = barterItemsResponse.data.items
-        .slice(0, 5)
-        .map((item: any) => ({
-          shortName: item.shortName,
-          id: item.id,
-          width: item.width,
-          height: item.height,
-          link: item.link,
-          image8xLink: item.image8xLink,
-          basePrice: item.basePrice,
-        }));
-
+      // 무작위로 5개의 아이템 선택
+      this.selectedBarterItems = this.selectRandomItems(
+        barterItemsResponse.data.items,
+        5
+      );
       console.log("Selected Barter Items: ", this.selectedBarterItems);
     }
 
     this.createBarterItemGrids();
+  }
+
+  // 무작위로 n개의 아이템을 선택하는 함수
+  selectRandomItems(items: any[], n: number): any[] {
+    let selectedItems = [];
+    for (let i = 0; i < n; i++) {
+      const randomIndex = Math.floor(Math.random() * items.length);
+      selectedItems.push(items[randomIndex]);
+      // 선택된 아이템은 목록에서 제거하여 중복 선택을 방지
+      items.splice(randomIndex, 1);
+    }
+    return selectedItems;
   }
 
   createInventory() {
