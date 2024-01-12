@@ -80,8 +80,6 @@ class Item {
     this.width = data.width;
     this.height = data.height;
   }
-
-  // 필요한 아이템 관련 메소드 추가
 }
 
 interface ChestRigProperties {
