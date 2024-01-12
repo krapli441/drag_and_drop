@@ -1,8 +1,53 @@
 import Phaser from "phaser";
 
+class Inventory {
+  private grids: Grid[];
+  private capacity: number;
+
+  constructor(properties: ChestRigProperties) {
+    this.grids = properties.grids.map(
+      (grid) => new Grid(grid.width, grid.height)
+    );
+    this.capacity = properties.capacity;
+  }
+
+  // 여기에 인벤토리 관리 로직 추가
+}
+
 interface Grid {
   width: number;
   height: number;
+  item: Item | null;
+}
+
+class Grid {
+  width: number;
+  height: number;
+  item: Item | null;
+
+  constructor(width: number, height: number) {
+    this.width = width;
+    this.height = height;
+    this.item = null;
+  }
+
+  // 여기에 그리드 관리 로직 추가
+}
+
+class Item {
+  shortName: string;
+  id: string;
+  width: number;
+  height: number;
+
+  constructor(data: BarterItemData) {
+    this.shortName = data.shortName;
+    this.id = data.id;
+    this.width = data.width;
+    this.height = data.height;
+  }
+
+  // 필요한 아이템 관련 메소드 추가
 }
 
 interface ChestRigProperties {
