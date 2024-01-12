@@ -94,7 +94,13 @@ export default class BootScene extends Phaser.Scene {
 
   createGridInventory() {
     if (this.ChestRigData && this.ChestRigData.hasGrid) {
-      GridRenderer.drawGrid(this, this.ChestRigData.properties.grids, 20, 150, 0xffffff);
+      GridRenderer.drawGrid(
+        this,
+        this.ChestRigData.properties.grids,
+        20,
+        150,
+        0xffffff
+      );
     }
   }
 
@@ -140,43 +146,49 @@ export default class BootScene extends Phaser.Scene {
   }
 
   createBarterItemGrids() {
-    const gridGraphics = this.add.graphics();
-    gridGraphics.lineStyle(1, 0x0000ff); // 파란색 선으로 그리드 테두리 설정
+    let xOffset = this.cameras.main.width / 2 + 20;
+    let yOffset = 20;
 
-    let xOffset = this.cameras.main.width / 2 + 20; // 화면 오른쪽에 위치하도록 설정
-    let yOffset = 20; // 시작 Y 위치
+    this.selectedBarterItems.forEach((item, index) => {
+      // 각 아이템에 대한 그래픽 생성 및 설정
+      let itemGraphic = this.add.graphics({ x: xOffset, y: yOffset });
+      itemGraphic.fillStyle(0xffffff, 1); // 흰색으로 채우기
+      itemGraphic.fillRect(0, 0, item.width * 50, item.height * 50); // 아이템 크기에 맞는 사각형 그리기
 
-    this.selectedBarterItems.forEach((item) => {
-      // 아이템의 그리드 그리기
-      for (let x = 0; x < item.width; x++) {
-        for (let y = 0; y < item.height; y++) {
-          gridGraphics.strokeRect(
-            xOffset + x * 50, // X 위치
-            yOffset + y * 50, // Y 위치
-            50, // 칸 너비
-            50 // 칸 높이
-          );
+      // 인터랙티브하게 설정
+      itemGraphic.setInteractive(
+        new Phaser.Geom.Rectangle(0, 0, item.width * 50, item.height * 50),
+        Phaser.Geom.Rectangle.Contains
+      );
+
+      // 드래그 이벤트 리스너 추가
+      itemGraphic.on(
+        "drag",
+        (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
+          itemGraphic.x = dragX;
+          itemGraphic.y = dragY;
         }
-      }
-
-      // 아이템 이름 텍스트 위치 계산
-      const textX = xOffset + (item.width * 50) / 2;
-      const textY = yOffset + (item.height * 50) / 2;
+      );
 
       // 아이템 이름 텍스트 추가
       this.add
-        .text(textX, textY, item.shortName, {
-          font: "16px Arial",
-          color: "#ffffff",
-          align: "center",
-        })
-        .setOrigin(0.5, 0.5); // 텍스트를 중앙 정렬
+        .text(
+          xOffset + item.width * 25,
+          yOffset + item.height * 25,
+          item.shortName,
+          {
+            font: "16px Arial",
+            color: "#000000",
+            align: "center",
+          }
+        )
+        .setOrigin(0.5, 0.5);
 
-      // 다음 아이템을 위한 X, Y 오프셋 업데이트
+      // X, Y 오프셋 업데이트
       xOffset += item.width * 50 + 10;
       if (xOffset + item.width * 50 > this.cameras.main.width) {
-        xOffset = this.cameras.main.width / 2 + 20; // X 오프셋 리셋
-        yOffset += item.height * 50 + 10; // Y 오프셋 업데이트
+        xOffset = this.cameras.main.width / 2 + 20;
+        yOffset += item.height * 50 + 10;
       }
     });
   }
