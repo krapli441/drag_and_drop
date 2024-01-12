@@ -1,10 +1,5 @@
 import Item from "./Item";
-
-export interface Grid {
-  width: number;
-  height: number;
-  item: Item | null;
-}
+import Grid from "./Grid";
 
 export interface ChestRigProperties {
   grids: Grid[];
