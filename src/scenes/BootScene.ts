@@ -78,6 +78,7 @@ interface BarterItemData {
 }
 
 export default class BootScene extends Phaser.Scene {
+  private inventory: Inventory | null = null;
   private ChestRigData: ChestRigData | null = null;
   private selectedBarterItems: BarterItemData[] = [];
 
@@ -90,8 +91,16 @@ export default class BootScene extends Phaser.Scene {
   async create() {
     await this.loadRandomChestRigData();
     await this.loadRandomBarterItems();
+    this.createInventory();
     this.createItemData();
     this.createBarterItemGrids();
+  }
+
+  createInventory() {
+    if (this.ChestRigData && this.ChestRigData.hasGrid) {
+      this.inventory = new Inventory(this.ChestRigData.properties);
+      console.log(Inventory);
+    }
   }
 
   async loadRandomBarterItems() {
