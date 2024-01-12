@@ -4,6 +4,7 @@ import {
   ChestRigData,
   BarterItemData,
 } from "./InventoryClass/InventoryInterface";
+import { loadRandomData } from "./api";
 
 export default class BootScene extends Phaser.Scene {
   private inventory: Inventory | null = null;
