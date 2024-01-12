@@ -99,7 +99,7 @@ export default class BootScene extends Phaser.Scene {
   createInventory() {
     if (this.ChestRigData && this.ChestRigData.hasGrid) {
       this.inventory = new Inventory(this.ChestRigData.properties);
-      console.log(Inventory);
+      console.log(this.inventory);
     }
   }
 
