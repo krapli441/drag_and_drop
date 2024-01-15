@@ -157,32 +157,33 @@ export default class BootScene extends Phaser.Scene {
 
     this.selectedBarterItems.forEach((item, index) => {
       // 각 아이템에 대한 그래픽 생성 및 설정
-      let itemGraphic = this.add.graphics({ x: xOffset, y: yOffset });
-      itemGraphic.fillStyle(0xffffff, 1); // 흰색으로 채우기
-      itemGraphic.fillRect(0, 0, item.width * 50, item.height * 50); // 아이템 크기에 맞는 사각형 그리기
+      let itemGraphic = this.add.graphics();
+      itemGraphic.fillStyle(0xffffff, 1);
+      itemGraphic.fillRect(0, 0, item.width * 50, item.height * 50);
 
-      // 인터랙티브하게 설정
-      itemGraphic.setInteractive(
+      // 아이템 이름 텍스트 생성
+      let itemText = this.add
+        .text(item.width * 25, item.height * 25, item.shortName, {
+          font: "16px Arial",
+          color: "#000000",
+          align: "center",
+        })
+        .setOrigin(0.5, 0.5);
+
+      // 컨테이너 생성 및 아이템 그래픽과 텍스트 추가
+      let itemContainer = this.add.container(xOffset, yOffset, [
+        itemGraphic,
+        itemText,
+      ]);
+
+      // 컨테이너 인터랙티브하게 설정
+      itemContainer.setInteractive(
         new Phaser.Geom.Rectangle(0, 0, item.width * 50, item.height * 50),
         Phaser.Geom.Rectangle.Contains
       );
 
       // 드래그 가능하게 설정
-      this.input.setDraggable(itemGraphic);
-
-      // 아이템 이름 텍스트 추가
-      this.add
-        .text(
-          xOffset + item.width * 25,
-          yOffset + item.height * 25,
-          item.shortName,
-          {
-            font: "16px Arial",
-            color: "#000000",
-            align: "center",
-          }
-        )
-        .setOrigin(0.5, 0.5);
+      this.input.setDraggable(itemContainer);
 
       // X, Y 오프셋 업데이트
       xOffset += item.width * 50 + 10;
@@ -201,7 +202,7 @@ export default class BootScene extends Phaser.Scene {
         dragX: number,
         dragY: number
       ) {
-        if (gameObject instanceof Phaser.GameObjects.Graphics) {
+        if (gameObject instanceof Phaser.GameObjects.Container) {
           gameObject.x = dragX;
           gameObject.y = dragY;
         }
