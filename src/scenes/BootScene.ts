@@ -161,6 +161,14 @@ export default class BootScene extends Phaser.Scene {
       itemGraphic.fillStyle(0xffffff, 1);
       itemGraphic.fillRect(0, 0, item.width * 50, item.height * 50);
 
+      // 그리드 구분선 그리기
+      itemGraphic.lineStyle(1, 0x000000, 1); // 검은색 선으로 설정
+      for (let x = 0; x < item.width; x++) {
+        for (let y = 0; y < item.height; y++) {
+          itemGraphic.strokeRect(x * 50, y * 50, 50, 50); // 각 그리드 칸 그리기
+        }
+      }
+
       // 아이템 이름 텍스트 생성
       let itemText = this.add
         .text(item.width * 25, item.height * 25, item.shortName, {
