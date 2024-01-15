@@ -5,7 +5,6 @@ import {
   BarterItemData,
 } from "./InventoryClass/InventoryInterface";
 import { loadChestRigData, loadBarterItemsData } from "./api";
-import { GridRenderer } from "./GridRenderer";
 
 export default class BootScene extends Phaser.Scene {
   private inventory: Inventory | null = null;
