@@ -3,6 +3,7 @@ import Inventory from "./InventoryClass/Inventory";
 import {
   ChestRigData,
   BarterItemData,
+  DraggedItemData,
 } from "./InventoryClass/InventoryInterface";
 import { loadChestRigData, loadBarterItemsData } from "./api";
 
@@ -10,6 +11,7 @@ export default class BootScene extends Phaser.Scene {
   private inventory: Inventory | null = null;
   private ChestRigData: ChestRigData | null = null;
   private selectedBarterItems: BarterItemData[] = [];
+  private draggedItemData: DraggedItemData | null = null;
 
   constructor() {
     super("BootScene");
@@ -103,28 +105,37 @@ export default class BootScene extends Phaser.Scene {
       const yOffsetStart = 150;
       const gridWidth = 50;
       const gridHeight = 50;
-  
+
       this.ChestRigData.properties.grids.forEach((grid, index) => {
         let gridX = xOffsetStart + grid.x * gridWidth;
         let gridY = yOffsetStart + grid.y * gridHeight;
-  
+
         // 그리드 그래픽 생성 및 그리기
         let gridGraphic = this.add.graphics();
         gridGraphic.lineStyle(1, 0x00ff00);
-        gridGraphic.strokeRect(gridX, gridY, grid.width * gridWidth, grid.height * gridHeight);
-  
+        gridGraphic.strokeRect(
+          gridX,
+          gridY,
+          grid.width * gridWidth,
+          grid.height * gridHeight
+        );
+
         // 인터랙티브 설정
         gridGraphic.setInteractive(
-          new Phaser.Geom.Rectangle(gridX, gridY, grid.width * gridWidth, grid.height * gridHeight),
+          new Phaser.Geom.Rectangle(
+            gridX,
+            gridY,
+            grid.width * gridWidth,
+            grid.height * gridHeight
+          ),
           Phaser.Geom.Rectangle.Contains
         );
-  
+
         // 드래그 가능하게 설정
         this.input.setDraggable(gridGraphic);
       });
     }
   }
-  
 
   createInnerGridInventory() {
     if (
@@ -220,15 +231,27 @@ export default class BootScene extends Phaser.Scene {
     // 전역 드래그 이벤트 리스너 추가
     this.input.on(
       "drag",
-      function (
+      (
         pointer: Phaser.Input.Pointer,
         gameObject: Phaser.GameObjects.GameObject,
         dragX: number,
         dragY: number
-      ) {
+      ) => {
         if (gameObject instanceof Phaser.GameObjects.Container) {
           gameObject.x = dragX;
           gameObject.y = dragY;
+
+          // 아이템 데이터 캡처 및 저장
+          if (gameObject.itemData) {
+            this.draggedItemData = {
+              id: gameObject.itemData.id, // 아이템의 고유 ID
+              x: dragX, // 현재 드래그 중인 아이템의 X 좌표
+              y: dragY, // 현재 드래그 중인 아이템의 Y 좌표
+              width: gameObject.itemData.width, // 아이템의 너비
+              height: gameObject.itemData.height, // 아이템의 높이
+            };
+          } // 필요한 경우, 여기에서 드래그 중인 아이템에 대한 시각적 피드백을 제공할 수 있습니다.
+          gameObject.setAlpha(0.5); // 예시: 드래그 중인 아이템의 투명도를 변경
         }
       }
     );

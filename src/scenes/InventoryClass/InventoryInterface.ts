@@ -27,3 +27,11 @@ export interface BarterItemData {
   image8xLink: string;
   basePrice: number;
 }
+
+export interface DraggedItemData {
+  id: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
