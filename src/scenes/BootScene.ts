@@ -154,22 +154,22 @@ export default class BootScene extends Phaser.Scene {
   createBarterItemGrids() {
     let xOffset = this.cameras.main.width / 2 + 20;
     let yOffset = 20;
-  
+
     this.selectedBarterItems.forEach((item, index) => {
       // 각 아이템에 대한 그래픽 생성 및 설정
       let itemGraphic = this.add.graphics({ x: xOffset, y: yOffset });
       itemGraphic.fillStyle(0xffffff, 1); // 흰색으로 채우기
       itemGraphic.fillRect(0, 0, item.width * 50, item.height * 50); // 아이템 크기에 맞는 사각형 그리기
-  
+
       // 인터랙티브하게 설정
       itemGraphic.setInteractive(
         new Phaser.Geom.Rectangle(0, 0, item.width * 50, item.height * 50),
         Phaser.Geom.Rectangle.Contains
       );
-  
+
       // 드래그 가능하게 설정
       this.input.setDraggable(itemGraphic);
-  
+
       // 아이템 이름 텍스트 추가
       this.add
         .text(
@@ -183,7 +183,7 @@ export default class BootScene extends Phaser.Scene {
           }
         )
         .setOrigin(0.5, 0.5);
-  
+
       // X, Y 오프셋 업데이트
       xOffset += item.width * 50 + 10;
       if (xOffset + item.width * 50 > this.cameras.main.width) {
@@ -191,15 +191,15 @@ export default class BootScene extends Phaser.Scene {
         yOffset += item.height * 50 + 10;
       }
     });
-  
+
     // 전역 드래그 이벤트 리스너 추가
     this.input.on(
       "drag",
       function (
-        pointer,
-        gameObject,
-        dragX,
-        dragY
+        pointer: Phaser.Input.Pointer,
+        gameObject: Phaser.GameObjects.GameObject,
+        dragX: number,
+        dragY: number
       ) {
         if (gameObject instanceof Phaser.GameObjects.Graphics) {
           gameObject.x = dragX;
@@ -208,5 +208,4 @@ export default class BootScene extends Phaser.Scene {
       }
     );
   }
-  
 }
