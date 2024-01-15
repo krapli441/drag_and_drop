@@ -100,15 +100,32 @@ export default class BootScene extends Phaser.Scene {
 
   createGridInventory() {
     if (this.ChestRigData && this.ChestRigData.hasGrid) {
-      GridRenderer.drawGrid(
-        this,
-        this.ChestRigData.properties.grids,
-        20,
-        150,
-        0xffffff
-      );
+      const xOffsetStart = 20;
+      const yOffsetStart = 150;
+      const gridWidth = 50;
+      const gridHeight = 50;
+  
+      this.ChestRigData.properties.grids.forEach((grid, index) => {
+        let gridX = xOffsetStart + grid.x * gridWidth;
+        let gridY = yOffsetStart + grid.y * gridHeight;
+  
+        // 그리드 그래픽 생성 및 그리기
+        let gridGraphic = this.add.graphics();
+        gridGraphic.lineStyle(1, 0x00ff00);
+        gridGraphic.strokeRect(gridX, gridY, grid.width * gridWidth, grid.height * gridHeight);
+  
+        // 인터랙티브 설정
+        gridGraphic.setInteractive(
+          new Phaser.Geom.Rectangle(gridX, gridY, grid.width * gridWidth, grid.height * gridHeight),
+          Phaser.Geom.Rectangle.Contains
+        );
+  
+        // 드래그 가능하게 설정
+        this.input.setDraggable(gridGraphic);
+      });
     }
   }
+  
 
   createInnerGridInventory() {
     if (

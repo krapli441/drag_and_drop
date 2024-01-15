@@ -8,7 +8,7 @@ export default class Inventory {
 
   constructor(properties: ChestRigProperties) {
     this.grids = properties.grids.map(
-      (grid) => new Grid(grid.width, grid.height)
+      (grid) => new Grid(grid.width, grid.height, grid.x, grid.y)
     );
     this.capacity = properties.capacity;
   }

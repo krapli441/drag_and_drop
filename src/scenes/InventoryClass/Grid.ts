@@ -4,10 +4,14 @@ export default class Grid {
   width: number;
   height: number;
   item: Item | null;
+  x: number;
+  y: number;
 
-  constructor(width: number, height: number) {
+  constructor(width: number, height: number, x: number, y: number) {
     this.width = width;
     this.height = height;
+    this.x = x;
+    this.y = y;
     this.item = null;
   }
 
