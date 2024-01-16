@@ -211,6 +211,8 @@ export default class BootScene extends Phaser.Scene {
         itemText,
       ]);
 
+      (itemContainer as any).itemData = item;
+
       // 컨테이너 인터랙티브하게 설정
       itemContainer.setInteractive(
         new Phaser.Geom.Rectangle(0, 0, item.width * 50, item.height * 50),
@@ -240,16 +242,19 @@ export default class BootScene extends Phaser.Scene {
         if (gameObject instanceof Phaser.GameObjects.Container) {
           gameObject.x = dragX;
           gameObject.y = dragY;
+
           // 아이템 정보 캡쳐 및 저장
-          this.draggedItemData = {
-            x: dragX,
-            y: dragY,
-            width: gameObject.width,
-            height: gameObject.height,
-            shortName: gameObject.name,
-            id: gameObject.name,
-            // 필요한 경우 추가 정보를 여기에 추가할 수 있습니다.
-          };
+          const itemData = (gameObject as any).itemData as BarterItemData;
+          if (itemData) {
+            this.draggedItemData = {
+              x: dragX,
+              y: dragY,
+              width: itemData.width,
+              height: itemData.height,
+              shortName: itemData.shortName,
+              id: itemData.id,
+            };
+          }
         }
       }
     );
