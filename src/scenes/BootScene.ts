@@ -6,6 +6,7 @@ import {
   DraggedItemData,
 } from "./InventoryClass/InventoryInterface";
 import { loadChestRigData, loadBarterItemsData } from "./api";
+import { DraggableContainer } from "./InventoryClass/DraggableContainer";
 
 export default class BootScene extends Phaser.Scene {
   private inventory: Inventory | null = null;
