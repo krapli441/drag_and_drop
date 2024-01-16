@@ -191,13 +191,19 @@ export default class BootScene extends Phaser.Scene {
       this.ChestRigData.properties.grids
     ) {
       const draggedItem = this.draggedItemData;
-
-      this.ChestRigData.properties.grids.forEach((grid) => {
+  
+      this.ChestRigData.properties.grids.forEach((grid, index) => {
         const gridX = 20 + grid.x * 50;
         const gridY = 150 + grid.y * 50;
         const gridWidth = grid.width * 50;
         const gridHeight = grid.height * 50;
-
+  
+        // 현재 그리드 위치 및 크기 출력
+        console.log(`Grid ${index}: x=${gridX}, y=${gridY}, width=${gridWidth}, height=${gridHeight}`);
+  
+        // 드래그 중인 아이템의 위치 출력
+        console.log(`Dragged Item: x=${draggedItem.x}, y=${draggedItem.y}`);
+  
         // 드래그 중인 아이템이 그리드 영역 내에 있는지 확인
         if (
           draggedItem.x >= gridX &&
@@ -210,6 +216,7 @@ export default class BootScene extends Phaser.Scene {
       });
     }
   }
+  
 
   createBarterItemGrids() {
     let xOffset = this.cameras.main.width / 2 + 20;
