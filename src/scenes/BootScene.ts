@@ -100,26 +100,21 @@ export default class BootScene extends Phaser.Scene {
   }
 
   createGridInventory() {
-    if (this.ChestRigData && this.ChestRigData.hasGrid) {
-      const xOffsetStart = 20;
-      const yOffsetStart = 150;
-      const gridWidth = 50;
-      const gridHeight = 50;
+    if (this.ChestRigData) {
+      const gridGraphics = this.add.graphics();
+      gridGraphics.lineStyle(1, 0xffffff); // 흰색 선으로 그리드 테두리 설정
 
-      this.ChestRigData.properties.grids.forEach((grid, index) => {
-        let gridX = xOffsetStart + grid.x * gridWidth;
-        let gridY = yOffsetStart + grid.y * gridHeight;
-
-        // 그리드 그래픽 생성 및 그리기
-        let gridGraphic = this.add.graphics();
-        gridGraphic.lineStyle(1, 0xffffff);
-        gridGraphic.strokeRect(
-          gridX,
-          gridY,
-          grid.width * gridWidth,
-          grid.height * gridHeight
-        );
-      });
+      // 그리드 인벤토리 그리기
+      for (let x = 0; x < this.ChestRigData.width; x++) {
+        for (let y = 0; y < this.ChestRigData.height; y++) {
+          gridGraphics.strokeRect(
+            20 + x * 50, // X 위치
+            150 + y * 50, // Y 위치 (텍스트 아래에 위치)
+            50, // 칸 너비
+            50 // 칸 높이
+          );
+        }
+      }
     }
   }
 
