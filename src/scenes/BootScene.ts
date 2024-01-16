@@ -119,20 +119,6 @@ export default class BootScene extends Phaser.Scene {
           grid.width * gridWidth,
           grid.height * gridHeight
         );
-
-        // 인터랙티브 설정
-        gridGraphic.setInteractive(
-          new Phaser.Geom.Rectangle(
-            gridX,
-            gridY,
-            grid.width * gridWidth,
-            grid.height * gridHeight
-          ),
-          Phaser.Geom.Rectangle.Contains
-        );
-
-        // 드래그 가능하게 설정
-        this.input.setDraggable(gridGraphic);
       });
     }
   }
