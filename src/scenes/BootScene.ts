@@ -33,10 +33,12 @@ export default class BootScene extends Phaser.Scene {
     ) {
       // 무작위 인덱스를 얻음
       const randomIndex = this.getRandomIndex(chestRigResponse.data.items);
-    
+
       // 무작위로 선택된 ChestRigData
-      this.ChestRigData = chestRigResponse.data.items[randomIndex] as ChestRigData;
-    
+      this.ChestRigData = chestRigResponse.data.items[
+        randomIndex
+      ] as ChestRigData;
+
       this.createInventory();
       this.createItemData();
       console.log("Selected Chest Rig Data: ", this.ChestRigData);
@@ -147,19 +149,33 @@ export default class BootScene extends Phaser.Scene {
       this.ChestRigData.properties.grids.forEach((grid: GridSize) => {
         for (let x = 0; x < grid.width; x++) {
           for (let y = 0; y < grid.height; y++) {
-            gridGraphics.strokeRect(
-              xOffset + x * 50, // X 위치
-              yOffset + y * 50, // Y 위치
-              50, // 칸 너비
-              50 // 칸 높이
-            );
+            let gridX = xOffset + x * 50;
+            let gridY = yOffset + y * 50;
+
+            gridGraphics.strokeRect(gridX, gridY, 50, 50); // 칸 그리기
+
+            // 각 그리드를 인터랙티브하게 설정
+            let gridRect = new Phaser.GameObjects.Rectangle(
+              this,
+              gridX,
+              gridY,
+              50,
+              50
+            ).setInteractive();
+
+            this.add.existing(gridRect); // 씬에 추가
+
+            // 드래그 이벤트 리스너 추가
+            gridRect.on("pointerover", () => {
+              console.log(
+                "아이템이 체스트 리그 인벤토리 내부 그리드 위에 올라감"
+              );
+            });
           }
         }
 
-        // X 오프셋 업데이트 (다음 그리드의 X 위치를 위해)
+        // X, Y 오프셋 업데이트
         xOffset += grid.width * 50 + 10;
-
-        // 가로 방향으로 더 이상 그리드를 그릴 공간이 없으면 Y 오프셋 업데이트
         if (xOffset + grid.width * 50 > this.cameras.main.width) {
           xOffset = 20; // X 오프셋 리셋
           yOffset += grid.height * 50 + 10; // Y 오프셋 업데이트
