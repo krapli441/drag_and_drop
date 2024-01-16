@@ -217,9 +217,13 @@ export default class BootScene extends Phaser.Scene {
                 draggedItem.width <= grid.width &&
                 draggedItem.height <= grid.height
               ) {
-                console.log(`아이템을 '그리드 ${index}'에 놓을 수 있음.`);
+                console.log(
+                  `${draggedItem.shortName}은 '그리드 ${index}'에 놓을 수 있음.`
+                );
               } else {
-                console.log(`아이템을 '그리드 ${index}'에 놓을 수 없음.`);
+                console.log(
+                  `${draggedItem.shortName}은 '그리드 ${index}'에 놓을 수 없음.`
+                );
               }
             }
           }
