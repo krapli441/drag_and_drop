@@ -13,6 +13,10 @@ export default class BootScene extends Phaser.Scene {
   private draggedItemData: DraggedItemData | null = null;
   private selectedBarterItems: BarterItemData[] = [];
 
+  getRandomIndex(items: any[]): number {
+    return Math.floor(Math.random() * items.length);
+  }
+
   constructor() {
     super("BootScene");
   }
@@ -27,7 +31,12 @@ export default class BootScene extends Phaser.Scene {
       chestRigResponse.data &&
       chestRigResponse.data.items.length > 0
     ) {
-      this.ChestRigData = chestRigResponse.data.items[0] as ChestRigData;
+      // 무작위 인덱스를 얻음
+      const randomIndex = this.getRandomIndex(chestRigResponse.data.items);
+    
+      // 무작위로 선택된 ChestRigData
+      this.ChestRigData = chestRigResponse.data.items[randomIndex] as ChestRigData;
+    
       this.createInventory();
       this.createItemData();
       console.log("Selected Chest Rig Data: ", this.ChestRigData);
