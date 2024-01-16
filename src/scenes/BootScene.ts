@@ -273,6 +273,7 @@ export default class BootScene extends Phaser.Scene {
       ]);
 
       (itemContainer as any).itemData = item;
+      (itemContainer as any).itemGraphic = itemGraphic;
 
       // 컨테이너 인터랙티브하게 설정
       itemContainer.setInteractive(
