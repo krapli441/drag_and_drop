@@ -133,6 +133,11 @@ export default class BootScene extends Phaser.Scene {
 
         // 드래그 가능하게 설정
         this.input.setDraggable(gridGraphic);
+
+        // pointerover 이벤트 리스너 추가
+        gridGraphic.on("pointerover", () => {
+          console.log("아이템이 체스트 리그 인벤토리 위에 올라감");
+        });
       });
     }
   }
@@ -255,7 +260,7 @@ export default class BootScene extends Phaser.Scene {
               id: itemData.id,
             };
 
-            console.log("드래그 중인 아이템: ", this.draggedItemData);
+            // console.log("드래그 중인 아이템: ", this.draggedItemData);
           }
         }
       }
