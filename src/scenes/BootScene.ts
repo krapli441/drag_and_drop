@@ -152,7 +152,8 @@ export default class BootScene extends Phaser.Scene {
             let gridX = xOffset + x * 50;
             let gridY = yOffset + y * 50;
             gridGraphics.strokeRect(gridX, gridY, 50, 50); // 칸 그리기
-            console.log(`Grid ${index}: x=${gridX}, y=${gridY}, width=50, height=50`);
+            console.log(`Grid ${index}`, grid);
+            // console.log(`Grid ${index}: x=${gridX}, y=${gridY}, width=50, height=50`);
             // 각 그리드를 인터랙티브하게 설정
             let gridRect = new Phaser.GameObjects.Rectangle(
               this,
