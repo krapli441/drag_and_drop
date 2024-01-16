@@ -186,11 +186,12 @@ export default class BootScene extends Phaser.Scene {
 
   update() {
     if (
+      this.draggedItemData &&
       this.ChestRigData &&
       this.ChestRigData.properties &&
-      this.draggedItemData
+      this.ChestRigData.properties.grids
     ) {
-      const draggedItem = this.draggedItemData; // 로컬 변수에 할당
+      const draggedItem = this.draggedItemData;
 
       this.ChestRigData.properties.grids.forEach((grid) => {
         const gridX = 20 + grid.x * 50;
@@ -200,12 +201,12 @@ export default class BootScene extends Phaser.Scene {
 
         // 드래그 중인 아이템이 그리드 영역 내에 있는지 확인
         if (
-          draggedItem.x > gridX &&
-          draggedItem.x < gridX + gridWidth &&
-          draggedItem.y > gridY &&
-          draggedItem.y < gridY + gridHeight
+          draggedItem.x >= gridX &&
+          draggedItem.x <= gridX + gridWidth &&
+          draggedItem.y >= gridY &&
+          draggedItem.y <= gridY + gridHeight
         ) {
-          console.log("아이템이 체스트 리그 인벤토리 위에 올라감");
+          console.log("아이템이 체스트 리그 인벤토리 내부 그리드 위에 올라감");
         }
       });
     }
