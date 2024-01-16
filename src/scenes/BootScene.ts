@@ -193,29 +193,29 @@ export default class BootScene extends Phaser.Scene {
       const draggedItem = this.draggedItemData;
   
       this.ChestRigData.properties.grids.forEach((grid, index) => {
-        const gridX = 20 + grid.x * 50;
-        const gridY = 150 + grid.y * 50;
-        const gridWidth = grid.width * 50;
-        const gridHeight = grid.height * 50;
+        if (grid.x !== undefined && grid.y !== undefined) {
+          const gridX = 20 + grid.x * 50;
+          const gridY = 150 + grid.y * 50;
+          const gridWidth = grid.width * 50;
+          const gridHeight = grid.height * 50;
   
-        // 현재 그리드 위치 및 크기 출력
-        console.log(`Grid ${index}: x=${gridX}, y=${gridY}, width=${gridWidth}, height=${gridHeight}`);
-  
-        // 드래그 중인 아이템의 위치 출력
-        console.log(`Dragged Item: x=${draggedItem.x}, y=${draggedItem.y}`);
-  
-        // 드래그 중인 아이템이 그리드 영역 내에 있는지 확인
-        if (
-          draggedItem.x >= gridX &&
-          draggedItem.x <= gridX + gridWidth &&
-          draggedItem.y >= gridY &&
-          draggedItem.y <= gridY + gridHeight
-        ) {
-          console.log("아이템이 체스트 리그 인벤토리 내부 그리드 위에 올라감");
+          // 조건에 따라 콘솔 로그 출력
+          if (
+            draggedItem.x >= gridX &&
+            draggedItem.x <= gridX + gridWidth &&
+            draggedItem.y >= gridY &&
+            draggedItem.y <= gridY + gridHeight
+          ) {
+            console.log(`Grid ${index}에 아이템이 올라감: x=${gridX}, y=${gridY}, width=${gridWidth}, height=${gridHeight}`);
+            console.log(`Dragged Item: x=${draggedItem.x}, y=${draggedItem.y}`);
+          }
+        } else {
+          console.log(`Grid ${index}의 x 또는 y 값이 정의되지 않음`);
         }
       });
     }
   }
+  
   
 
   createBarterItemGrids() {
