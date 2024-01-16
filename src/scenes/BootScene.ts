@@ -185,24 +185,35 @@ export default class BootScene extends Phaser.Scene {
   }
 
   update() {
-    if (this.draggedItemData && this.ChestRigData && this.ChestRigData.properties && this.ChestRigData.properties.grids) {
+    if (
+      this.draggedItemData &&
+      this.ChestRigData &&
+      this.ChestRigData.properties &&
+      this.ChestRigData.properties.grids
+    ) {
       const draggedItem = this.draggedItemData;
       let xOffset = 20; // 시작 X 위치
       let yOffset = 150 + this.ChestRigData.height * 50 + 20; // 시작 Y 위치
-  
+
       this.ChestRigData.properties.grids.forEach((grid, index) => {
         for (let x = 0; x < grid.width; x++) {
           for (let y = 0; y < grid.height; y++) {
             let gridX = xOffset + x * 50;
             let gridY = yOffset + y * 50;
-  
-            if (draggedItem.x >= gridX && draggedItem.x <= gridX + 50 &&
-                draggedItem.y >= gridY && draggedItem.y <= gridY + 50) {
-              console.log("아이템이 체스트 리그 인벤토리 내부 그리드 위에 올라감");
+
+            if (
+              draggedItem.x >= gridX &&
+              draggedItem.x <= gridX + 50 &&
+              draggedItem.y >= gridY &&
+              draggedItem.y <= gridY + 50
+            ) {
+              console.log(
+                `아이템이 체스트 리그 인벤토리 내부 '그리드 ${index}' 위에 올라감`
+              );
             }
           }
         }
-  
+
         // X, Y 오프셋 업데이트
         xOffset += grid.width * 50 + 10;
         if (xOffset + grid.width * 50 > this.cameras.main.width) {
@@ -212,7 +223,6 @@ export default class BootScene extends Phaser.Scene {
       });
     }
   }
-  
 
   createBarterItemGrids() {
     let xOffset = this.cameras.main.width / 2 + 20;
