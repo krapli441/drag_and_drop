@@ -112,7 +112,7 @@ export default class BootScene extends Phaser.Scene {
 
         // 그리드 그래픽 생성 및 그리기
         let gridGraphic = this.add.graphics();
-        gridGraphic.lineStyle(1, 0x00ff00);
+        gridGraphic.lineStyle(1, 0xffffff);
         gridGraphic.strokeRect(
           gridX,
           gridY,
