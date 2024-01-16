@@ -35,4 +35,5 @@ export interface DraggedItemData {
   height: number;
   x: number;
   y: number;
+  gameObject: Phaser.GameObjects.Container;
 }

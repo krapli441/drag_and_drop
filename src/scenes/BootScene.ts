@@ -217,10 +217,34 @@ export default class BootScene extends Phaser.Scene {
                 draggedItem.width <= grid.width &&
                 draggedItem.height <= grid.height
               ) {
+                (
+                  draggedItem.gameObject
+                    .itemGraphic as Phaser.GameObjects.Graphics
+                )
+                  .clear()
+                  .fillStyle(0x00ff00, 1) // 초록색으로 채우기
+                  .fillRect(
+                    0,
+                    0,
+                    draggedItem.width * 50,
+                    draggedItem.height * 50
+                  );
                 console.log(
                   `${draggedItem.shortName}은 '그리드 ${index}'에 놓을 수 있음.`
                 );
               } else {
+                (
+                  draggedItem.gameObject
+                    .itemGraphic as Phaser.GameObjects.Graphics
+                )
+                  .clear()
+                  .fillStyle(0xff0000, 1) // 빨간색으로 채우기
+                  .fillRect(
+                    0,
+                    0,
+                    draggedItem.width * 50,
+                    draggedItem.height * 50
+                  );
                 console.log(
                   `${draggedItem.shortName}은 '그리드 ${index}'에 놓을 수 없음.`
                 );
@@ -315,6 +339,7 @@ export default class BootScene extends Phaser.Scene {
               height: itemData.height,
               shortName: itemData.shortName,
               id: itemData.id,
+              gameObject: gameObject,
             };
 
             // console.log("드래그 중인 아이템: ", this.draggedItemData);
