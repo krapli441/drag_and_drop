@@ -210,6 +210,9 @@ export default class BootScene extends Phaser.Scene {
               console.log(
                 `아이템이 체스트 리그 인벤토리 내부 '그리드 ${index}' 위에 올라감`
               );
+              console.log(
+                `드래그 중인 아이템 : ${draggedItem.shortName}, ${draggedItem.id}, ${draggedItem.width}, ${draggedItem.height}`
+              );
             }
           }
         }
