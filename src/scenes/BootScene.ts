@@ -185,38 +185,34 @@ export default class BootScene extends Phaser.Scene {
   }
 
   update() {
-    if (
-      this.draggedItemData &&
-      this.ChestRigData &&
-      this.ChestRigData.properties &&
-      this.ChestRigData.properties.grids
-    ) {
+    if (this.draggedItemData && this.ChestRigData && this.ChestRigData.properties && this.ChestRigData.properties.grids) {
       const draggedItem = this.draggedItemData;
-
+      let xOffset = 20; // 시작 X 위치
+      let yOffset = 150 + this.ChestRigData.height * 50 + 20; // 시작 Y 위치
+  
       this.ChestRigData.properties.grids.forEach((grid, index) => {
-        if (grid.x !== undefined && grid.y !== undefined) {
-          const gridX = 20 + grid.x * 50;
-          const gridY = 150 + grid.y * 50;
-          const gridWidth = grid.width * 50;
-          const gridHeight = grid.height * 50;
-          // 조건에 따라 콘솔 로그 출력
-          if (
-            draggedItem.x >= gridX &&
-            draggedItem.x <= gridX + gridWidth &&
-            draggedItem.y >= gridY &&
-            draggedItem.y <= gridY + gridHeight
-          ) {
-            console.log(
-              `Grid ${index}에 아이템이 올라감: x=${gridX}, y=${gridY}, width=${gridWidth}, height=${gridHeight}`
-            );
-            console.log(`Dragged Item: x=${draggedItem.x}, y=${draggedItem.y}`);
+        for (let x = 0; x < grid.width; x++) {
+          for (let y = 0; y < grid.height; y++) {
+            let gridX = xOffset + x * 50;
+            let gridY = yOffset + y * 50;
+  
+            if (draggedItem.x >= gridX && draggedItem.x <= gridX + 50 &&
+                draggedItem.y >= gridY && draggedItem.y <= gridY + 50) {
+              console.log("아이템이 체스트 리그 인벤토리 내부 그리드 위에 올라감");
+            }
           }
-        } else {
-          console.log(`Grid ${index}의 x 또는 y 값이 정의되지 않음`);
+        }
+  
+        // X, Y 오프셋 업데이트
+        xOffset += grid.width * 50 + 10;
+        if (xOffset + grid.width * 50 > this.cameras.main.width) {
+          xOffset = 20;
+          yOffset += grid.height * 50 + 10;
         }
       });
     }
   }
+  
 
   createBarterItemGrids() {
     let xOffset = this.cameras.main.width / 2 + 20;
