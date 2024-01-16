@@ -254,6 +254,8 @@ export default class BootScene extends Phaser.Scene {
               shortName: itemData.shortName,
               id: itemData.id,
             };
+
+            console.log("드래그 중인 아이템: ", this.draggedItemData);
           }
         }
       }
