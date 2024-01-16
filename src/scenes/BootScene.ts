@@ -192,14 +192,13 @@ export default class BootScene extends Phaser.Scene {
       this.ChestRigData.properties.grids
     ) {
       const draggedItem = this.draggedItemData;
-  
+
       this.ChestRigData.properties.grids.forEach((grid, index) => {
         if (grid.x !== undefined && grid.y !== undefined) {
           const gridX = 20 + grid.x * 50;
           const gridY = 150 + grid.y * 50;
           const gridWidth = grid.width * 50;
           const gridHeight = grid.height * 50;
-  
           // 조건에 따라 콘솔 로그 출력
           if (
             draggedItem.x >= gridX &&
@@ -207,7 +206,9 @@ export default class BootScene extends Phaser.Scene {
             draggedItem.y >= gridY &&
             draggedItem.y <= gridY + gridHeight
           ) {
-            console.log(`Grid ${index}에 아이템이 올라감: x=${gridX}, y=${gridY}, width=${gridWidth}, height=${gridHeight}`);
+            console.log(
+              `Grid ${index}에 아이템이 올라감: x=${gridX}, y=${gridY}, width=${gridWidth}, height=${gridHeight}`
+            );
             console.log(`Dragged Item: x=${draggedItem.x}, y=${draggedItem.y}`);
           }
         } else {
@@ -216,8 +217,6 @@ export default class BootScene extends Phaser.Scene {
       });
     }
   }
-  
-  
 
   createBarterItemGrids() {
     let xOffset = this.cameras.main.width / 2 + 20;
