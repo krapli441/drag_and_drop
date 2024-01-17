@@ -364,6 +364,7 @@ export default class BootScene extends Phaser.Scene {
         console.log("드래그 이벤트 종료"); // 드래그 이벤트 종료 확인
 
         const itemData = (gameObject as any).itemData as BarterItemData;
+        console.log("드래그 종료된 아이템 데이터 : ", itemData)
         if (!itemData || !this.ChestRigData || !this.ChestRigData.properties) {
           console.log("필요한 데이터가 없음");
           return;
