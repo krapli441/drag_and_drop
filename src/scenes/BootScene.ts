@@ -329,7 +329,7 @@ export default class BootScene extends Phaser.Scene {
         dragX: number,
         dragY: number
       ) => {
-        if (gameObject instanceof Phaser.GameObjects.Container) {
+        if (gameObject instanceof CustomContainer) {
           gameObject.x = dragX;
           gameObject.y = dragY;
 

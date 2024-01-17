@@ -1,5 +1,6 @@
 import Item from "./Item";
 import Grid from "./Grid";
+import { CustomContainer } from "../customContainer";
 
 export interface ChestRigProperties {
   grids: Grid[];
@@ -35,5 +36,5 @@ export interface DraggedItemData {
   height: number;
   x: number;
   y: number;
-  gameObject: Phaser.GameObjects.Container;
+  gameObject: CustomContainer;
 }
