@@ -369,13 +369,14 @@ export default class BootScene extends Phaser.Scene {
           return;
         }
 
+        let xOffset = 20; // 시작 X 위치
+        let yOffset = 150 + this.ChestRigData.height * 50 + 20; // 시작 Y 위치
+
         // 각 그리드를 확인하며 드래그 종료 위치가 그리드 내에 있는지 확인
         this.ChestRigData.properties.grids.forEach((grid, index) => {
-          let gridX = 20 + grid.x * 50;
-          let gridY = 150 + grid.y * 50;
-
-          grid.x = gridX;
-          grid.y = gridY;
+          // grid.x 및 grid.y가 행과 열 번호를 나타내는 경우, 실제 픽셀 위치를 계산
+          let gridX = xOffset + grid.x * 50;
+          let gridY = yOffset + grid.y * 50;
 
           console.log(`그리드 ${index}의 x, y 값: `, grid.x, grid.y);
           console.log(`그리드 ${index} 위치: x=${gridX}, y=${gridY}`);
