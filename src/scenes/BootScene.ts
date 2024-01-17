@@ -375,10 +375,9 @@ export default class BootScene extends Phaser.Scene {
         // 각 그리드를 확인하며 드래그 종료 위치가 그리드 내에 있는지 확인
         this.ChestRigData.properties.grids.forEach((grid, index) => {
           // grid.x 및 grid.y가 행과 열 번호를 나타내는 경우, 실제 픽셀 위치를 계산
-          let gridX = xOffset + grid.x * 50;
-          let gridY = yOffset + grid.y * 50;
+          let gridX = xOffset + index * 50; // grid.x 대신 index 사용
+          let gridY = yOffset; // grid.y 대신 yOffset 사용
 
-          console.log(`그리드 ${index}의 x, y 값: `, grid.x, grid.y);
           console.log(`그리드 ${index} 위치: x=${gridX}, y=${gridY}`);
 
           if (
