@@ -166,12 +166,12 @@ export default class BootScene extends Phaser.Scene {
 
             this.add.existing(gridRect); // 씬에 추가
 
-            // 드래그 이벤트 리스너 추가
-            gridRect.on("pointerover", () => {
-              console.log(
-                "아이템이 체스트 리그 인벤토리 내부 그리드 위에 올라감"
-              );
-            });
+            // // 드래그 이벤트 리스너 추가
+            // gridRect.on("pointerover", () => {
+            //   console.log(
+            //     "아이템이 체스트 리그 인벤토리 내부 그리드 위에 올라감"
+            //   );
+            // });
           }
         }
 
@@ -208,9 +208,6 @@ export default class BootScene extends Phaser.Scene {
               draggedItem.y >= gridY &&
               draggedItem.y <= gridY + 50
             ) {
-              console.log(
-                `아이템이 체스트 리그 인벤토리 내부 '그리드 ${index}' 위에 올라감`
-              );
               console.log(
                 `드래그 중인 아이템 : ${draggedItem.shortName}, ${draggedItem.id}, ${draggedItem.width}, ${draggedItem.height}`
               );
