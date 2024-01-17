@@ -6,6 +6,7 @@ import {
   DraggedItemData,
 } from "./InventoryClass/InventoryInterface";
 import { loadChestRigData, loadBarterItemsData } from "./api";
+import { CustomContainer } from "./customContainer";
 
 export default class BootScene extends Phaser.Scene {
   private inventory: Inventory | null = null;
@@ -291,10 +292,11 @@ export default class BootScene extends Phaser.Scene {
         .setOrigin(0.5, 0.5);
 
       // 컨테이너 생성 및 아이템 그래픽과 텍스트 추가
-      let itemContainer = this.add.container(xOffset, yOffset, [
+      let itemContainer = new CustomContainer(this, xOffset, yOffset, [
         itemGraphic,
         itemText,
       ]);
+      itemContainer.itemGraphic = itemGraphic; // 커스텀 속성에 그래픽 객체 할당
 
       (itemContainer as any).itemData = item;
       (itemContainer as any).itemGraphic = itemGraphic;
@@ -314,6 +316,8 @@ export default class BootScene extends Phaser.Scene {
         xOffset = this.cameras.main.width / 2 + 20;
         yOffset += item.height * 50 + 10;
       }
+
+      this.add.existing(itemContainer);
     });
 
     // 전역 드래그 이벤트 리스너 추가
