@@ -154,7 +154,7 @@ export default class BootScene extends Phaser.Scene {
             let gridY = yOffset + y * 50;
             gridGraphics.strokeRect(gridX, gridY, 50, 50); // 칸 그리기
             console.log(`Grid ${index}`, grid);
-            // console.log(`Grid ${index}: x=${gridX}, y=${gridY}, width=50, height=50`);
+            console.log(`Grid ${index}: x=${gridX}, y=${gridY}, width=50, height=50`);
             // 각 그리드를 인터랙티브하게 설정
             let gridRect = new Phaser.GameObjects.Rectangle(
               this,
@@ -356,20 +356,21 @@ export default class BootScene extends Phaser.Scene {
         gameObject: Phaser.GameObjects.GameObject
       ) => {
         console.log("드래그 이벤트 종료"); // 드래그 이벤트 종료 확인
-    
+
         const itemData = (gameObject as any).itemData as BarterItemData;
         if (!itemData || !this.ChestRigData || !this.ChestRigData.properties) {
           console.log("필요한 데이터가 없음");
           return;
         }
-    
+
         // 각 그리드를 확인하며 드래그 종료 위치가 그리드 내에 있는지 확인
         this.ChestRigData.properties.grids.forEach((grid, index) => {
           let gridX = 20 + grid.x * 50;
           let gridY = 150 + grid.y * 50;
-    
-          console.log(`그리드 ${index} 위치: x=${gridX}, y=${gridY}`); // 그리드 위치 확인
-    
+
+          console.log(`그리드 ${index}의 x, y 값: `, grid.x, grid.y);
+          console.log(`그리드 ${index} 위치: x=${gridX}, y=${gridY}`);
+
           if (
             pointer.x >= gridX &&
             pointer.x <= gridX + grid.width * 50 &&
@@ -377,7 +378,6 @@ export default class BootScene extends Phaser.Scene {
             pointer.y <= gridY + grid.height * 50
           ) {
             console.log(`포인터 위치: x=${pointer.x}, y=${pointer.y}`); // 포인터 위치 확인
-    
             // 아이템 크기 확인
             if (
               itemData.width <= grid.width &&
@@ -397,6 +397,5 @@ export default class BootScene extends Phaser.Scene {
         });
       }
     );
-    ;
   }
 }
