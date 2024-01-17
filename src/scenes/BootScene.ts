@@ -227,9 +227,9 @@ export default class BootScene extends Phaser.Scene {
                     draggedItem.width * 50,
                     draggedItem.height * 50
                   );
-                console.log(
-                  `${draggedItem.shortName}은 '그리드 ${index}'에 놓을 수 있음.`
-                );
+                // console.log(
+                //   `${draggedItem.shortName}은 '그리드 ${index}'에 놓을 수 있음.`
+                // );
               } else {
                 (
                   draggedItem.gameObject
@@ -346,6 +346,43 @@ export default class BootScene extends Phaser.Scene {
             // console.log("드래그 중인 아이템: ", this.draggedItemData);
           }
         }
+      }
+    );
+
+    this.input.on(
+      "dragend",
+      (
+        pointer: Phaser.Input.Pointer,
+        gameObject: Phaser.GameObjects.GameObject
+      ) => {
+        const itemData = (gameObject as any).itemData as BarterItemData;
+        if (!itemData || !this.ChestRigData || !this.ChestRigData.properties)
+          return;
+
+        // 각 그리드를 확인하며 드래그 종료 위치가 그리드 내에 있는지 확인
+        this.ChestRigData.properties.grids.forEach((grid, index) => {
+          let gridX = 20 + grid.x * 50;
+          let gridY = 150 + grid.y * 50;
+
+          if (
+            pointer.x >= gridX &&
+            pointer.x <= gridX + grid.width * 50 &&
+            pointer.y >= gridY &&
+            pointer.y <= gridY + grid.height * 50
+          ) {
+            // 아이템 크기 확인
+            if (
+              itemData.width <= grid.width &&
+              itemData.height <= grid.height
+            ) {
+              // 아이템을 그리드에 추가
+              grid.item = itemData;
+              console.log(
+                `아이템 ${itemData.shortName}이(가) '그리드 ${index}'에 추가됨`
+              );
+            }
+          }
+        });
       }
     );
   }
