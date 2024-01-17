@@ -145,6 +145,8 @@ export default class BootScene extends Phaser.Scene {
       interface GridSize {
         width: number;
         height: number;
+        x: number;
+        y: number;
       }
 
       this.ChestRigData.properties.grids.forEach((grid: GridSize, index) => {
@@ -152,9 +154,13 @@ export default class BootScene extends Phaser.Scene {
           for (let y = 0; y < grid.height; y++) {
             let gridX = xOffset + x * 50;
             let gridY = yOffset + y * 50;
+            grid.x = gridX;
+            grid.y = gridY;
             gridGraphics.strokeRect(gridX, gridY, 50, 50); // 칸 그리기
             console.log(`Grid ${index}`, grid);
-            console.log(`Grid ${index}: x=${gridX}, y=${gridY}, width=50, height=50`);
+            console.log(
+              `Grid ${index}: x=${gridX}, y=${gridY}, width=50, height=50`
+            );
             // 각 그리드를 인터랙티브하게 설정
             let gridRect = new Phaser.GameObjects.Rectangle(
               this,
@@ -367,6 +373,9 @@ export default class BootScene extends Phaser.Scene {
         this.ChestRigData.properties.grids.forEach((grid, index) => {
           let gridX = 20 + grid.x * 50;
           let gridY = 150 + grid.y * 50;
+
+          grid.x = gridX;
+          grid.y = gridY;
 
           console.log(`그리드 ${index}의 x, y 값: `, grid.x, grid.y);
           console.log(`그리드 ${index} 위치: x=${gridX}, y=${gridY}`);
