@@ -4,6 +4,7 @@ import {
   ChestRigData,
   BarterItemData,
   DraggedItemData,
+  GridSize,
 } from "./InventoryClass/InventoryInterface";
 import { loadChestRigData, loadBarterItemsData } from "./api";
 import { CustomContainer } from "./customContainer";
@@ -142,26 +143,17 @@ export default class BootScene extends Phaser.Scene {
       let xOffset = 20; // 시작 X 위치
       let yOffset = 150 + this.ChestRigData.height * 50 + 20; // 시작 Y 위치 (기존 그리드 아래에 위치)
 
-      interface GridSize {
-        width: number;
-        height: number;
-        x: number;
-        y: number;
-      }
-
-      this.ChestRigData.properties.grids.forEach((grid: GridSize, index) => {
+      this.ChestRigData.properties.grids.forEach((grid, index) => {
         for (let x = 0; x < grid.width; x++) {
           for (let y = 0; y < grid.height; y++) {
             let gridX = xOffset + x * 50;
             let gridY = yOffset + y * 50;
+
             grid.x = gridX;
             grid.y = gridY;
+
             gridGraphics.strokeRect(gridX, gridY, 50, 50); // 칸 그리기
-            // console.log(`Grid ${index}`, grid);
-            // console.log(
-            //   `Grid ${index}: x=${gridX}, y=${gridY}, width=50, height=50`
-            // );
-            // 각 그리드를 인터랙티브하게 설정
+
             let gridRect = new Phaser.GameObjects.Rectangle(
               this,
               gridX,
@@ -169,25 +161,21 @@ export default class BootScene extends Phaser.Scene {
               50,
               50
             ).setInteractive();
-
-            this.add.existing(gridRect); // 씬에 추가
-
-            // // 드래그 이벤트 리스너 추가
-            // gridRect.on("pointerover", () => {
-            //   console.log(
-            //     "아이템이 체스트 리그 인벤토리 내부 그리드 위에 올라감"
-            //   );
-            // });
+            this.add.existing(gridRect);
           }
         }
 
-        // X, Y 오프셋 업데이트
         xOffset += grid.width * 50 + 10;
         if (xOffset + grid.width * 50 > this.cameras.main.width) {
-          xOffset = 20; // X 오프셋 리셋
-          yOffset += grid.height * 50 + 10; // Y 오프셋 업데이트
+          xOffset = 20;
+          yOffset += grid.height * 50 + 10;
         }
       });
+
+      console.log(
+        "레이아웃 그린 후 그리드 정보 : ",
+        this.ChestRigData.properties.grids
+      );
     }
   }
 
@@ -378,7 +366,7 @@ export default class BootScene extends Phaser.Scene {
           let gridX = xOffset + index * 50; // grid.x 대신 index 사용
           let gridY = yOffset; // grid.y 대신 yOffset 사용
 
-          // console.log(`그리드 ${index} 위치: x=${gridX}, y=${gridY}`);
+          console.log(`드래그 앤 드롭 ${index} 위치: x=${gridX}, y=${gridY}`);
 
           if (
             pointer.x >= gridX &&

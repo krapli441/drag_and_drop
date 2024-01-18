@@ -38,3 +38,10 @@ export interface DraggedItemData {
   y: number;
   gameObject: CustomContainer;
 }
+
+export interface GridSize {
+  width: number;
+  height: number;
+  x: number;
+  y: number;
+}
