@@ -355,30 +355,32 @@ export default class BootScene extends Phaser.Scene {
           return;
         }
 
-        let xOffset = 20; // 시작 X 위치
-        let yOffset = 150 + this.ChestRigData.height * 50 + 20; // 시작 Y 위치
         this.ChestRigData.properties.grids.forEach((grid, index) => {
-          // 감지 영역을 위로 50픽셀 이동
-          let adjustedGridY = grid.y - 50;
+          // 그리드의 전체 영역 계산
+          let gridStartX = grid.x;
+          let gridEndX = grid.x + grid.width * 50;
+          let gridStartY = grid.y;
+          let gridEndY = grid.y + grid.height * 50;
 
+          // 포인터 위치가 그리드 영역 내에 있는지 확인
           if (
-            pointer.x >= grid.x &&
-            pointer.x <= grid.x + grid.width * 50 &&
-            pointer.y >= adjustedGridY &&
-            pointer.y <= adjustedGridY + grid.height * 50
+            pointer.x >= gridStartX &&
+            pointer.x < gridEndX &&
+            pointer.y >= gridStartY &&
+            pointer.y < gridEndY
           ) {
+            // 아이템 크기 확인
             if (
               itemData.width <= grid.width &&
               itemData.height <= grid.height
             ) {
-              grid.item = itemData;
+              grid.item = itemData; // 아이템을 그리드에 추가
               console.log(
-                `아이템 ${itemData.shortName}이(가) '그리드 ${index}'에 추가됨`
+                `아이템 '${itemData.shortName}'이(가) '그리드 ${index}'에 추가됨`
               );
-              console.log(`그리드 ${index} 정보: `, grid);
             } else {
               console.log(
-                `아이템 ${itemData.shortName}은(는) '그리드 ${index}'에 넣을 수 없음`
+                `아이템 '${itemData.shortName}'은(는) '그리드 ${index}'에 넣을 수 없음`
               );
             }
           }
