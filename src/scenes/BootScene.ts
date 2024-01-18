@@ -349,11 +349,7 @@ export default class BootScene extends Phaser.Scene {
         pointer: Phaser.Input.Pointer,
         gameObject: Phaser.GameObjects.GameObject
       ) => {
-        // console.log("드래그 이벤트 종료");
-
         const itemData = (gameObject as any).itemData as BarterItemData;
-        // console.log("드래그 종료된 아이템 데이터 : ", itemData);
-
         if (!itemData || !this.ChestRigData || !this.ChestRigData.properties) {
           console.log("필요한 데이터가 없음");
           return;
@@ -369,12 +365,19 @@ export default class BootScene extends Phaser.Scene {
             pointer.y >= grid.y &&
             pointer.y <= grid.y + grid.height * 50
           ) {
-            if (itemData.width <= grid.width && itemData.height <= grid.height) {
+            if (
+              itemData.width <= grid.width &&
+              itemData.height <= grid.height
+            ) {
               grid.item = itemData;
-              console.log(`아이템 ${itemData.shortName}이(가) '그리드 ${index}'에 추가됨`);
+              console.log(
+                `아이템 ${itemData.shortName}이(가) '그리드 ${index}'에 추가됨`
+              );
               console.log(`그리드 ${index} 정보: `, grid);
             } else {
-              console.log(`아이템 ${itemData.shortName}은(는) '그리드 ${index}'에 넣을 수 없음`);
+              console.log(
+                `아이템 ${itemData.shortName}은(는) '그리드 ${index}'에 넣을 수 없음`
+              );
             }
           }
         });
