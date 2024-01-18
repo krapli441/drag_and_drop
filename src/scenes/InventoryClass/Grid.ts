@@ -6,12 +6,16 @@ export default class Grid {
   item: Item | null;
   x: number;
   y: number;
+  endX: number;
+  endY: number;
 
-  constructor(width: number, height: number, x: number, y: number) {
+  constructor(width: number, height: number, x: number, y: number, endX: number, endY: number) {
     this.width = width;
     this.height = height;
     this.x = x;
     this.y = y;
+    this.endX = endX;
+    this.endY = endY;
     this.item = null;
   }
 
