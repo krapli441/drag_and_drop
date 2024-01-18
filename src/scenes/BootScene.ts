@@ -361,25 +361,25 @@ export default class BootScene extends Phaser.Scene {
         pointer: Phaser.Input.Pointer,
         gameObject: Phaser.GameObjects.GameObject
       ) => {
-        console.log("드래그 이벤트 종료");
-    
+        // console.log("드래그 이벤트 종료");
+
         const itemData = (gameObject as any).itemData as BarterItemData;
-        console.log("드래그 종료된 아이템 데이터 : ", itemData);
-    
+        // console.log("드래그 종료된 아이템 데이터 : ", itemData);
+
         if (!itemData || !this.ChestRigData || !this.ChestRigData.properties) {
           console.log("필요한 데이터가 없음");
           return;
         }
-    
+
         let xOffset = 20; // 시작 X 위치
         let yOffset = 150 + this.ChestRigData.height * 50 + 20; // 시작 Y 위치
-    
+
         this.ChestRigData.properties.grids.forEach((grid, index) => {
           let gridX = xOffset + index * 50; // grid.x 대신 index 사용
           let gridY = yOffset; // grid.y 대신 yOffset 사용
-    
+
           // console.log(`그리드 ${index} 위치: x=${gridX}, y=${gridY}`);
-    
+
           if (
             pointer.x >= gridX &&
             pointer.x <= gridX + grid.width * 50 &&
@@ -387,21 +387,27 @@ export default class BootScene extends Phaser.Scene {
             pointer.y <= gridY + grid.height * 50
           ) {
             // console.log(`포인터 위치: x=${pointer.x}, y=${pointer.y}`);
-            
+
             // 아이템 크기 확인
-            if (itemData.width <= grid.width && itemData.height <= grid.height) {
+            if (
+              itemData.width <= grid.width &&
+              itemData.height <= grid.height
+            ) {
               grid.item = itemData;
-              console.log(`아이템 ${itemData.shortName}이(가) '그리드 ${index}'에 추가됨`);
+              console.log(
+                `아이템 ${itemData.shortName}이(가) '그리드 ${index}'에 추가됨`
+              );
               // 아이템이 추가된 그리드의 정보 출력
               console.log(`그리드 ${index} 정보: `, grid);
+              console.log(this.ChestRigData);
             } else {
-              console.log(`아이템 ${itemData.shortName}은(는) '그리드 ${index}'에 넣을 수 없음`);
+              console.log(
+                `아이템 ${itemData.shortName}은(는) '그리드 ${index}'에 넣을 수 없음`
+              );
             }
           }
         });
       }
     );
-    
-    
   }
 }
