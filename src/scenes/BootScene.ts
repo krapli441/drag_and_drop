@@ -357,13 +357,15 @@ export default class BootScene extends Phaser.Scene {
 
         let xOffset = 20; // 시작 X 위치
         let yOffset = 150 + this.ChestRigData.height * 50 + 20; // 시작 Y 위치
-
         this.ChestRigData.properties.grids.forEach((grid, index) => {
+          // 감지 영역을 위로 50픽셀 이동
+          let adjustedGridY = grid.y - 50;
+
           if (
             pointer.x >= grid.x &&
             pointer.x <= grid.x + grid.width * 50 &&
-            pointer.y >= grid.y &&
-            pointer.y <= grid.y + grid.height * 50
+            pointer.y >= adjustedGridY &&
+            pointer.y <= adjustedGridY + grid.height * 50
           ) {
             if (
               itemData.width <= grid.width &&
