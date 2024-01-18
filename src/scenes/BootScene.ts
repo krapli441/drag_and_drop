@@ -358,30 +358,21 @@ export default class BootScene extends Phaser.Scene {
         this.ChestRigData.properties.grids.forEach((grid, index) => {
           // 그리드의 전체 영역 계산
           let gridStartX = grid.x;
-          let gridEndX = grid.x + grid.width * 50;
+          let gridEndX = grid.x + (grid.width * 50);
           let gridStartY = grid.y;
-          let gridEndY = grid.y + grid.height * 50;
-
+          let gridEndY = grid.y + (grid.height * 50);
+    
           // 포인터 위치가 그리드 영역 내에 있는지 확인
           if (
-            pointer.x >= gridStartX &&
-            pointer.x < gridEndX &&
-            pointer.y >= gridStartY &&
-            pointer.y < gridEndY
+            pointer.x >= gridStartX && pointer.x < gridEndX &&
+            pointer.y >= gridStartY && pointer.y < gridEndY
           ) {
             // 아이템 크기 확인
-            if (
-              itemData.width <= grid.width &&
-              itemData.height <= grid.height
-            ) {
+            if (itemData.width <= grid.width && itemData.height <= grid.height) {
               grid.item = itemData; // 아이템을 그리드에 추가
-              console.log(
-                `아이템 '${itemData.shortName}'이(가) '그리드 ${index}'에 추가됨`
-              );
+              console.log(`아이템 '${itemData.shortName}'이(가) '그리드 ${index}'에 추가됨`);
             } else {
-              console.log(
-                `아이템 '${itemData.shortName}'은(는) '그리드 ${index}'에 넣을 수 없음`
-              );
+              console.log(`아이템 '${itemData.shortName}'은(는) '그리드 ${index}'에 넣을 수 없음`);
             }
           }
         });
