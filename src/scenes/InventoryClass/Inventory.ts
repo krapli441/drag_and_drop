@@ -31,24 +31,19 @@ export default class Inventory {
 
   // 아이템 추가 메서드
   addItem(item: Item, position: { x: number; y: number }): boolean {
-    if (!this.isItemFit(item, position)) {
-      console.log(
-        `아이템 '${item.shortName}'은(는) 주어진 위치에 맞지 않습니다.`
-      );
+    // 픽셀 단위의 좌표를 그리드 단위로 변환
+    const gridPosX = Math.floor(position.x / 50); // 예시로 50px을 그리드 크기로 가정
+    const gridPosY = Math.floor(position.y / 50);
+
+    if (!this.isItemFit(item, { x: gridPosX, y: gridPosY })) {
       return false;
     }
 
     // 아이템을 그리드에 추가하는 로직
     for (let i = 0; i < item.height; i++) {
       for (let j = 0; j < item.width; j++) {
-        const gridIndex = (position.y + i) * this.numColumns + (position.x + j);
-        if (
-          gridIndex < this.grids.length &&
-          !this.grids[gridIndex].addItem(item)
-        ) {
-          console.log(
-            `아이템 '${item.shortName}'은(는) 그리드 인덱스 ${gridIndex}에 추가할 수 없습니다.`
-          );
+        const gridIndex = (gridPosY + i) * this.numColumns + (gridPosX + j);
+        if (!this.grids[gridIndex].addItem(item)) {
           return false;
         }
       }
