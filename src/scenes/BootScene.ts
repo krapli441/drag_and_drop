@@ -8,6 +8,7 @@ import {
 } from "./InventoryClass/InventoryInterface";
 import { loadChestRigData, loadBarterItemsData } from "./api";
 import { CustomContainer } from "./customContainer";
+import Item from "./InventoryClass/Item";
 
 export default class BootScene extends Phaser.Scene {
   private inventory: Inventory | null = null;
@@ -355,11 +356,14 @@ export default class BootScene extends Phaser.Scene {
           return;
         }
 
-        this.ChestRigData.properties.grids.forEach((grid, index) => {
-          let gridStartX = grid.x;
-          let gridEndX = grid.x + grid.width * 50;
-          let gridStartY = grid.y;
-          let gridEndY = grid.y + grid.height * 50;
+        for (const [
+          index,
+          grid,
+        ] of this.ChestRigData.properties.grids.entries()) {
+          const gridStartX = grid.x;
+          const gridEndX = grid.x + grid.width * 50;
+          const gridStartY = grid.y;
+          const gridEndY = grid.y + grid.height * 50;
 
           if (
             pointer.x >= gridStartX &&
@@ -367,25 +371,20 @@ export default class BootScene extends Phaser.Scene {
             pointer.y >= gridStartY &&
             pointer.y < gridEndY
           ) {
-            if (
-              itemData.width <= grid.width &&
-              itemData.height <= grid.height
-            ) {
-              // 첫 번째 빈 위치 찾기
-              const emptyIndex = grid.item.findIndex((item) => item === null);
-              if (emptyIndex !== -1) {
-                grid.item[emptyIndex] = itemData; // 아이템을 빈 위치(첫 번째)에 추가
-                console.log(
-                  `아이템 '${itemData.shortName}'이(가) '그리드 ${index}'에 추가됨`
-                );
-              }
+            const item = new Item(itemData); // BarterItemData를 Item 클래스 객체로 변환
+            // Inventory 클래스의 addItem 메서드를 사용하여 아이템 추가 시도
+            if (this.inventory.addItem(item, { x: grid.x, y: grid.y })) {
+              console.log(
+                `아이템 '${itemData.shortName}'이(가) '그리드 ${index}'에 추가됨`
+              );
             } else {
               console.log(
                 `아이템 '${itemData.shortName}'은(는) '그리드 ${index}'에 넣을 수 없음`
               );
             }
+            break; // 아이템이 추가되면 루프 종료
           }
-        });
+        }
       }
     );
   }
