@@ -384,6 +384,12 @@ export default class BootScene extends Phaser.Scene {
               console.log(
                 `아이템 '${itemData.shortName}'이(가) '그리드 ${index}'에 추가됨`
               );
+              console.log(
+                "아이템 넣은 후 : ",
+                this.ChestRigData &&
+                  this.ChestRigData.properties &&
+                  this.ChestRigData.properties.grids
+              );
             } else {
               console.log(
                 `아이템 '${itemData.shortName}'은(는) '그리드 ${index}'에 넣을 수 없음`
