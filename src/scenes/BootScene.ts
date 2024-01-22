@@ -172,10 +172,7 @@ export default class BootScene extends Phaser.Scene {
         }
       });
 
-      console.log(
-        "레이아웃 그린 후 그리드 정보 : ",
-        this.ChestRigData.properties.grids
-      );
+      console.log("레이아웃 그린 후 그리드 정보 : ", this.inventory);
     }
   }
 
