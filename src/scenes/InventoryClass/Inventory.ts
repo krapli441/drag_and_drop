@@ -15,6 +15,7 @@ export default class Inventory {
 
   // 아이템 추가 메서드
   addItem(item: Item, position: { x: number; y: number }): boolean {
+    // 아이템이 그리드에 들어갈 수 있는지 검사
     if (!this.isItemFit(item, position)) {
       return false;
     }
@@ -28,7 +29,10 @@ export default class Inventory {
           position.x +
           i * this.grids.length +
           j;
-        if (!this.grids[gridIndex].addItem(item)) {
+        if (
+          gridIndex < this.grids.length &&
+          !this.grids[gridIndex].addItem(item)
+        ) {
           return false;
         }
       }

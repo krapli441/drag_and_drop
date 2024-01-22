@@ -16,13 +16,14 @@ export default class Grid {
   }
 
   // 그리드에 아이템을 추가하는 메서드
-  // 특정 위치에 아이템을 추가하는 메서드
-  addItem(item: Item, position: number): boolean {
-    // position은 아이템을 추가할 배열 인덱스
-    if (this.item[position] === null) {
-      this.item[position] = item; // 아이템을 해당 위치에 추가
-      return true; // 성공적으로 추가되면 true 반환
+  addItem(item: Item): boolean {
+    // 아이템이 들어갈 수 있는 빈 공간을 찾아서 추가
+    for (let i = 0; i < this.item.length; i++) {
+      if (this.item[i] === null) {
+        this.item[i] = item;
+        return true;
+      }
     }
-    return false; // 해당 위치에 이미 아이템이 있으면 false 반환
+    return false; // 빈 공간이 없으면 false 반환
   }
 }
