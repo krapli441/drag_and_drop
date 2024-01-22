@@ -6,6 +6,7 @@ import {
   DraggedItemData,
   GridSize,
 } from "./InventoryClass/InventoryInterface";
+import Item from "./InventoryClass/Item";
 import { loadChestRigData, loadBarterItemsData } from "./api";
 import { CustomContainer } from "./customContainer";
 
