@@ -377,6 +377,7 @@ export default class BootScene extends Phaser.Scene {
               console.log(
                 `아이템 '${itemData.shortName}'이(가) '그리드 ${index}'에 추가됨`
               );
+              console.log("인벤토리: ", this.inventory);
             } else {
               console.log(
                 `아이템 '${itemData.shortName}'은(는) '그리드 ${index}'에 넣을 수 없음`
