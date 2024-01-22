@@ -222,9 +222,6 @@ export default class BootScene extends Phaser.Scene {
                     draggedItem.width * 50,
                     draggedItem.height * 50
                   );
-                // console.log(
-                //   `${draggedItem.shortName}은 '그리드 ${index}'에 놓을 수 있음.`
-                // );
               } else {
                 (
                   draggedItem.gameObject
@@ -238,9 +235,6 @@ export default class BootScene extends Phaser.Scene {
                     draggedItem.width * 50,
                     draggedItem.height * 50
                   );
-                // console.log(
-                //   `${draggedItem.shortName}은 '그리드 ${index}'에 놓을 수 없음.`
-                // );
               }
             }
           }
