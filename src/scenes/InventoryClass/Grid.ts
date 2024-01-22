@@ -16,14 +16,26 @@ export default class Grid {
   }
 
   // 그리드에 아이템을 추가하는 메서드
-  addItem(item: Item): boolean {
-    // 아이템이 들어갈 수 있는 빈 공간을 찾아서 추가
-    for (let i = 0; i < this.item.length; i++) {
-      if (this.item[i] === null) {
-        this.item[i] = item;
-        return true;
+  addItem(item: Item, position: { x: number; y: number }): boolean {
+    // position은 그리드 내의 좌표 (0,0) 부터 시작
+
+    // 아이템이 들어갈 수 있는지 검사
+    for (let i = 0; i < item.height; i++) {
+      for (let j = 0; j < item.width; j++) {
+        let index = (position.y + i) * this.width + (position.x + j);
+        if (this.item[index] !== null) {
+          return false; // 이미 아이템이 있는 경우
+        }
       }
     }
-    return false; // 빈 공간이 없으면 false 반환
+
+    // 아이템을 추가
+    for (let i = 0; i < item.height; i++) {
+      for (let j = 0; j < item.width; j++) {
+        let index = (position.y + i) * this.width + (position.x + j);
+        this.item[index] = item;
+      }
+    }
+    return true;
   }
 }
