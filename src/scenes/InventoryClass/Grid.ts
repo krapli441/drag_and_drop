@@ -12,7 +12,7 @@ export default class Grid {
     this.height = height;
     this.x = x;
     this.y = y;
-    this.item = null;
+    this.item = Array(width * height).fill(null);
   }
 
   // 그리드에 아이템을 추가하는 메서드
