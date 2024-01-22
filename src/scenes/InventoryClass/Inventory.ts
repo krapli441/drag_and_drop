@@ -17,16 +17,16 @@ export default class Inventory {
 
   // 그리드 열 수를 계산하는 메서드
   private calculateNumColumns(grids: Grid[]): number {
-    let maxRightEdge = 0;
+    let maxColumns = 0;
 
     grids.forEach((grid) => {
-      const rightEdge = grid.x + grid.width;
-      if (rightEdge > maxRightEdge) {
-        maxRightEdge = rightEdge;
+      const columns = Math.ceil(grid.x / 50) + grid.width; // 그리드 시작 위치를 열 번호로 변환
+      if (columns > maxColumns) {
+        maxColumns = columns;
       }
     });
 
-    return maxRightEdge;
+    return maxColumns;
   }
 
   // 아이템 추가 메서드
@@ -35,14 +35,14 @@ export default class Inventory {
     const gridPosX = Math.floor(position.x / 50); // 예시로 50px을 그리드 크기로 가정
     const gridPosY = Math.floor(position.y / 50);
 
-    if (!this.isItemFit(item, { x: gridPosX, y: gridPosY })) {
-      return false;
-    }
-
     // 아이템을 그리드에 추가하는 로직
     for (let i = 0; i < item.height; i++) {
       for (let j = 0; j < item.width; j++) {
         const gridIndex = (gridPosY + i) * this.numColumns + (gridPosX + j);
+        if (gridIndex >= this.grids.length || !this.grids[gridIndex]) {
+          console.log(`그리드 인덱스 ${gridIndex}는 존재하지 않습니다.`);
+          return false;
+        }
         if (!this.grids[gridIndex].addItem(item)) {
           return false;
         }

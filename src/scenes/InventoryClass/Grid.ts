@@ -23,7 +23,9 @@ export default class Grid {
         return true;
       }
     }
-    console.log(`이 그리드에는 더 이상 아이템을 추가할 수 없습니다.`);
+    console.log(
+      `이 그리드(${this.x}, ${this.y})에는 더 이상 아이템을 추가할 수 없습니다.`
+    );
     return false;
   }
 }
