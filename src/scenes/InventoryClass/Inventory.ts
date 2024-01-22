@@ -25,7 +25,7 @@ export default class Inventory {
       return false; // 그리드 인덱스가 유효하지 않은 경우
     }
 
-    return this.grids[gridIndex].addItem(item, position);
+    return this.grids[gridIndex].addItem(item);
   }
 
   // 아이템이 해당 위치에 맞게 들어갈 수 있는지 검사하는 메서드
