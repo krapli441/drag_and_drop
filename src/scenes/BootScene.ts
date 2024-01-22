@@ -351,15 +351,22 @@ export default class BootScene extends Phaser.Scene {
         gameObject: Phaser.GameObjects.GameObject
       ) => {
         const itemData = (gameObject as any).itemData as BarterItemData;
-        if (!itemData || !this.ChestRigData || !this.ChestRigData.properties) {
+        if (
+          !itemData ||
+          !this.ChestRigData ||
+          !this.ChestRigData.properties ||
+          !this.inventory
+        ) {
           console.log("필요한 데이터가 없음");
           return;
         }
 
-        for (const [
-          index,
-          grid,
-        ] of this.ChestRigData.properties.grids.entries()) {
+        for (
+          let index = 0;
+          index < this.ChestRigData.properties.grids.length;
+          index++
+        ) {
+          const grid = this.ChestRigData.properties.grids[index];
           const gridStartX = grid.x;
           const gridEndX = grid.x + grid.width * 50;
           const gridStartY = grid.y;
@@ -372,7 +379,6 @@ export default class BootScene extends Phaser.Scene {
             pointer.y < gridEndY
           ) {
             const item = new Item(itemData); // BarterItemData를 Item 클래스 객체로 변환
-            // Inventory 클래스의 addItem 메서드를 사용하여 아이템 추가 시도
             if (this.inventory.addItem(item, { x: grid.x, y: grid.y })) {
               console.log(
                 `아이템 '${itemData.shortName}'이(가) '그리드 ${index}'에 추가됨`
@@ -382,7 +388,7 @@ export default class BootScene extends Phaser.Scene {
                 `아이템 '${itemData.shortName}'은(는) '그리드 ${index}'에 넣을 수 없음`
               );
             }
-            break; // 아이템이 추가되면 루프 종료
+            break;
           }
         }
       }
