@@ -349,8 +349,12 @@ export default class BootScene extends Phaser.Scene {
         pointer: Phaser.Input.Pointer,
         gameObject: Phaser.GameObjects.GameObject
       ) => {
-        const itemData = (gameObject as any).itemData as BarterItemData;
-        if (!itemData || !this.ChestRigData || !this.ChestRigData.properties) {
+        const barterItemData = (gameObject as any).itemData as BarterItemData;
+        if (
+          !barterItemData ||
+          !this.ChestRigData ||
+          !this.ChestRigData.properties
+        ) {
           console.log("필요한 데이터가 없음");
           return;
         }
@@ -367,21 +371,24 @@ export default class BootScene extends Phaser.Scene {
             pointer.y >= gridStartY &&
             pointer.y < gridEndY
           ) {
-            if (
-              itemData.width <= grid.width &&
-              itemData.height <= grid.height
-            ) {
+            // BarterItemData를 Item 객체로 변환
+            const item = new Item(barterItemData);
+
+            // 아이템 크기 확인 및 그리드에 아이템 추가
+            if (item.width <= grid.width && item.height <= grid.height) {
               // 첫 번째 빈 위치 찾기
-              const emptyIndex = grid.item.findIndex((item) => item === null);
+              const emptyIndex = grid.item.findIndex(
+                (gridItem) => gridItem === null
+              );
               if (emptyIndex !== -1) {
-                grid.item[emptyIndex] = itemData; // 아이템을 빈 위치(첫 번째)에 추가
+                grid.item[emptyIndex] = item; // 아이템을 빈 위치(첫 번째)에 추가
                 console.log(
-                  `아이템 '${itemData.shortName}'이(가) '그리드 ${index}'에 추가됨`
+                  `아이템 '${item.shortName}'이(가) '그리드 ${index}'에 추가됨`
                 );
               }
             } else {
               console.log(
-                `아이템 '${itemData.shortName}'은(는) '그리드 ${index}'에 넣을 수 없음`
+                `아이템 '${item.shortName}'은(는) '그리드 ${index}'에 넣을 수 없음`
               );
             }
           }
