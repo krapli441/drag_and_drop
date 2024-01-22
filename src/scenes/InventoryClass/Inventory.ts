@@ -52,6 +52,17 @@ export default class Inventory {
     return true;
   }
 
+  updateGridCoordinates(gridIndex: number, x: number, y: number): void {
+    if (gridIndex < 0 || gridIndex >= this.grids.length) {
+      console.log(`그리드 인덱스 ${gridIndex}가 유효 범위를 벗어났습니다.`);
+      return;
+    }
+
+    const grid = this.grids[gridIndex];
+    grid.x = x;
+    grid.y = y;
+  }
+
   // 아이템이 해당 위치에 맞게 들어갈 수 있는지 검사하는 메서드
   private isItemFit(item: Item, position: { x: number; y: number }): boolean {
     for (let i = 0; i < item.height; i++) {

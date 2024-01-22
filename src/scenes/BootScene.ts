@@ -171,6 +171,9 @@ export default class BootScene extends Phaser.Scene {
           xOffset = 20;
           yOffset += grid.height * 50 + 10;
         }
+        if (this.inventory) {
+          this.inventory.updateGridCoordinates(index, grid.x, grid.y);
+        }
       });
 
       console.log(
