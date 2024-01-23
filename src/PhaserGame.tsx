@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import Phaser from "phaser";
-import BootScene from "./scenes/Inventory";
+import Inventory from "./scenes/Inventory";
 
 const PhaserGame: React.FC = () => {
   const phaserGameRef = useRef<HTMLDivElement>(null);
@@ -12,7 +12,7 @@ const PhaserGame: React.FC = () => {
         width: 1000,
         height: 600,
         parent: phaserGameRef.current,
-        scene: [BootScene], // 여기에 Scene을 포함
+        scene: [Inventory], // 여기에 Scene을 포함
       };
 
       const game = new Phaser.Game(gameConfig);
