@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import Phaser from "phaser";
-import BootScene from "./scenes/BootScene";
+import BootScene from "./scenes/Inventory";
 
 const PhaserGame: React.FC = () => {
   const phaserGameRef = useRef<HTMLDivElement>(null);
