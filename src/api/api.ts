@@ -1,4 +1,4 @@
-import { CHEST_RIG_QUERY, BARTER_ITEM_QUERY } from "./Item_queries";
+import { CHEST_RIG_QUERY, BARTER_ITEM_QUERY } from "./item_queries";
 
 export async function loadRandomData(query: string) {
   try {
