@@ -12,12 +12,13 @@ const PhaserGame: React.FC = () => {
         width: 1000,
         height: 600,
         parent: phaserGameRef.current,
-        scene: [Inventory], // 여기에 Scene을 포함
+        scene: [Inventory],
       };
 
       const game = new Phaser.Game(gameConfig);
 
       return () => {
+        console.log("Phaser 게임 종료.");
         game.destroy(true);
       };
     }
