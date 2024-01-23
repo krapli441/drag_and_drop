@@ -4,7 +4,6 @@ export interface Item {
   image2?: string;
   size_width: number;
   size_height: number;
-  // ... 기타 필요한 속성들 ...
 }
 
 export interface Grid {
