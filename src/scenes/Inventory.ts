@@ -12,7 +12,6 @@ export default class Inventory extends Phaser.Scene {
   preload() {}
 
   async create() {
-    console.log("Inventory 씬의 create 메소드 호출됨");
     try {
       const chestRigData = await loadRandomData(CHEST_RIG_QUERY);
       const barterItemsData = await loadRandomData(BARTER_ITEM_QUERY);
