@@ -5,13 +5,22 @@ import { BarterItem } from "../types/Barter_Item";
 import { ChestRigItem } from "../types/Chest_Rig";
 
 class ChestRigInventory {
-  item: ChestRigItem;
+  id: string;
+  shortName: string;
+  width: number;
+  height: number;
+  hasGrid: boolean;
+  basePrice: number;
   grids: any[]; // 이곳에 추가 기능을 구현할 수 있습니다.
 
   constructor(item: ChestRigItem) {
-    this.item = item;
+    this.id = item.id;
+    this.shortName = item.shortName;
+    this.width = item.width;
+    this.height = item.height;
+    this.hasGrid = item.hasGrid;
+    this.basePrice = item.basePrice;
     this.grids = item.properties.grids;
-    // 여기에 초기화 로직을 추가할 수 있습니다.
   }
 
   // 이곳에 추가 메소드를 구현할 수 있습니다.

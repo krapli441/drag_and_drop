@@ -4,7 +4,6 @@ export interface ChestRigItem {
   width: number;
   height: number;
   hasGrid: boolean;
-  link: string;
   image8xLink: string;
   basePrice: number;
   properties: {
