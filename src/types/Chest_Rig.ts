@@ -11,3 +11,8 @@ export interface ChestRigItem {
     capacity: number;
   };
 }
+
+export interface ChestRigInnerGrid {
+  width: number;
+  height: number;
+}

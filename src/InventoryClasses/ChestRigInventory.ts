@@ -1,4 +1,5 @@
 import { ChestRigItem } from "../types/Chest_Rig";
+import { ChestRigInnerGrid } from "../types/Chest_Rig";
 
 export class ChestRigInventory {
   id: string;
@@ -7,7 +8,7 @@ export class ChestRigInventory {
   height: number;
   hasGrid: boolean;
   basePrice: number;
-  grids: any[];
+  grids: ChestRigInnerGrid[];
   capacity: number;
 
   constructor(item: ChestRigItem) {
@@ -17,7 +18,7 @@ export class ChestRigInventory {
     this.height = item.height;
     this.hasGrid = item.hasGrid;
     this.basePrice = item.basePrice;
-    this.grids = item.properties.grids;
+    this.grids = item.properties.grids as ChestRigInnerGrid[];
     this.capacity = item.properties.capacity;
   }
 }
