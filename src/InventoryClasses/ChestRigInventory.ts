@@ -9,19 +9,15 @@ export class ChestRigInventory {
   hasGrid: boolean;
   basePrice: number;
   grids: ChestRigInnerGrid[];
-  gridSpaces: any[];
+  gridSpaces: ChestRigInnerGrid[];
   capacity: number;
 
-  calculateGridSpaces(grids: ChestRigInnerGrid[]) {
-    const gridSpaces: any[] = [];
-
-    grids.forEach((grid) => {
-      // 각 그리드의 크기에 따라 '빈 칸'을 계산합니다.
-      const spaces = new Array(grid.width * grid.height).fill(null);
-      gridSpaces.push(...spaces);
-    });
-
-    return gridSpaces;
+  calculateGridSpaces(grids: ChestRigInnerGrid[]): ChestRigInnerGrid[] {
+    return grids.map((grid) => ({
+      width: grid.width,
+      height: grid.height,
+      items: new Array(grid.width * grid.height).fill(null),
+    }));
   }
 
   constructor(item: ChestRigItem) {
@@ -32,7 +28,7 @@ export class ChestRigInventory {
     this.hasGrid = item.hasGrid;
     this.basePrice = item.basePrice;
     this.grids = item.properties.grids as ChestRigInnerGrid[];
-    this.gridSpaces = this.calculateGridSpaces(item.properties.grids);
+    this.gridSpaces = this.calculateGridSpaces(this.grids);
     this.capacity = item.properties.capacity;
   }
 }
