@@ -8,6 +8,7 @@ export class ChestRigInventory {
   hasGrid: boolean;
   basePrice: number;
   grids: any[];
+  capacity: number;
 
   constructor(item: ChestRigItem) {
     this.id = item.id;
@@ -17,5 +18,6 @@ export class ChestRigInventory {
     this.hasGrid = item.hasGrid;
     this.basePrice = item.basePrice;
     this.grids = item.properties.grids;
+    this.capacity = item.properties.capacity;
   }
 }
