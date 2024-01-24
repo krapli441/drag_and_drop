@@ -4,6 +4,19 @@ import { CHEST_RIG_QUERY, BARTER_ITEM_QUERY } from "../api/item_queries";
 import { BarterItem } from "../types/Barter_Item";
 import { ChestRigItem } from "../types/Chest_Rig";
 
+class ChestRigInventory {
+  item: ChestRigItem;
+  grids: any[]; // 이곳에 추가 기능을 구현할 수 있습니다.
+
+  constructor(item: ChestRigItem) {
+    this.item = item;
+    this.grids = item.properties.grids;
+    // 여기에 초기화 로직을 추가할 수 있습니다.
+  }
+
+  // 이곳에 추가 메소드를 구현할 수 있습니다.
+}
+
 export default class Inventory extends Phaser.Scene {
   constructor() {
     super("Inventory");
@@ -26,6 +39,10 @@ export default class Inventory extends Phaser.Scene {
 
       if (randomChestRig.hasGrid && randomChestRig.properties.grids) {
         this.drawGrid(randomChestRig.properties.grids);
+
+        // ChestRigInventory 인스턴스 생성
+        const chestRigInventory = new ChestRigInventory(randomChestRig);
+        console.log("ChestRigInventory:", chestRigInventory);
       }
     } catch (error) {
       console.error("데이터 로딩 중 오류가 발생했습니다:", error);
