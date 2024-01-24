@@ -3,7 +3,7 @@ import { loadRandomData } from "../api/api";
 import { CHEST_RIG_QUERY, BARTER_ITEM_QUERY } from "../api/item_queries";
 import { BarterItem } from "../types/Barter_Item";
 import { ChestRigItem } from "../types/Chest_Rig";
-import { ChestRigInventory } from "./ChestRigInventory";
+import { ChestRigInventory } from "../InventoryClasses/ChestRigInventory";
 
 export default class Inventory extends Phaser.Scene {
   constructor() {
