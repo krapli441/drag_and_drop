@@ -1,6 +1,8 @@
 import Phaser from "phaser";
 import { loadRandomData } from "../api/api";
 import { CHEST_RIG_QUERY, BARTER_ITEM_QUERY } from "../api/item_queries";
+import { BarterItem } from "../types/Barter_Item";
+import { ChestRigItem } from "../types/Chest_Rig";
 
 export default class Inventory extends Phaser.Scene {
   constructor() {
@@ -27,12 +29,12 @@ export default class Inventory extends Phaser.Scene {
     }
   }
 
-  selectRandomChestRig(items) {
+  selectRandomChestRig(items: ChestRigItem[]) {
     const randomIndex = Math.floor(Math.random() * items.length);
     return items[randomIndex];
   }
 
-  selectRandomBarterItems(items, count) {
+  selectRandomBarterItems(items: BarterItem[], count: number) {
     const shuffled = items.sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
   }
