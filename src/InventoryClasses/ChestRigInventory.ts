@@ -9,7 +9,6 @@ export class ChestRigInventory {
   hasGrid: boolean;
   basePrice: number;
   grids: ChestRigInnerGrid[];
-  gridSpaces: ChestRigInnerGrid[];
   capacity: number;
 
   calculateGridSpaces(grids: ChestRigInnerGrid[]): ChestRigInnerGrid[] {
@@ -27,8 +26,7 @@ export class ChestRigInventory {
     this.height = item.height;
     this.hasGrid = item.hasGrid;
     this.basePrice = item.basePrice;
-    this.grids = item.properties.grids as ChestRigInnerGrid[];
-    this.gridSpaces = this.calculateGridSpaces(this.grids);
+    this.grids = this.calculateGridSpaces(item.properties.grids); // 여기서 item.properties.grids를 인자로 전달
     this.capacity = item.properties.capacity;
   }
 }

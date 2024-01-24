@@ -15,5 +15,5 @@ export interface ChestRigItem {
 export interface ChestRigInnerGrid {
   width: number;
   height: number;
-  items: any[]; // 아이템을 저장할 배열
+  items?: any[]; // 아이템을 저장할 배열
 }
