@@ -3,26 +3,7 @@ import { loadRandomData } from "../api/api";
 import { CHEST_RIG_QUERY, BARTER_ITEM_QUERY } from "../api/item_queries";
 import { BarterItem } from "../types/Barter_Item";
 import { ChestRigItem } from "../types/Chest_Rig";
-
-class ChestRigInventory {
-  id: string;
-  shortName: string;
-  width: number;
-  height: number;
-  hasGrid: boolean;
-  basePrice: number;
-  grids: any[];
-
-  constructor(item: ChestRigItem) {
-    this.id = item.id;
-    this.shortName = item.shortName;
-    this.width = item.width;
-    this.height = item.height;
-    this.hasGrid = item.hasGrid;
-    this.basePrice = item.basePrice;
-    this.grids = item.properties.grids;
-  }
-}
+import { ChestRigInventory } from "./ChestRigInventory";
 
 export default class Inventory extends Phaser.Scene {
   constructor() {
