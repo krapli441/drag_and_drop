@@ -29,8 +29,6 @@ query {
     id
     width
     height
-    link
-    image8xLink
     basePrice
   }
 }

@@ -19,7 +19,7 @@ export default class Inventory extends Phaser.Scene {
       const randomChestRig = this.selectRandomChestRig(chestRigData.data.items);
       const randomBarterItems = this.selectRandomBarterItems(
         barterItemsData.data.items,
-        5
+        10
       );
 
       console.log("무작위 체스트 리그 데이터 : ", randomChestRig);
