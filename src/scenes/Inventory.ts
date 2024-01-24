@@ -11,7 +11,7 @@ class ChestRigInventory {
   height: number;
   hasGrid: boolean;
   basePrice: number;
-  grids: any[]; // 이곳에 추가 기능을 구현할 수 있습니다.
+  grids: any[];
 
   constructor(item: ChestRigItem) {
     this.id = item.id;
@@ -22,8 +22,6 @@ class ChestRigInventory {
     this.basePrice = item.basePrice;
     this.grids = item.properties.grids;
   }
-
-  // 이곳에 추가 메소드를 구현할 수 있습니다.
 }
 
 export default class Inventory extends Phaser.Scene {
