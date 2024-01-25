@@ -151,7 +151,9 @@ export function drawItemGrid(
         const droppedX = pointer.x;
         const droppedY = pointer.y;
         const droppedItemData = itemRect.getData("itemData");
-
+    
+        console.log(`드롭된 위치: x=${droppedX}, y=${droppedY}`); // 드롭 위치 로깅
+    
         // 드롭된 위치가 어느 그리드의 어느 칸에 해당하는지 확인
         const droppedOnGrid = gridDetails.find(
           (grid) =>
@@ -160,8 +162,10 @@ export function drawItemGrid(
             droppedY >= grid.y &&
             droppedY < grid.y + grid.height
         );
-
+    
         if (droppedOnGrid && this.chestRigInventory) {
+          console.log(`드롭된 그리드: ${droppedOnGrid.gridIndex}, 칸: ${droppedOnGrid.row}-${droppedOnGrid.column}`); // 드롭된 그리드 정보 로깅
+    
           const canPlaceItem = checkItemPlacement(
             this,
             this.chestRigInventory.grids,
@@ -170,22 +174,22 @@ export function drawItemGrid(
             droppedOnGrid.row,
             droppedOnGrid.column
           );
+    
           if (canPlaceItem) {
-            console.log(
-              `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 성공적으로 배치했습니다.`
-            );
+            console.log(`아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 있습니다.`);
             // 여기서 아이템을 그리드에 실제로 배치하는 로직을 추가합니다.
           } else {
-            console.log(
-              `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 없습니다.`
-            );
+            console.log(`아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 없습니다.`);
           }
+        } else {
+          console.log("드롭된 위치가 유효한 그리드 내부가 아닙니다.");
         }
-
+    
         itemRect.setData("dragging", false);
         // 드래그 종료 시 데이터 처리
       }
     );
+    
 
     // 다음 아이템 위치 업데이트
     startX += gridSize * item.width + gridSpacing;
