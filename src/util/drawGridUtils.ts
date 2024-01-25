@@ -79,6 +79,35 @@ export function drawItemGrid(
           gridSize
         );
         rect.setInteractive();
+        scene.input.setDraggable(rect);
+
+        rect.on(
+          "pointerdown",
+          function (
+            this: Phaser.GameObjects.Rectangle,
+            pointer: Phaser.Input.Pointer
+          ) {
+            this.data.set("startX", this.x);
+            this.data.set("startY", this.y);
+          }
+        );
+
+        scene.input.on(
+          "drag",
+          function (
+            pointer: Phaser.Input.Pointer,
+            gameObject: Phaser.GameObjects.Rectangle,
+            dragX: number,
+            dragY: number
+          ) {
+            gameObject.x = dragX;
+            gameObject.y = dragY;
+          }
+        );
+
+        rect.on("pointerup", function (pointer: Phaser.Input.Pointer) {
+          // 여기에 드롭 후의 로직을 추가
+        });
 
         gridGraphics.strokeRect(x, y, gridSize, gridSize);
       }
