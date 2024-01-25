@@ -44,7 +44,6 @@ export function drawGrid(scene: Phaser.Scene, grids: ChestRigInnerGrid[]) {
         gridGraphics.strokeRect(x, y, gridSize, gridSize);
       }
     }
-
     currentX += grid.width * gridSize + gridSpacing;
     maxYInRow = Math.max(maxYInRow, grid.height * gridSize);
 
@@ -103,7 +102,7 @@ export function drawItemGrid(
       itemRect.setData("dragging", true);
       // 아이템 데이터 캡쳐
       const capturedItemData = itemRect.getData("itemData");
-      console.log("드래그 시작:", capturedItemData);
+      // console.log("드래그 시작:", capturedItemData);
     });
 
     itemRect.on(
@@ -117,10 +116,15 @@ export function drawItemGrid(
     );
 
     itemRect.on("pointerup", function (pointer: Phaser.Input.Pointer) {
+      const droppedX = pointer.x;
+      const droppedY = pointer.y;
+      if (isInsideGrid(droppedX, droppedY)) {
+        console.log("아이템이 그리드 내부로 들어감");
+      }
       itemRect.setData("dragging", false);
       // 드래그 종료 시 데이터 처리
       const droppedItemData = itemRect.getData("itemData");
-      console.log("드래그 종료:", droppedItemData);
+      // console.log("드래그 종료:", droppedItemData);
       // 여기에 드롭 후의 로직을 추가
     });
 
