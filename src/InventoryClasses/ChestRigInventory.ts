@@ -15,7 +15,9 @@ export class ChestRigInventory {
     return grids.map((grid) => ({
       width: grid.width,
       height: grid.height,
-      items: new Array(grid.width * grid.height).fill(null),
+      items: Array.from({ length: grid.height }, () =>
+        new Array(grid.width).fill(null)
+      ),
     }));
   }
 
