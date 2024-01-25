@@ -11,17 +11,17 @@ let gridAreas: {
   gridIndex: number;
 }[] = [];
 
-export function drawGrid(scene: Phaser.Scene, grids: ChestRigInnerGrid[]) {
-  let gridDetails: {
-    gridIndex: number;
-    row: number;
-    column: number;
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  }[] = [];
+let gridDetails: {
+  gridIndex: number;
+  row: number;
+  column: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}[] = [];
 
+export function drawGrid(scene: Phaser.Scene, grids: ChestRigInnerGrid[]) {
   const gridGraphics = scene.add.graphics();
   gridGraphics.lineStyle(2, 0xffffff, 1);
 
@@ -148,16 +148,25 @@ export function drawItemGrid(
     itemRect.on("pointerup", function (pointer: Phaser.Input.Pointer) {
       const droppedX = pointer.x;
       const droppedY = pointer.y;
-      if (isInsideGrid(droppedX, droppedY)) {
+
+      // 드롭된 위치가 어느 그리드의 어느 칸에 해당하는지 확인
+      const droppedOnGrid = gridDetails.find(
+        (grid) =>
+          droppedX >= grid.x &&
+          droppedX < grid.x + grid.width &&
+          droppedY >= grid.y &&
+          droppedY < grid.y + grid.height
+      );
+
+      if (droppedOnGrid) {
         console.log(
-          `아이템이 그리드 ${isInsideGrid(droppedX, droppedY)}에 드롭됨`
+          `아이템이 ${droppedOnGrid.gridIndex}번째 그리드의 ${droppedOnGrid.row}번째 줄, ${droppedOnGrid.column}번째 칸에 올려졌습니다`
         );
       }
+
       itemRect.setData("dragging", false);
       // 드래그 종료 시 데이터 처리
       const droppedItemData = itemRect.getData("itemData");
-      // console.log("드래그 종료:", droppedItemData);
-      // 여기에 드롭 후의 로직을 추가
     });
 
     // 다음 아이템 위치 업데이트
