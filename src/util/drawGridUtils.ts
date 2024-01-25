@@ -1,6 +1,8 @@
 import Phaser from "phaser";
 import { ChestRigInnerGrid } from "../types/Chest_Rig";
 import { BarterItem } from "../types/Barter_Item";
+import { ChestRigInventory } from "../InventoryClasses/ChestRigInventory";
+import Inventory from "../scenes/Inventory";
 
 // 그리드 영역 정보를 저장하는 배열
 let gridAreas: {
@@ -79,8 +81,6 @@ export function drawGrid(scene: Phaser.Scene, grids: ChestRigInnerGrid[]) {
       maxYInRow = 0;
     }
   });
-  // console.log("그리드 영역 정보:", gridAreas);
-  // console.log("그리드 칸 정보:", gridDetails);
 }
 
 // 드롭 위치가 그리드 영역 내부인지 판별하는 함수
@@ -145,44 +145,47 @@ export function drawItemGrid(
       }
     );
 
-    itemRect.on("pointerup", function (pointer: Phaser.Input.Pointer) {
-      const droppedX = pointer.x;
-      const droppedY = pointer.y;
-      const droppedItemData = itemRect.getData("itemData");
+    itemRect.on(
+      "pointerup",
+      function (this: Inventory, pointer: Phaser.Input.Pointer) {
+        const droppedX = pointer.x;
+        const droppedY = pointer.y;
+        const droppedItemData = itemRect.getData("itemData");
 
-      // 드롭된 위치가 어느 그리드의 어느 칸에 해당하는지 확인
-      const droppedOnGrid = gridDetails.find(
-        (grid) =>
-          droppedX >= grid.x &&
-          droppedX < grid.x + grid.width &&
-          droppedY >= grid.y &&
-          droppedY < grid.y + grid.height
-      );
-
-      if (droppedOnGrid) {
-        const canPlaceItem = checkItemPlacement(
-          scene,
-          grids,
-          droppedOnGrid.gridIndex,
-          droppedItemData,
-          droppedOnGrid.row,
-          droppedOnGrid.column
+        // 드롭된 위치가 어느 그리드의 어느 칸에 해당하는지 확인
+        const droppedOnGrid = gridDetails.find(
+          (grid) =>
+            droppedX >= grid.x &&
+            droppedX < grid.x + grid.width &&
+            droppedY >= grid.y &&
+            droppedY < grid.y + grid.height
         );
-        if (canPlaceItem) {
-          console.log(
-            `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 성공적으로 배치했습니다.`
-          );
-          // 여기서 아이템을 그리드에 실제로 배치하는 로직을 추가합니다.
-        } else {
-          console.log(
-            `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 없습니다.`
-          );
-        }
-      }
 
-      itemRect.setData("dragging", false);
-      // 드래그 종료 시 데이터 처리
-    });
+        if (droppedOnGrid) {
+          const canPlaceItem = checkItemPlacement(
+            this, // 현재 씬을 나타내는 this 키워드
+            chestRigInventory.grids,
+            droppedOnGrid.gridIndex,
+            droppedItemData,
+            droppedOnGrid.row,
+            droppedOnGrid.column
+          );
+          if (canPlaceItem) {
+            console.log(
+              `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 성공적으로 배치했습니다.`
+            );
+            // 여기서 아이템을 그리드에 실제로 배치하는 로직을 추가합니다.
+          } else {
+            console.log(
+              `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 없습니다.`
+            );
+          }
+        }
+
+        itemRect.setData("dragging", false);
+        // 드래그 종료 시 데이터 처리
+      }
+    );
 
     // 다음 아이템 위치 업데이트
     startX += gridSize * item.width + gridSpacing;
@@ -193,7 +196,6 @@ export function drawItemGrid(
   });
 }
 
-// 예시: 아이템 드롭 위치 및 배치 가능 여부 확인
 export function checkItemPlacement(
   scene: Phaser.Scene,
   grids: ChestRigInnerGrid[],

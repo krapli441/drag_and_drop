@@ -28,9 +28,7 @@ export default class Inventory extends Phaser.Scene {
       console.log("무작위 교환 아이템 데이터 : ", randomBarterItems);
 
       if (randomChestRig.hasGrid && randomChestRig.properties.grids) {
-        // this.drawGrid(randomChestRig.properties.grids);
         drawGrid(this, randomChestRig.properties.grids);
-        // ChestRigInventory 인스턴스 생성
         const chestRigInventory = new ChestRigInventory(randomChestRig);
         console.log("ChestRigInventory:", chestRigInventory);
         drawItemGrid(
