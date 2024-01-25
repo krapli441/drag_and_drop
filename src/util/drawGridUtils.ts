@@ -79,6 +79,7 @@ export function drawItemGrid(
 
         // 드래그 시작 위치 저장
         rect.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+          console.log(`드래그 시작 - 아이템 인덱스: ${index}`);
           rect.setData("dragOffsetX", pointer.x - rect.x);
           rect.setData("dragOffsetY", pointer.y - rect.y);
         });
@@ -93,11 +94,16 @@ export function drawItemGrid(
             dragY: number
           ) => {
             if (gameObject === rect) {
+              console.log(`드래그 중 - 아이템 인덱스: ${index}`);
               gameObject.x = dragX - rect.getData("dragOffsetX");
               gameObject.y = dragY - rect.getData("dragOffsetY");
             }
           }
         );
+
+        rect.on("pointerup", (pointer: Phaser.Input.Pointer) => {
+          console.log(`드래그 끝 - 아이템 인덱스: ${index}`);
+        });
 
         gridGraphics.strokeRect(x, y, gridSize, gridSize);
       }
