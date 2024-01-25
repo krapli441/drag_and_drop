@@ -128,7 +128,7 @@ export function drawItemGrid(
       const droppedX = pointer.x;
       const droppedY = pointer.y;
       if (isInsideGrid(droppedX, droppedY)) {
-        console.log("아이템이 그리드 내부로 들어감");
+        console.log(`아이템이 그리드 ${isInsideGrid(droppedX, droppedY)}에 드롭됨`);
       }
       itemRect.setData("dragging", false);
       // 드래그 종료 시 데이터 처리
