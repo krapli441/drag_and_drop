@@ -12,6 +12,16 @@ let gridAreas: {
 }[] = [];
 
 export function drawGrid(scene: Phaser.Scene, grids: ChestRigInnerGrid[]) {
+  let gridDetails: {
+    gridIndex: number;
+    row: number;
+    column: number;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }[] = [];
+
   const gridGraphics = scene.add.graphics();
   gridGraphics.lineStyle(2, 0xffffff, 1);
 
@@ -28,6 +38,16 @@ export function drawGrid(scene: Phaser.Scene, grids: ChestRigInnerGrid[]) {
         const y = currentY + j * gridSize;
         // 그리드 영역 정보 저장
         gridAreas.push({ x, y, width: gridSize, height: gridSize, gridIndex });
+        // 그리드 칸의 상세 정보 저장
+        gridDetails.push({
+          gridIndex: gridIndex,
+          row: j + 1,
+          column: i + 1,
+          x: x,
+          y: y,
+          width: gridSize,
+          height: gridSize,
+        });
 
         // 상호작용 가능한 사각형 객체 생성
         const rect = scene.add.rectangle(
@@ -60,6 +80,7 @@ export function drawGrid(scene: Phaser.Scene, grids: ChestRigInnerGrid[]) {
     }
   });
   console.log("그리드 영역 정보:", gridAreas);
+  console.log("그리드 칸 정보:", gridDetails);
 }
 
 // 드롭 위치가 그리드 영역 내부인지 판별하는 함수
@@ -128,7 +149,9 @@ export function drawItemGrid(
       const droppedX = pointer.x;
       const droppedY = pointer.y;
       if (isInsideGrid(droppedX, droppedY)) {
-        console.log(`아이템이 그리드 ${isInsideGrid(droppedX, droppedY)}에 드롭됨`);
+        console.log(
+          `아이템이 그리드 ${isInsideGrid(droppedX, droppedY)}에 드롭됨`
+        );
       }
       itemRect.setData("dragging", false);
       // 드래그 종료 시 데이터 처리
