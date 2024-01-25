@@ -66,53 +66,42 @@ export function drawItemGrid(
   let currentY = startY;
 
   items.forEach((item, index) => {
-    for (let i = 0; i < item.width; i++) {
-      for (let j = 0; j < item.height; j++) {
-        const x = currentX + i * gridSize;
-        const y = currentY + j * gridSize;
+    // 아이템 전체 크기에 해당하는 rect 생성
+    const itemRect = scene.add
+      .rectangle(
+        startX + (gridSize * item.width) / 2,
+        startY + (gridSize * item.height) / 2,
+        gridSize * item.width,
+        gridSize * item.height,
+        0x00ff00 // 예시 색상 코드
+      )
+      .setInteractive();
 
-        const rect = scene.add
-          .rectangle(x + gridSize / 2, y + gridSize / 2, gridSize, gridSize)
-          .setInteractive();
+    // 드래그 앤 드롭 로직
+    scene.input.setDraggable(itemRect);
 
-        scene.input.setDraggable(rect);
+    itemRect.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+      itemRect.setData("startX", itemRect.x);
+      itemRect.setData("startY", itemRect.y);
+    });
 
-        // 드래그 시작 위치 저장
-        rect.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
-          console.log(`드래그 시작 - 아이템 인덱스: ${index}`);
-          rect.setData("dragOffsetX", pointer.x - rect.x);
-          rect.setData("dragOffsetY", pointer.y - rect.y);
-        });
-
-        // 드래그 중 객체 위치 업데이트
-        scene.input.on(
-          "drag",
-          (
-            pointer: Phaser.Input.Pointer,
-            gameObject: Phaser.GameObjects.Rectangle,
-            dragX: number,
-            dragY: number
-          ) => {
-            if (gameObject === rect) {
-              console.log(`드래그 중 - 아이템 인덱스: ${index}`);
-              gameObject.x = dragX - rect.getData("dragOffsetX");
-              gameObject.y = dragY - rect.getData("dragOffsetY");
-            }
-          }
-        );
-
-        rect.on("pointerup", (pointer: Phaser.Input.Pointer) => {
-          console.log(`드래그 끝 - 아이템 인덱스: ${index}`);
-        });
-
-        gridGraphics.strokeRect(x, y, gridSize, gridSize);
+    itemRect.on(
+      "drag",
+      (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
+        itemRect.x = dragX;
+        itemRect.y = dragY;
       }
-    }
+    );
 
-    currentX += item.width * gridSize + gridSpacing;
-    if (currentX + gridSize > Number(scene.sys.game.config.width)) {
-      currentX = startX;
-      currentY += item.height * gridSize + gridSpacing;
+    itemRect.on("pointerup", function (pointer: Phaser.Input.Pointer) {
+      // 드롭 후 로직 추가
+    });
+
+    // 다음 아이템 위치 업데이트
+    startX += gridSize * item.width + gridSpacing;
+    if (startX + gridSize > Number(scene.sys.game.config.width)) {
+      startX = 0;
+      startY += gridSize * item.height + gridSpacing;
     }
   });
 }
