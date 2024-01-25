@@ -5,6 +5,8 @@ import { BarterItem } from "../types/Barter_Item";
 import { ChestRigItem } from "../types/Chest_Rig";
 import { ChestRigInnerGrid } from "../types/Chest_Rig";
 import { ChestRigInventory } from "../InventoryClasses/ChestRigInventory";
+import { selectRandomBarterItems } from "../util/selectRandomItems";
+import { selectRandomChestRig } from "../util/selectRandomItems";
 
 export default class Inventory extends Phaser.Scene {
   constructor() {
@@ -17,8 +19,8 @@ export default class Inventory extends Phaser.Scene {
     try {
       const chestRigData = await loadRandomData(CHEST_RIG_QUERY);
       const barterItemsData = await loadRandomData(BARTER_ITEM_QUERY);
-      const randomChestRig = this.selectRandomChestRig(chestRigData.data.items);
-      const randomBarterItems = this.selectRandomBarterItems(
+      const randomChestRig = selectRandomChestRig(chestRigData.data.items);
+      const randomBarterItems = selectRandomBarterItems(
         barterItemsData.data.items,
         10
       );
@@ -43,15 +45,6 @@ export default class Inventory extends Phaser.Scene {
     }
   }
 
-  selectRandomChestRig(items: ChestRigItem[]) {
-    const randomIndex = Math.floor(Math.random() * items.length);
-    return items[randomIndex];
-  }
-
-  selectRandomBarterItems(items: BarterItem[], count: number) {
-    const shuffled = items.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
-  }
 
   drawGrid(grids: ChestRigInnerGrid[]) {
     const gridGraphics = this.add.graphics();
