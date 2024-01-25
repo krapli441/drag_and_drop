@@ -32,6 +32,7 @@ export default class Inventory extends Phaser.Scene {
         // ChestRigInventory 인스턴스 생성
         const chestRigInventory = new ChestRigInventory(randomChestRig);
         console.log("ChestRigInventory:", chestRigInventory);
+        this.drawItemGrid(randomBarterItems, 0, chestRigInventory.height * 50 + 20);
       }
     } catch (error) {
       console.error("데이터 로딩 중 오류가 발생했습니다:", error);
@@ -96,4 +97,52 @@ export default class Inventory extends Phaser.Scene {
       }
     });
   }
+
+  drawItemGrid(items: BarterItem[], startX: number, startY: number) {
+    const gridGraphics = this.add.graphics();
+    gridGraphics.lineStyle(2, 0x6EFF56, 1);
+  
+    const gridSize = 50;
+    const gridSpacing = 10;
+    let currentX = startX;
+    let currentY = startY;
+  
+    items.forEach((item, index) => {
+      for (let i = 0; i < item.width; i++) {
+        for (let j = 0; j < item.height; j++) {
+          const x = currentX + i * gridSize;
+          const y = currentY + j * gridSize;
+  
+          // 상호작용 가능한 사각형 객체 생성
+          const rect = this.add.rectangle(
+            x + gridSize / 2,
+            y + gridSize / 2,
+            gridSize,
+            gridSize
+          );
+          rect.setInteractive();
+  
+          // 마우스 오버 이벤트 리스너 추가
+          rect.on("pointerover", () => {
+            console.log(
+              `마우스가 아이템 ${index + 1} (${item.shortName})의 ${j + 1}번째 줄, ${i + 1}번째 칸에 올려졌습니다`
+            );
+          });
+  
+          gridGraphics.strokeRect(x, y, gridSize, gridSize);
+        }
+      }
+  
+      // 다음 아이템 위치 업데이트
+      currentX += item.width * gridSize + gridSpacing;
+  
+      // 줄바꿈 처리
+      if (currentX + gridSize > Number(this.sys.game.config.width)) {
+        currentX = startX;
+        currentY += item.height * gridSize + gridSpacing;
+      }
+    });
+  }
+  
+
 }
