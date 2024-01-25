@@ -49,28 +49,45 @@ export default class Inventory extends Phaser.Scene {
 
   drawGrid(grids: any[]) {
     const gridGraphics = this.add.graphics();
-    gridGraphics.lineStyle(2, 0xffffff, 1); // 테두리 스타일 설정
+    gridGraphics.lineStyle(2, 0xffffff, 1);
 
-    const gridSize = 50; // 각 그리드 칸의 크기
-    const gridSpacing = 10; // 그리드 사이의 간격
-    let currentX = 0; // 현재 X 좌표
-    let currentY = 0; // 현재 Y 좌표
-    let maxYInRow = 0; // 현재 행에서 가장 높은 그리드의 높이
+    const gridSize = 50;
+    const gridSpacing = 10;
+    let currentX = 0;
+    let currentY = 0;
+    let maxYInRow = 0;
 
-    grids.forEach((grid) => {
+    grids.forEach((grid, gridIndex) => {
       for (let i = 0; i < grid.width; i++) {
         for (let j = 0; j < grid.height; j++) {
           const x = currentX + i * gridSize;
           const y = currentY + j * gridSize;
+
+          // 상호작용 가능한 사각형 객체 생성
+          const rect = this.add.rectangle(
+            x + gridSize / 2,
+            y + gridSize / 2,
+            gridSize,
+            gridSize
+          );
+          rect.setInteractive();
+
+          // 마우스 오버 이벤트 리스너 추가
+          rect.on("pointerover", () => {
+            console.log(
+              `마우스가 ${gridIndex}번째 그리드의 ${j + 1}번째 줄, ${
+                i + 1
+              }번째 칸에 올려졌습니다`
+            );
+          });
+
           gridGraphics.strokeRect(x, y, gridSize, gridSize);
         }
       }
 
-      // 다음 그리드 위치 업데이트 (간격 추가)
       currentX += grid.width * gridSize + gridSpacing;
       maxYInRow = Math.max(maxYInRow, grid.height * gridSize);
 
-      // 줄바꿈 처리 (새 행 시작 시 간격 추가)
       if (currentX + gridSize > Number(this.sys.game.config.width)) {
         currentX = 0;
         currentY += maxYInRow + gridSpacing;
