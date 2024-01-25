@@ -148,6 +148,7 @@ export function drawItemGrid(
     itemRect.on("pointerup", function (pointer: Phaser.Input.Pointer) {
       const droppedX = pointer.x;
       const droppedY = pointer.y;
+      const droppedItemData = itemRect.getData("itemData");
 
       // 드롭된 위치가 어느 그리드의 어느 칸에 해당하는지 확인
       const droppedOnGrid = gridDetails.find(
@@ -159,14 +160,28 @@ export function drawItemGrid(
       );
 
       if (droppedOnGrid) {
-        console.log(
-          `아이템이 ${droppedOnGrid.gridIndex}번째 그리드의 ${droppedOnGrid.row}번째 줄, ${droppedOnGrid.column}번째 칸에 올려졌습니다`
+        const canPlaceItem = checkItemPlacement(
+          scene,
+          grids,
+          droppedOnGrid.gridIndex,
+          droppedItemData,
+          droppedOnGrid.row,
+          droppedOnGrid.column
         );
+        if (canPlaceItem) {
+          console.log(
+            `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 성공적으로 배치했습니다.`
+          );
+          // 여기서 아이템을 그리드에 실제로 배치하는 로직을 추가합니다.
+        } else {
+          console.log(
+            `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 없습니다.`
+          );
+        }
       }
 
       itemRect.setData("dragging", false);
       // 드래그 종료 시 데이터 처리
-      const droppedItemData = itemRect.getData("itemData");
     });
 
     // 다음 아이템 위치 업데이트
@@ -176,4 +191,48 @@ export function drawItemGrid(
       startY += gridSize * item.height + gridSpacing;
     }
   });
+}
+
+// 예시: 아이템 드롭 위치 및 배치 가능 여부 확인
+export function checkItemPlacement(
+  scene: Phaser.Scene,
+  grids: ChestRigInnerGrid[],
+  gridIndex: number,
+  itemData: BarterItem,
+  row: number,
+  column: number
+) {
+  // 드롭된 그리드 찾기
+  const gridInfo = grids[gridIndex];
+  if (!gridInfo || !gridInfo.items) {
+    console.log("유효하지 않은 그리드입니다.");
+    return false;
+  }
+
+  // 아이템이 배치될 각 칸이 비어있는지 확인
+  for (let i = 0; i < itemData.height; i++) {
+    for (let j = 0; j < itemData.width; j++) {
+      // 해당 아이템 파트의 그리드 위치
+      const itemPartRow = row + i;
+      const itemPartCol = column + j;
+
+      // 그리드 범위를 넘어가거나 이미 다른 아이템이 있는 경우
+      if (
+        itemPartRow >= gridInfo.height ||
+        itemPartCol >= gridInfo.width ||
+        gridInfo.items[itemPartRow][itemPartCol] !== null
+      ) {
+        console.log(
+          `아이템을 배치할 수 없습니다: ${gridIndex}번째 그리드의 ${itemPartRow}번째 줄, ${itemPartCol}번째 칸`
+        );
+        return false;
+      }
+    }
+  }
+
+  // 모든 조건을 만족하면 아이템 배치 가능
+  console.log(
+    `아이템을 배치할 수 있습니다: ${gridIndex}번째 그리드의 ${row}번째 줄, ${column}번째 칸`
+  );
+  return true;
 }
