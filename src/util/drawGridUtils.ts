@@ -81,27 +81,16 @@ export function drawItemGrid(
         rect.setInteractive();
         scene.input.setDraggable(rect);
 
-        rect.on(
-          "pointerdown",
-          function (
-            this: Phaser.GameObjects.Rectangle,
-            pointer: Phaser.Input.Pointer
-          ) {
-            this.data.set("startX", this.x);
-            this.data.set("startY", this.y);
-          }
-        );
+        rect.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+          rect.setData("startX", rect.x);
+          rect.setData("startY", rect.y);
+        });
 
-        scene.input.on(
+        rect.on(
           "drag",
-          function (
-            pointer: Phaser.Input.Pointer,
-            gameObject: Phaser.GameObjects.Rectangle,
-            dragX: number,
-            dragY: number
-          ) {
-            gameObject.x = dragX;
-            gameObject.y = dragY;
+          (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
+            rect.x = dragX;
+            rect.y = dragY;
           }
         );
 
