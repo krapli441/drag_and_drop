@@ -3,7 +3,13 @@ import { ChestRigInnerGrid } from "../types/Chest_Rig";
 import { BarterItem } from "../types/Barter_Item";
 
 // 그리드 영역 정보를 저장하는 배열
-let gridAreas: { x: number; y: number; width: number; height: number }[] = [];
+let gridAreas: {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  gridIndex: number;
+}[] = [];
 
 export function drawGrid(scene: Phaser.Scene, grids: ChestRigInnerGrid[]) {
   const gridGraphics = scene.add.graphics();
@@ -21,7 +27,7 @@ export function drawGrid(scene: Phaser.Scene, grids: ChestRigInnerGrid[]) {
         const x = currentX + i * gridSize;
         const y = currentY + j * gridSize;
         // 그리드 영역 정보 저장
-        gridAreas.push({ x, y, width: gridSize, height: gridSize });
+        gridAreas.push({ x, y, width: gridSize, height: gridSize, gridIndex });
 
         // 상호작용 가능한 사각형 객체 생성
         const rect = scene.add.rectangle(
@@ -53,17 +59,20 @@ export function drawGrid(scene: Phaser.Scene, grids: ChestRigInnerGrid[]) {
       maxYInRow = 0;
     }
   });
+  console.log("그리드 영역 정보:", gridAreas);
 }
 
 // 드롭 위치가 그리드 영역 내부인지 판별하는 함수
 export function isInsideGrid(droppedX: number, droppedY: number) {
-  return gridAreas.some(
+  const foundArea = gridAreas.find(
     (area) =>
       droppedX >= area.x &&
       droppedX < area.x + area.width &&
       droppedY >= area.y &&
       droppedY < area.y + area.height
   );
+
+  return foundArea ? foundArea.gridIndex : null;
 }
 
 export function drawItemGrid(
