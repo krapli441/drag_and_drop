@@ -8,6 +8,7 @@ import { drawGrid } from "../util/drawGridUtils";
 import { drawItemGrid } from "../util/drawGridUtils";
 
 export default class Inventory extends Phaser.Scene {
+  chestRigInventory: ChestRigInventory | null = null;
   constructor() {
     super("Inventory");
   }
@@ -29,13 +30,13 @@ export default class Inventory extends Phaser.Scene {
 
       if (randomChestRig.hasGrid && randomChestRig.properties.grids) {
         drawGrid(this, randomChestRig.properties.grids);
-        const chestRigInventory = new ChestRigInventory(randomChestRig);
-        console.log("ChestRigInventory:", chestRigInventory);
+        this.chestRigInventory = new ChestRigInventory(randomChestRig); // 인스턴스 초기화
+        console.log("ChestRigInventory:", this.chestRigInventory);
         drawItemGrid(
           this,
           randomBarterItems,
           0,
-          chestRigInventory.height * 50 + 20
+          this.chestRigInventory.height * 50 + 20
         );
       }
     } catch (error) {

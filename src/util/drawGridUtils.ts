@@ -161,10 +161,10 @@ export function drawItemGrid(
             droppedY < grid.y + grid.height
         );
 
-        if (droppedOnGrid) {
+        if (droppedOnGrid && this.chestRigInventory) {
           const canPlaceItem = checkItemPlacement(
-            this, // 현재 씬을 나타내는 this 키워드
-            chestRigInventory.grids,
+            this,
+            this.chestRigInventory.grids,
             droppedOnGrid.gridIndex,
             droppedItemData,
             droppedOnGrid.row,
