@@ -3,6 +3,7 @@ import { loadRandomData } from "../api/api";
 import { CHEST_RIG_QUERY, BARTER_ITEM_QUERY } from "../api/item_queries";
 import { BarterItem } from "../types/Barter_Item";
 import { ChestRigItem } from "../types/Chest_Rig";
+import { ChestRigInnerGrid } from "../types/Chest_Rig";
 import { ChestRigInventory } from "../InventoryClasses/ChestRigInventory";
 
 export default class Inventory extends Phaser.Scene {
@@ -47,7 +48,7 @@ export default class Inventory extends Phaser.Scene {
     return shuffled.slice(0, count);
   }
 
-  drawGrid(grids: any[]) {
+  drawGrid(grids: ChestRigInnerGrid[]) {
     const gridGraphics = this.add.graphics();
     gridGraphics.lineStyle(2, 0xffffff, 1);
 
