@@ -77,24 +77,35 @@ export function drawItemGrid(
       )
       .setInteractive();
 
+    // 아이템 데이터 설정
+    itemRect.setData("itemData", item);
+
     // 드래그 앤 드롭 로직
     scene.input.setDraggable(itemRect);
 
     itemRect.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
-      itemRect.setData("startX", itemRect.x);
-      itemRect.setData("startY", itemRect.y);
+      itemRect.setData("dragging", true);
+      // 아이템 데이터 캡쳐
+      const capturedItemData = itemRect.getData("itemData");
+      console.log("드래그 시작:", capturedItemData);
     });
 
     itemRect.on(
       "drag",
       (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
-        itemRect.x = dragX;
-        itemRect.y = dragY;
+        if (itemRect.getData("dragging")) {
+          itemRect.x = dragX;
+          itemRect.y = dragY;
+        }
       }
     );
 
     itemRect.on("pointerup", function (pointer: Phaser.Input.Pointer) {
-      // 드롭 후 로직 추가
+      itemRect.setData("dragging", false);
+      // 드래그 종료 시 데이터 처리
+      const droppedItemData = itemRect.getData("itemData");
+      console.log("드래그 종료:", droppedItemData);
+      // 여기에 드롭 후의 로직을 추가
     });
 
     // 다음 아이템 위치 업데이트
