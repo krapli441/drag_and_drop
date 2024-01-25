@@ -71,41 +71,39 @@ export function drawItemGrid(
         const x = currentX + i * gridSize;
         const y = currentY + j * gridSize;
 
-        // 상호작용 가능한 사각형 객체 생성
-        const rect = scene.add.rectangle(
-          x + gridSize / 2,
-          y + gridSize / 2,
-          gridSize,
-          gridSize
-        );
-        rect.setInteractive();
+        const rect = scene.add
+          .rectangle(x + gridSize / 2, y + gridSize / 2, gridSize, gridSize)
+          .setInteractive();
+
         scene.input.setDraggable(rect);
 
+        // 드래그 시작 위치 저장
         rect.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
-          rect.setData("startX", rect.x);
-          rect.setData("startY", rect.y);
+          rect.setData("dragOffsetX", pointer.x - rect.x);
+          rect.setData("dragOffsetY", pointer.y - rect.y);
         });
 
-        rect.on(
+        // 드래그 중 객체 위치 업데이트
+        scene.input.on(
           "drag",
-          (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
-            rect.x = dragX;
-            rect.y = dragY;
+          (
+            pointer: Phaser.Input.Pointer,
+            gameObject: Phaser.GameObjects.Rectangle,
+            dragX: number,
+            dragY: number
+          ) => {
+            if (gameObject === rect) {
+              gameObject.x = dragX - rect.getData("dragOffsetX");
+              gameObject.y = dragY - rect.getData("dragOffsetY");
+            }
           }
         );
-
-        rect.on("pointerup", function (pointer: Phaser.Input.Pointer) {
-          // 여기에 드롭 후의 로직을 추가
-        });
 
         gridGraphics.strokeRect(x, y, gridSize, gridSize);
       }
     }
 
-    // 다음 아이템 위치 업데이트
     currentX += item.width * gridSize + gridSpacing;
-
-    // 줄바꿈 처리
     if (currentX + gridSize > Number(scene.sys.game.config.width)) {
       currentX = startX;
       currentY += item.height * gridSize + gridSpacing;
