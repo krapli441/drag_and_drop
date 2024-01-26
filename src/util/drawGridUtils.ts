@@ -159,3 +159,33 @@ export function drawItemGrid(
     }
   });
 }
+
+function canPlaceItemInGrid(
+  grid: ChestRigInnerGrid,
+  item: BarterItem,
+  dropRow: number,
+  dropColumn: number
+): boolean {
+  // grid.items가 정의되어 있지 않다면 아이템을 배치할 수 없음
+  if (!grid.items) {
+    return false;
+  }
+
+  // 아이템을 배치하려는 각 칸이 비어있는지 확인
+  for (let i = 0; i < item.height; i++) {
+    for (let j = 0; j < item.width; j++) {
+      const checkRow = dropRow + i;
+      const checkColumn = dropColumn + j;
+
+      // 그리드 범위를 벗어나거나 이미 아이템이 배치된 경우
+      if (
+        checkRow >= grid.height ||
+        checkColumn >= grid.width ||
+        grid.items[checkRow][checkColumn] !== null
+      ) {
+        return false; // 배치할 수 없음
+      }
+    }
+  }
+  return true; // 모든 조건을 만족하면 배치 가능
+}
