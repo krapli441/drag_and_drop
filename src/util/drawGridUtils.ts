@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { ChestRigInventory } from "../InventoryClasses/ChestRigInventory";
 import { ChestRigInnerGrid } from "../types/Chest_Rig";
 import { BarterItem } from "../types/Barter_Item";
 import { gridAreas, gridDetails } from "../types/Grids";
@@ -127,29 +128,47 @@ export function drawItemGrid(
       }
     );
 
-    itemRect.on("pointerup", function (pointer: Phaser.Input.Pointer) {
+    itemRect.on("pointerup", function(this: ChestRigInventory, pointer: Phaser.Input.Pointer) {
       const droppedX = pointer.x;
       const droppedY = pointer.y;
-
+      const droppedItemData = itemRect.getData("itemData");
+    
       // 드롭된 위치가 어느 그리드의 어느 칸에 해당하는지 확인
       const droppedOnGrid = gridDetails.find(
-        (grid) =>
+        grid =>
           droppedX >= grid.x &&
           droppedX < grid.x + grid.width &&
           droppedY >= grid.y &&
           droppedY < grid.y + grid.height
       );
-
-      if (droppedOnGrid) {
-        console.log(
-          `아이템이 ${droppedOnGrid.gridIndex}번째 그리드의 ${droppedOnGrid.row}번째 줄, ${droppedOnGrid.column}번째 칸에 올려졌습니다`
+    
+      if (droppedOnGrid && ChestRigInventory) {
+        // 아이템이 배치될 그리드 및 칸 확인
+        const targetGrid = this.grids[droppedOnGrid.gridIndex];
+        const dropRow = droppedOnGrid.row - 1; // 0 기반 인덱스 조정
+        const dropColumn = droppedOnGrid.column - 1; // 0 기반 인덱스 조정
+    
+        // 아이템 배치 가능 여부 확인
+        const canPlaceItem = canPlaceItemInGrid(
+          targetGrid,
+          droppedItemData,
+          dropRow,
+          dropColumn
         );
+    
+        if (canPlaceItem) {
+          console.log(`아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 있습니다.`);
+          // 여기서 아이템을 그리드에 실제로 배치하는 로직을 추가합니다.
+          // 예: targetGrid.items[dropRow][dropColumn] = droppedItemData.id;
+        } else {
+          console.log(`아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 없습니다.`);
+        }
       }
-
+    
       itemRect.setData("dragging", false);
-      // 드래그 종료 시 데이터 처리
-      const droppedItemData = itemRect.getData("itemData");
+      // 드래그 종료 시 추가 처리 (예: 아이템 복원 등)
     });
+    
 
     // 다음 아이템 위치 업데이트
     startX += gridSize * item.width + gridSpacing;
@@ -183,9 +202,11 @@ function canPlaceItemInGrid(
         checkColumn >= grid.width ||
         grid.items[checkRow][checkColumn] !== null
       ) {
+        console.log("아이템을 배치할 수 없습니다");
         return false; // 배치할 수 없음
       }
     }
   }
+  console.log("아이템을 배치할 수 있습니다");
   return true; // 모든 조건을 만족하면 배치 가능
 }
