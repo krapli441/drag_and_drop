@@ -1,25 +1,7 @@
 import Phaser from "phaser";
 import { ChestRigInnerGrid } from "../types/Chest_Rig";
 import { BarterItem } from "../types/Barter_Item";
-
-// 그리드 영역 정보를 저장하는 배열
-let gridAreas: {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  gridIndex: number;
-}[] = [];
-
-let gridDetails: {
-  gridIndex: number;
-  row: number;
-  column: number;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}[] = [];
+import { gridAreas, gridDetails } from "../types/Grids";
 
 export function drawGrid(scene: Phaser.Scene, grids: ChestRigInnerGrid[]) {
   const gridGraphics = scene.add.graphics();
