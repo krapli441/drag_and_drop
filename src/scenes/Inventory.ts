@@ -37,6 +37,7 @@ export default class Inventory extends Phaser.Scene {
         drawItemGrid(
           this,
           randomBarterItems,
+          chestRigInventory.grids,
           0,
           chestRigInventory.height * 50 + 20
         );
