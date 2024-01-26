@@ -152,7 +152,8 @@ export function drawItemGrid(
           targetGrid,
           droppedItemData,
           dropRow,
-          dropColumn
+          dropColumn,
+          droppedOnGrid.gridIndex
         );
 
         if (canPlaceItem) {
@@ -179,32 +180,43 @@ export function drawItemGrid(
   });
 }
 
-function canPlaceItemInGrid(
+export function canPlaceItemInGrid(
   grid: ChestRigInnerGrid,
-  item: BarterItem,
+  itemData: BarterItem,
   dropRow: number,
-  dropColumn: number
-): boolean {
-  // grid.items가 정의되어 있지 않다면 아이템을 배치할 수 없음
+  dropColumn: number,
+  gridIndex: number // gridIndex를 별도의 매개변수로 추가
+) {
+  // grid.items의 존재 여부 확인
   if (!grid.items) {
+    console.log("유효하지 않은 그리드입니다.");
     return false;
   }
 
-  // 아이템을 배치하려는 각 칸이 비어있는지 확인
-  for (let i = 0; i < item.height; i++) {
-    for (let j = 0; j < item.width; j++) {
+  for (let i = 0; i < itemData.height; i++) {
+    for (let j = 0; j < itemData.width; j++) {
       const checkRow = dropRow + i;
       const checkColumn = dropColumn + j;
 
-      // 그리드 범위를 벗어나거나 이미 아이템이 배치된 경우
       if (
         checkRow >= grid.height ||
         checkColumn >= grid.width ||
         grid.items[checkRow][checkColumn] !== null
       ) {
-        return false; // 배치할 수 없음
+        console.log(
+          `아이템을 배치할 수 없습니다: ${gridIndex}번째 그리드의 ${
+            checkRow + 1
+          }번째 줄, ${checkColumn + 1}번째 칸`
+        );
+        return false;
       }
     }
   }
-  return true; // 모든 조건을 만족하면 배치 가능
+
+  console.log(
+    `아이템을 ${gridIndex}번째 그리드의 ${dropRow + 1}번째 줄, ${
+      dropColumn + 1
+    }번째 칸에 배치할 수 있습니다.`
+  );
+  return true;
 }
