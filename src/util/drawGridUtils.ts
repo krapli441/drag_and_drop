@@ -43,11 +43,11 @@ export function drawGrid(scene: Phaser.Scene, grids: ChestRigInnerGrid[]) {
 
         // 마우스 오버 이벤트 리스너 추가
         rect.on("pointerover", () => {
-          console.log(
-            `마우스가 ${gridIndex}번째 그리드의 ${j + 1}번째 줄, ${
-              i + 1
-            }번째 칸에 올려졌습니다`
-          );
+          // console.log(
+          //   `마우스가 ${gridIndex}번째 그리드의 ${j + 1}번째 줄, ${
+          //     i + 1
+          //   }번째 칸에 올려졌습니다`
+          // );
         });
 
         gridGraphics.strokeRect(x, y, gridSize, gridSize);
