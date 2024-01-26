@@ -33,6 +33,7 @@ export default class Inventory extends Phaser.Scene {
         // ChestRigInventory 인스턴스 생성
         const chestRigInventory = new ChestRigInventory(randomChestRig);
         console.log("ChestRigInventory:", chestRigInventory);
+        console.log("ChestRigInventory grids:", chestRigInventory.grids);
         drawItemGrid(
           this,
           randomBarterItems,
