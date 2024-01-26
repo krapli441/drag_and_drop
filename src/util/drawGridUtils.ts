@@ -220,3 +220,34 @@ export function canPlaceItemInGrid(
   );
   return true;
 }
+
+function placeItemInGrid(
+  grid: ChestRigInnerGrid,
+  itemData: BarterItem,
+  startRow: number,
+  startColumn: number
+) {
+  for (let row = 0; row < itemData.height; row++) {
+    for (let col = 0; col < itemData.width; col++) {
+      grid.items[startRow + row][startColumn + col] = itemData.id; // 아이템 ID 저장
+    }
+  }
+}
+function onItemDrop(
+  gridIndex: number,
+  itemData: BarterItem,
+  dropRow: number,
+  dropColumn: number,
+  chestRigInventory: ChestRigInventory
+) {
+  const targetGrid = chestRigInventory.grids[gridIndex];
+
+  if (
+    canPlaceItemInGrid(targetGrid, itemData, dropRow, dropColumn, gridIndex)
+  ) {
+    placeItemInGrid(targetGrid, itemData, dropRow, dropColumn);
+    console.log(`아이템 ${itemData.id}이(가) 그리드에 배치되었습니다.`);
+  } else {
+    console.log(`아이템을 그리드에 배치할 수 없습니다.`);
+  }
+}
