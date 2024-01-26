@@ -162,6 +162,12 @@ export function drawItemGrid(
           console.log(
             `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 성공적으로 배치했습니다.`
           );
+
+          // ChestRigInventory 인스턴스의 grids 정보 로깅
+          console.log(
+            "배치 후 인벤토리 상태 :", // ChestRigInventory 인스턴스의 grids 정보 로깅
+            grids[droppedOnGrid.gridIndex].items
+          );
         } else {
           console.log(
             `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 없습니다.`
