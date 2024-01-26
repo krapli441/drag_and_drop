@@ -159,8 +159,6 @@ export function drawItemGrid(
           console.log(
             `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 있습니다.`
           );
-          // 여기서 아이템을 그리드에 실제로 배치하는 로직을 추가합니다.
-          // 예: targetGrid.items[dropRow][dropColumn] = droppedItemData.id;
         } else {
           console.log(
             `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 없습니다.`
@@ -204,11 +202,9 @@ function canPlaceItemInGrid(
         checkColumn >= grid.width ||
         grid.items[checkRow][checkColumn] !== null
       ) {
-        console.log("아이템을 배치할 수 없습니다");
         return false; // 배치할 수 없음
       }
     }
   }
-  console.log("아이템을 배치할 수 있습니다");
   return true; // 모든 조건을 만족하면 배치 가능
 }
