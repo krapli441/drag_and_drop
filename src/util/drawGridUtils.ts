@@ -227,12 +227,28 @@ function placeItemInGrid(
   startRow: number,
   startColumn: number
 ) {
+  // grid.items가 정의되었는지 확인
+  if (!grid.items) {
+    console.error("그리드에 items 배열이 정의되지 않았습니다.");
+    return;
+  }
+
+  // 아이템을 그리드에 배치
   for (let row = 0; row < itemData.height; row++) {
     for (let col = 0; col < itemData.width; col++) {
+      // 해당 그리드 칸이 정의되었는지 확인
+      if (
+        !grid.items[startRow + row] ||
+        grid.items[startRow + row][startColumn + col] === undefined
+      ) {
+        console.error("그리드의 지정된 칸이 정의되지 않았습니다.");
+        return;
+      }
       grid.items[startRow + row][startColumn + col] = itemData.id; // 아이템 ID 저장
     }
   }
 }
+
 function onItemDrop(
   gridIndex: number,
   itemData: BarterItem,
