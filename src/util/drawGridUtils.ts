@@ -157,13 +157,13 @@ export function drawItemGrid(
         );
 
         if (canPlaceItem) {
-          console.log(
-            `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 있습니다.`
-          );
+          // console.log(
+          //   `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 있습니다.`
+          // );
         } else {
-          console.log(
-            `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 없습니다.`
-          );
+          // console.log(
+          //   `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 없습니다.`
+          // );
         }
       }
 
