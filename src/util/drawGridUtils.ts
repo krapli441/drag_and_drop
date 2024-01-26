@@ -62,8 +62,6 @@ export function drawGrid(scene: Phaser.Scene, grids: ChestRigInnerGrid[]) {
       maxYInRow = 0;
     }
   });
-  // console.log("그리드 영역 정보:", gridAreas);
-  // console.log("그리드 칸 정보:", gridDetails);
 }
 
 // 드롭 위치가 그리드 영역 내부인지 판별하는 함수
