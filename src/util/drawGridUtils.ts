@@ -144,8 +144,9 @@ export function drawItemGrid(
             droppedY < grid.y + grid.height
         );
 
-        if (droppedOnGrid && ChestRigInventory) {
-          console.log("droppedOnGrid 정보:", droppedOnGrid);
+        if (droppedOnGrid) {
+          console.log("this.grids:", this.grids);
+          console.log("droppedOnGrid.gridIndex:", droppedOnGrid.gridIndex);
           // 아이템이 배치될 그리드 및 칸 확인
           const targetGrid = this.grids[droppedOnGrid.gridIndex];
           const dropRow = droppedOnGrid.row - 1; // 0 기반 인덱스 조정
