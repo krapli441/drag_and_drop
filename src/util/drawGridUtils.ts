@@ -163,7 +163,12 @@ export function drawItemGrid(
             `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 성공적으로 배치했습니다.`
           );
 
-          updateItemVisualPosition(itemRect, droppedOnGrid, gridSize);
+          updateItemVisualPosition(
+            itemRect,
+            droppedOnGrid,
+            gridSize,
+            droppedItemData.height
+          );
           // ChestRigInventory 인스턴스의 grids 정보 로깅
           console.log(
             "배치 후 인벤토리 상태 :", // ChestRigInventory 인스턴스의 grids 정보 로깅
@@ -181,15 +186,31 @@ export function drawItemGrid(
     });
 
     function updateItemVisualPosition(
-      itemRect: { setPosition: (arg0: any, arg1: any) => void },
-      droppedOnGrid: { x: number; column: number; y: number; row: number },
-      gridSize: number
+      itemRect: Phaser.GameObjects.Rectangle, // 아이템의 사각형
+      droppedOnGrid: {
+        gridIndex?: number;
+        row: any;
+        column: any;
+        x: any;
+        y: any;
+        width?: number;
+        height?: number;
+      }, // 아이템이 떨어진 그리드 세부 정보
+      gridSize: number, // 각 그리드 셀의 크기
+      itemHeight: number | undefined // 아이템의 높이
     ) {
+      // 그리드 셀의 좌상단 모서리를 기준으로 새로운 X, Y 좌표 계산
       const newX =
         droppedOnGrid.x + (droppedOnGrid.column - 1) * gridSize + gridSize / 2;
-      const newY =
+      let newY =
         droppedOnGrid.y + (droppedOnGrid.row - 1) * gridSize + gridSize / 2;
 
+      // 두 번째 줄 이하에 아이템을 놓았다면 Y 좌표를 조정
+      if (droppedOnGrid.row > 1 && itemHeight !== undefined) {
+        newY -= (itemHeight * gridSize) / 2;
+      }
+
+      // 아이템의 새로운 위치 설정
       itemRect.setPosition(newX, newY);
     }
 
