@@ -43,11 +43,11 @@ export function drawGrid(scene: Phaser.Scene, grids: ChestRigInnerGrid[]) {
 
         // 마우스 오버 이벤트 리스너 추가
         rect.on("pointerover", () => {
-          console.log(
-            `마우스가 ${gridIndex}번째 그리드의 ${j + 1}번째 줄, ${
-              i + 1
-            }번째 칸에 올려졌습니다`
-          );
+          // console.log(
+          //   `마우스가 ${gridIndex}번째 그리드의 ${j + 1}번째 줄, ${
+          //     i + 1
+          //   }번째 칸에 올려졌습니다`
+          // );
         });
 
         gridGraphics.strokeRect(x, y, gridSize, gridSize);
@@ -152,15 +152,22 @@ export function drawItemGrid(
           targetGrid,
           droppedItemData,
           dropRow,
-          dropColumn
+          dropColumn,
+          droppedOnGrid.gridIndex
         );
 
         if (canPlaceItem) {
+          // 아이템을 그리드에 배치
+          placeItemInGrid(targetGrid, droppedItemData, dropRow, dropColumn);
           console.log(
-            `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 있습니다.`
+            `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 성공적으로 배치했습니다.`
           );
-          // 여기서 아이템을 그리드에 실제로 배치하는 로직을 추가합니다.
-          // 예: targetGrid.items[dropRow][dropColumn] = droppedItemData.id;
+
+          // ChestRigInventory 인스턴스의 grids 정보 로깅
+          console.log(
+            "배치 후 인벤토리 상태 :", // ChestRigInventory 인스턴스의 grids 정보 로깅
+            grids[droppedOnGrid.gridIndex].items
+          );
         } else {
           console.log(
             `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 배치할 수 없습니다.`
@@ -181,34 +188,90 @@ export function drawItemGrid(
   });
 }
 
-function canPlaceItemInGrid(
+export function canPlaceItemInGrid(
   grid: ChestRigInnerGrid,
-  item: BarterItem,
+  itemData: BarterItem,
   dropRow: number,
-  dropColumn: number
-): boolean {
-  // grid.items가 정의되어 있지 않다면 아이템을 배치할 수 없음
+  dropColumn: number,
+  gridIndex: number // gridIndex를 별도의 매개변수로 추가
+) {
+  // grid.items의 존재 여부 확인
   if (!grid.items) {
+    console.log("유효하지 않은 그리드입니다.");
     return false;
   }
 
-  // 아이템을 배치하려는 각 칸이 비어있는지 확인
-  for (let i = 0; i < item.height; i++) {
-    for (let j = 0; j < item.width; j++) {
+  for (let i = 0; i < itemData.height; i++) {
+    for (let j = 0; j < itemData.width; j++) {
       const checkRow = dropRow + i;
       const checkColumn = dropColumn + j;
 
-      // 그리드 범위를 벗어나거나 이미 아이템이 배치된 경우
       if (
         checkRow >= grid.height ||
         checkColumn >= grid.width ||
         grid.items[checkRow][checkColumn] !== null
       ) {
-        console.log("아이템을 배치할 수 없습니다");
-        return false; // 배치할 수 없음
+        console.log(
+          `아이템을 배치할 수 없습니다: ${gridIndex}번째 그리드의 ${
+            checkRow + 1
+          }번째 줄, ${checkColumn + 1}번째 칸`
+        );
+        return false;
       }
     }
   }
-  console.log("아이템을 배치할 수 있습니다");
-  return true; // 모든 조건을 만족하면 배치 가능
+
+  console.log(
+    `아이템을 ${gridIndex}번째 그리드의 ${dropRow + 1}번째 줄, ${
+      dropColumn + 1
+    }번째 칸에 배치할 수 있습니다.`
+  );
+  return true;
+}
+
+function placeItemInGrid(
+  grid: ChestRigInnerGrid,
+  itemData: BarterItem,
+  startRow: number,
+  startColumn: number
+) {
+  // grid.items가 정의되었는지 확인
+  if (!grid.items) {
+    console.error("그리드에 items 배열이 정의되지 않았습니다.");
+    return;
+  }
+
+  // 아이템을 그리드에 배치
+  for (let row = 0; row < itemData.height; row++) {
+    for (let col = 0; col < itemData.width; col++) {
+      // 해당 그리드 칸이 정의되었는지 확인
+      if (
+        !grid.items[startRow + row] ||
+        grid.items[startRow + row][startColumn + col] === undefined
+      ) {
+        console.error("그리드의 지정된 칸이 정의되지 않았습니다.");
+        return;
+      }
+      grid.items[startRow + row][startColumn + col] = itemData.id; // 아이템 ID 저장
+    }
+  }
+}
+
+function onItemDrop(
+  gridIndex: number,
+  itemData: BarterItem,
+  dropRow: number,
+  dropColumn: number,
+  chestRigInventory: ChestRigInventory
+) {
+  const targetGrid = chestRigInventory.grids[gridIndex];
+
+  if (
+    canPlaceItemInGrid(targetGrid, itemData, dropRow, dropColumn, gridIndex)
+  ) {
+    placeItemInGrid(targetGrid, itemData, dropRow, dropColumn);
+    console.log(`아이템 ${itemData.id}이(가) 그리드에 배치되었습니다.`);
+  } else {
+    console.log(`아이템을 그리드에 배치할 수 없습니다.`);
+  }
 }
