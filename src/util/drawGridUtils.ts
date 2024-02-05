@@ -131,6 +131,7 @@ export function drawItemGrid(
       const droppedX = pointer.x;
       const droppedY = pointer.y;
       const droppedItemData = itemRect.getData("itemData");
+      const itemHeight = droppedItemData.height;
 
       // 드롭된 위치가 어느 그리드의 어느 칸에 해당하는지 확인
       const droppedOnGrid = gridDetails.find(
@@ -163,7 +164,12 @@ export function drawItemGrid(
             `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 성공적으로 배치했습니다.`
           );
 
-          updateItemVisualPosition(itemRect, droppedOnGrid, gridSize);
+          updateItemVisualPosition(
+            itemRect,
+            droppedOnGrid,
+            gridSize,
+            itemHeight
+          );
           // ChestRigInventory 인스턴스의 grids 정보 로깅
           console.log(
             "배치 후 인벤토리 상태 :", // ChestRigInventory 인스턴스의 grids 정보 로깅
@@ -183,12 +189,18 @@ export function drawItemGrid(
     function updateItemVisualPosition(
       itemRect: { setPosition: (arg0: any, arg1: any) => void },
       droppedOnGrid: { x: number; column: number; y: number; row: number },
-      gridSize: number
+      gridSize: number,
+      itemHeight: number // 아이템의 높이를 매개변수로 추가
     ) {
+      // 아이템의 실제 y 위치를 계산할 때 아이템의 높이를 고려
+      const newY =
+        droppedOnGrid.y +
+        (droppedOnGrid.row - 1) * gridSize +
+        (gridSize - itemHeight * gridSize) / 2;
+
+      // 아이템의 실제 x 위치 계산은 동일
       const newX =
         droppedOnGrid.x + (droppedOnGrid.column - 1) * gridSize + gridSize / 2;
-      const newY =
-        droppedOnGrid.y + (droppedOnGrid.row - 1) * gridSize + gridSize / 2;
 
       itemRect.setPosition(newX, newY);
     }
