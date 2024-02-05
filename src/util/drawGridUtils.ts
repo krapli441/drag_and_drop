@@ -163,6 +163,7 @@ export function drawItemGrid(
             `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 성공적으로 배치했습니다.`
           );
 
+          updateItemVisualPosition(itemRect, droppedOnGrid, gridSize);
           // ChestRigInventory 인스턴스의 grids 정보 로깅
           console.log(
             "배치 후 인벤토리 상태 :", // ChestRigInventory 인스턴스의 grids 정보 로깅
@@ -178,6 +179,19 @@ export function drawItemGrid(
       itemRect.setData("dragging", false);
       // 드래그 종료 시 추가 처리 (예: 아이템 복원 등)
     });
+
+    function updateItemVisualPosition(
+      itemRect: { setPosition: (arg0: any, arg1: any) => void },
+      droppedOnGrid: { x: number; column: number; y: number; row: number },
+      gridSize: number
+    ) {
+      const newX =
+        droppedOnGrid.x + (droppedOnGrid.column - 1) * gridSize + gridSize / 2;
+      const newY =
+        droppedOnGrid.y + (droppedOnGrid.row - 1) * gridSize + gridSize / 2;
+
+      itemRect.setPosition(newX, newY);
+    }
 
     // 다음 아이템 위치 업데이트
     startX += gridSize * item.width + gridSpacing;
