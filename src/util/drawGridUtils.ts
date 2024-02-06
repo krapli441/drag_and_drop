@@ -43,11 +43,11 @@ export function drawGrid(scene: Phaser.Scene, grids: ChestRigInnerGrid[]) {
 
         // 마우스 오버 이벤트 리스너 추가
         rect.on("pointerover", () => {
-          // console.log(
-          //   `마우스가 ${gridIndex}번째 그리드의 ${j + 1}번째 줄, ${
-          //     i + 1
-          //   }번째 칸에 올려졌습니다`
-          // );
+          console.log(
+            `마우스가 ${gridIndex}번째 그리드의 ${j + 1}번째 줄, ${
+              i + 1
+            }번째 칸에 올려졌습니다`
+          );
         });
 
         gridGraphics.strokeRect(x, y, gridSize, gridSize);
@@ -163,11 +163,7 @@ export function drawItemGrid(
             `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 성공적으로 배치했습니다.`
           );
 
-          updateItemVisualPosition(
-            itemRect,
-            droppedOnGrid,
-            gridSize,
-          );
+          updateItemVisualPosition(itemRect, droppedOnGrid, gridSize);
           // ChestRigInventory 인스턴스의 grids 정보 로깅
           console.log(
             "배치 후 인벤토리 상태 :", // ChestRigInventory 인스턴스의 grids 정보 로깅
