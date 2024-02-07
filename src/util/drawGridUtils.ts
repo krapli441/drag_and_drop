@@ -164,7 +164,6 @@ export function drawItemGrid(
           );
 
           updateItemVisualPosition(itemRect, droppedOnGrid, gridSize);
-          // ChestRigInventory 인스턴스의 grids 정보 로깅
           console.log(
             "배치 후 인벤토리 상태 :", // ChestRigInventory 인스턴스의 grids 정보 로깅
             grids[droppedOnGrid.gridIndex].items
@@ -177,7 +176,6 @@ export function drawItemGrid(
       }
 
       itemRect.setData("dragging", false);
-      // 드래그 종료 시 추가 처리 (예: 아이템 복원 등)
     });
 
     function updateItemVisualPosition(
@@ -216,7 +214,7 @@ export function canPlaceItemInGrid(
   itemData: BarterItem,
   dropRow: number,
   dropColumn: number,
-  gridIndex: number // gridIndex를 별도의 매개변수로 추가
+  gridIndex: number
 ) {
   // grid.items의 존재 여부 확인
   if (!grid.items) {
