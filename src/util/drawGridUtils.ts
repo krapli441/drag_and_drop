@@ -163,7 +163,13 @@ export function drawItemGrid(
             `아이템을 ${droppedOnGrid.gridIndex}번째 그리드에 성공적으로 배치했습니다.`
           );
 
-          updateItemVisualPosition(itemRect, droppedOnGrid, gridSize);
+          updateItemVisualPosition(
+            itemRect,
+            droppedOnGrid,
+            gridSize,
+            item.width, // 아이템의 가로 크기 전달
+            item.height // 아이템의 세로 크기 전달
+          );
           console.log(
             "배치 후 인벤토리 상태 :", // ChestRigInventory 인스턴스의 grids 정보 로깅
             grids[droppedOnGrid.gridIndex].items
@@ -182,22 +188,25 @@ export function drawItemGrid(
       itemRect: Phaser.GameObjects.Rectangle, // 아이템의 Phaser 객체
       droppedOnGrid: {
         gridIndex?: number;
-        row: any;
-        column: any;
-        x: any;
-        y: any;
+        row: number;
+        column: number;
+        x: number;
+        y: number;
         width?: number;
         height?: number;
       }, // 드롭된 그리드의 상세 정보
-      gridSize: number // 그리드 한 칸의 크기
+      gridSize: number, // 그리드 한 칸의 크기
+      itemWidth: number, // 아이템의 가로 칸 수
+      itemHeight: number // 아이템의 세로 칸 수
     ) {
-      // 아이템의 새 x, y 위치를 계산합니다.
+      // 아이템의 왼쪽 상단 모서리가 드롭된 그리드 셀의 왼쪽 상단 모서리와 일치하도록 합니다.
+      // (Phaser에서 x, y는 객체의 중심을 기준으로 하기 때문에, 여기서는 객체의 크기 절반을 빼주어야 합니다.)
       const newX = droppedOnGrid.x + gridSize * (droppedOnGrid.column - 1);
       const newY = droppedOnGrid.y + gridSize * (droppedOnGrid.row - 1);
 
-      // Phaser 객체의 위치를 업데이트합니다.
-      itemRect.x = newX + gridSize / 2;
-      itemRect.y = newY + gridSize / 2;
+      // Phaser 객체의 위치를 업데이트합니다. 이 때, 아이템의 왼쪽 상단 모서리가 셀의 왼쪽 상단 모서리에 맞춰지도록 조정합니다.
+      itemRect.x = newX + (gridSize - gridSize * itemWidth) / 2;
+      itemRect.y = newY + (gridSize - gridSize * itemHeight) / 2;
     }
 
     // 다음 아이템 위치 업데이트
@@ -278,21 +287,21 @@ function placeItemInGrid(
   }
 }
 
-function onItemDrop(
-  gridIndex: number,
-  itemData: BarterItem,
-  dropRow: number,
-  dropColumn: number,
-  chestRigInventory: ChestRigInventory
-) {
-  const targetGrid = chestRigInventory.grids[gridIndex];
+// function onItemDrop(
+//   gridIndex: number,
+//   itemData: BarterItem,
+//   dropRow: number,
+//   dropColumn: number,
+//   chestRigInventory: ChestRigInventory
+// ) {
+//   const targetGrid = chestRigInventory.grids[gridIndex];
 
-  if (
-    canPlaceItemInGrid(targetGrid, itemData, dropRow, dropColumn, gridIndex)
-  ) {
-    placeItemInGrid(targetGrid, itemData, dropRow, dropColumn);
-    console.log(`아이템 ${itemData.id}이(가) 그리드에 배치되었습니다.`);
-  } else {
-    console.log(`아이템을 그리드에 배치할 수 없습니다.`);
-  }
-}
+//   if (
+//     canPlaceItemInGrid(targetGrid, itemData, dropRow, dropColumn, gridIndex)
+//   ) {
+//     placeItemInGrid(targetGrid, itemData, dropRow, dropColumn);
+//     console.log(`아이템 ${itemData.id}이(가) 그리드에 배치되었습니다.`);
+//   } else {
+//     console.log(`아이템을 그리드에 배치할 수 없습니다.`);
+//   }
+// }
