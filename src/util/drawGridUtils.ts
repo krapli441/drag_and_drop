@@ -185,7 +185,7 @@ export function drawItemGrid(
     });
 
     function updateItemVisualPosition(
-      itemRect: Phaser.GameObjects.Rectangle, // 아이템의 Phaser 객체
+      itemRect: Phaser.GameObjects.Rectangle,
       droppedOnGrid: {
         gridIndex?: number;
         row: number;
@@ -194,19 +194,18 @@ export function drawItemGrid(
         y: number;
         width?: number;
         height?: number;
-      }, // 드롭된 그리드의 상세 정보
-      gridSize: number, // 그리드 한 칸의 크기
-      itemWidth: number, // 아이템의 가로 칸 수
-      itemHeight: number // 아이템의 세로 칸 수
+      },
+      gridSize: number,
+      itemWidth: number,
+      itemHeight: number
     ) {
-      // 아이템의 왼쪽 상단 모서리가 드롭된 그리드 셀의 왼쪽 상단 모서리와 일치하도록 합니다.
-      // (Phaser에서 x, y는 객체의 중심을 기준으로 하기 때문에, 여기서는 객체의 크기 절반을 빼주어야 합니다.)
+      // 셀의 왼쪽 상단 모서리에 아이템의 왼쪽 상단 모서리가 위치하도록 계산합니다.
       const newX = droppedOnGrid.x + gridSize * (droppedOnGrid.column - 1);
       const newY = droppedOnGrid.y + gridSize * (droppedOnGrid.row - 1);
 
-      // Phaser 객체의 위치를 업데이트합니다. 이 때, 아이템의 왼쪽 상단 모서리가 셀의 왼쪽 상단 모서리에 맞춰지도록 조정합니다.
-      itemRect.x = newX + (gridSize - gridSize * itemWidth) / 2;
-      itemRect.y = newY + (gridSize - gridSize * itemHeight) / 2;
+      // Phaser 객체의 위치를 업데이트합니다. 객체의 크기를 고려하지 않고 셀의 왼쪽 상단에 위치하도록 합니다.
+      itemRect.x = newX;
+      itemRect.y = newY;
     }
 
     // 다음 아이템 위치 업데이트
