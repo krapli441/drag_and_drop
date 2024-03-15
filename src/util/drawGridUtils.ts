@@ -200,8 +200,8 @@ export function drawItemGrid(
       itemHeight: number
     ) {
       // 셀의 왼쪽 상단 모서리에 아이템의 왼쪽 상단 모서리가 위치하도록 계산합니다.
-      const newX = droppedOnGrid.x + gridSize * (droppedOnGrid.column - 1);
-      const newY = droppedOnGrid.y + gridSize * (droppedOnGrid.row - 1);
+      const newX = droppedOnGrid.x + gridSize;
+      const newY = droppedOnGrid.y + gridSize;
 
       // Phaser 객체의 위치를 업데이트합니다. 객체의 크기를 고려하지 않고 셀의 왼쪽 상단에 위치하도록 합니다.
       itemRect.x = newX;
